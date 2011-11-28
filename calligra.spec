@@ -17,7 +17,7 @@ BuildRequires: kdepimlibs4-devel
 
 #For version upper or equal 2012
 BuildRequires: libkexiv2-devel
-BuildRequires:	kdegraphics4-devel
+#BuildRequires:	kdegraphics4-devel
 BuildRequires: libkdcraw-devel
 #For version upper or equal 2012
 BuildRequires: okular-devel
