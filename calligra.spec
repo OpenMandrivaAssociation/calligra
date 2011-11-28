@@ -2,6 +2,8 @@
 %define _mobile 1
 %define prerel beta4
 
+#koffice has epoch 15. We need upper epoch
+Epoch: 16
 Name: calligra
 URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
@@ -13,12 +15,12 @@ Group: Office
 License: GPL
 BuildRequires: kdepimlibs4-devel
 
-#TODO For version upper or equal  2012
-#BuildRequires: libkexiv2-devel
-#
+#For version upper or equal 2012
+BuildRequires: libkexiv2-devel
 BuildRequires:	kdegraphics4-devel
 BuildRequires: libkdcraw-devel
-#BuildRequires: okular-devel
+#For version upper or equal 2012
+BuildRequires: okular-devel
 BuildRequires: lcms2-devel
 BuildRequires: qca2-devel
 BuildRequires: xbase-devel
@@ -96,7 +98,7 @@ Calligra contains:
 Group: Office
 Summary: Set of office applications for KDE
 Provides: calligra-core = %epoch:%version-%release
-Obsoletes: koffice-core < 12:2.4
+Obsoletes: koffice-core < 15:2.4
 Obsoletes: %{_lib}kopainter5
 Obsoletes: koffice2-core
 Obsoletes: koffice-common
