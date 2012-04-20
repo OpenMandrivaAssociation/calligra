@@ -1,22 +1,28 @@
 %define compile_apidox 0
 %define _mobile 1
-%define prerel beta4
+%define prerel %nil
 
 #koffice has epoch 15. We need upper epoch
 Epoch: 16
 Name: calligra
 URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
-Version: 2.4
+Version: 2.4.0
+%if "%prerel" != ""
 Release: %mkrel -c %prerel 1
-Source: http://fr2.rpmfind.net/linux/KDE/unstable/calligra-2.3.84/calligra-2.3.84.tar.bz2
+%else
+Release: 1
+%endif
+Source: http://fr2.rpmfind.net/linux/KDE/stable/calligra-%version/calligra-%version.tar.bz2
 Patch0: calligra-fix-koabstraction-includes.patch
+Patch1: calligra-2.4.0-find-openjpeg.patch
 Group: Office
 License: GPL
 BuildRequires: kdepimlibs4-devel
+Source100: %name.rpmlintrc
 
 #For version upper or equal 2012
-BuildRequires: libkexiv2-devel
+BuildRequires: pkgconfig(libkexiv2)
 #BuildRequires:	kdegraphics4-devel
 BuildRequires: libkdcraw-devel
 #For version upper or equal 2012
@@ -26,13 +32,13 @@ BuildRequires: qca2-devel
 BuildRequires: xbase-devel
 BuildRequires: libwpd-devel
 BuildRequires: libwpg-devel
-BuildRequires: QtShiva-devel
+BuildRequires: pkgconfig(QtShiva) >= 0.9.2
 BuildRequires: libexif-devel
 BuildRequires: libexiv-devel
 BuildRequires: boost-devel
 BuildRequires: pkgconfig(poppler-qt4)
 BuildRequires: libjbig-devel
-BuildRequires: openjpeg-devel
+BuildRequires: openjpeg-devel >= 1.5
 BuildRequires: libxml2-devel >= 2.4.28-2mdk
 BuildRequires: python-devel
 BuildRequires: readline-devel
@@ -47,21 +53,22 @@ BuildRequires: qca2-devel
 BuildRequires: glpk-devel
 BuildRequires: freeglut-devel
 BuildRequires: glew-devel
-BuildRequires: GraphicsMagick-devel
-BuildRequires: opengtl-devel >= 0.9.13
+BuildRequires: pkgconfig(GraphicsMagick)
+BuildRequires: opengtl-devel >= 0.9.16
 BuildRequires: mysql-devel
 BuildRequires: wv2-devel >= 0.4.2
 BuildRequires: getfem++
 BuildRequires: ctemplate-devel
 BuildRequires: freetds-devel
 BuildRequires: sqlite-devel
+BuildRequires: marble-devel
 BuildRequires: fftw3-devel >= 3.2
 %if %compile_apidox
 BuildRequires: graphviz
 BuildRequires: doxygen
 %endif
 Suggests: %name-words
-Suggests: tables
+Suggests: sheets
 Suggests: karbon
 Suggests: stage
 Suggests: krita
@@ -97,7 +104,6 @@ Calligra contains:
 %package core
 Group: Office
 Summary: Set of office applications for KDE
-Provides: calligra-core = %epoch:%version-%release
 Obsoletes: koffice-core < 15:2.4
 Obsoletes: %{_lib}kopainter5
 Obsoletes: koffice2-core
@@ -137,6 +143,7 @@ Common files for Calligra
 %_kde_libdir/kde4/kopabackgroundtool.so
 %_kde_libdir/kde4/koreport_barcodeplugin.so
 %_kde_libdir/kde4/koreport_chartplugin.so
+%_kde_libdir/kde4/koreport_mapsplugin.so
 %_kde_libdir/kde4/koreport_webplugin.so
 %_kde_libdir/kde4/musicshape.so
 %_kde_libdir/kde4/spreadsheetshape-deferred.so
@@ -197,6 +204,7 @@ Common files for Calligra
 %_kde_services/kopabackgroundtool.desktop
 %_kde_services/koreport_barcodeplugin.desktop
 %_kde_services/koreport_chartplugin.desktop
+%_kde_services/koreport_mapsplugin.desktop
 %_kde_services/koreport_webplugin.desktop
 %_kde_services/kounavail.desktop
 %_kde_services/musicshape.desktop
@@ -266,8 +274,6 @@ With it, you can create informative and attractive documents with ease.
 %_kde_libdir/kde4/docbookexport.so
 %_kde_libdir/kde4/docximport.so
 %_kde_libdir/kde4/hancomwordimport.so
-%_kde_libdir/kde4/htmlexport.so
-%_kde_libdir/kde4/htmlimport.so
 %_kde_libdir/kde4/htmlodf_export.so
 %_kde_libdir/kde4/kounavailpart.so
 #%_kde_libdir/kde4/krossmodulekword.so
@@ -291,7 +297,7 @@ With it, you can create informative and attractive documents with ease.
 %_kde_appsdir/xsltfilter/export/words/xslfo/words2xslfo-table.xsl
 %_kde_appsdir/xsltfilter/export/words/xslfo/main.xsl
 %_kde_configdir/wordsrc
-%_kde_iconsdir/hicolor/*/apps/words.png
+%_kde_iconsdir/hicolor/*/apps/words.*
 %_kde_services/ServiceMenus/words_konqi.desktop
 %_kde_services/html-odf_export.desktop
 #%_kde_services/krossmodulekword.desktop
@@ -347,7 +353,6 @@ It is intended for managing moderately large projects with multiple resources.
 %_kde_services/plantjscheduler.desktop
 %_kde_servicetypes/plan_schedulerplugin.desktop
 %_kde_iconsdir/hicolor/*/*/calligraplan*
-%_kde_iconsdir/hicolor/*/*/planwork*
 %_kde_iconsdir/hicolor/*/*/application-x-vnd.kde.plan*
 %_kde_datadir/config.kcfg/plansettings.kcfg
 %_kde_datadir/config.kcfg/planworksettings.kcfg
@@ -355,29 +360,30 @@ It is intended for managing moderately large projects with multiple resources.
 
 #--------------------------------------------------------------------
 
-%package -n tables
+%package -n sheets
 Summary:	SpreadSheet for calligra
 Group:		Graphical desktop/KDE
-URL:            http://www.calligra-suite.org/tables/
+URL:            http://www.calligra-suite.org/sheets/
 Requires:	%name-core = %{epoch}:%{version}-%{release}
 Provides:       %name-apps
 Obsoletes:      koffice-kspread
 Obsoletes:      koffice2-kspread
 Obsoletes:      kspread
+# Sheets used to be called tables in early betas
+Obsoletes:	tables
 Conflicts:      kword < 11:2.1.91-2
 
 
-%description -n tables
+%description -n sheets
 Tables is a fully-featured calculation and spreadsheet tool.
 Use it to quickly create and calculate various business-related spreadsheets,
 such as income and expenditure, employee working hours, etc…
 
-%files -n tables
+%files -n sheets
 %defattr(-,root,root)
-%doc %_kde_docdir/HTML/en/tables
-%_kde_bindir/calligratables
+%_kde_bindir/calligrasheets
 %_kde_libdir/kde4/applixspreadimport.so
-%_kde_libdir/kde4/calligratablespart.so
+%_kde_libdir/kde4/calligrasheetspart.so
 %_kde_libdir/kde4/csvexport.so
 %_kde_libdir/kde4/csvimport.so
 %_kde_libdir/kde4/dbaseimport.so
@@ -392,21 +398,23 @@ such as income and expenditure, employee working hours, etc…
 %_kde_libdir/kde4/qproimport.so
 %_kde_libdir/kde4/spreadsheetshape.so
 %_kde_libdir/kde4/xlsximport.so
-%_kde_libdir/libkdeinit4_calligratables.so
-%_kde_applicationsdir/tables.desktop
+%_kde_libdir/libkdeinit4_calligrasheets.so
+%_kde_datadir/applications/kde4/sheets.desktop
+%_kde_datadir/config.kcfg/sheets.kcfg
+%_kde_services/sheetspart.desktop
 %_kde_appsdir/tables
-%_kde_datadir/config.kcfg/tables.kcfg
-%_kde_datadir/config/tablesrc
-%_kde_datadir/kde4/services/tablespart.desktop
+%_kde_appsdir/sheets
+%_kde_datadir/config/sheetsrc
 %_kde_datadir/templates/.source/SpreadSheet.kst
 %_kde_datadir/templates/SpreadSheet.desktop
-%_kde_iconsdir/hicolor/*/apps/kspread.png
+%_kde_iconsdir/*/*/*/kspread.*
 %_kde_services/krossmodulekspread.desktop
 %_kde_services/kspread*.desktop
 %_kde_services/ServiceMenus/kspread_konqi.desktop
 %_kde_services/spreadsheetshape.desktop
-%_kde_servicetypes/tables_plugin.desktop
 %_kde_services/spreadsheetshape-deferred.desktop
+%_kde_servicetypes/sheets_plugin.desktop
+%doc %_docdir/HTML/en/sheets
 #--------------------------------------------------------------------
 
 %package -n stage
@@ -478,6 +486,7 @@ content elements are available to Stage.
 %_kde_servicetypes/kpr_pageeffect.desktop
 %_kde_servicetypes/kpr_shapeanimation.desktop
 %_kde_datadir/kde4/services/stagepart.desktop
+%doc %_docdir/HTML/en/stage
 
 #--------------------------------------------------------------------
 
@@ -549,8 +558,9 @@ Krita is a pixel-based image manipulation program.
 %_kde_appsdir/kritaplugins
 %_kde_configdir/kritarc
 %_kde_configdir/krita*.knsrc
+%dir %_kde_datadir/color/icc/krita
+%_kde_datadir/color/icc/krita/README
 %_kde_datadir/color/icc/krita/*.icm
-%_kde_datadir/color/icc/krita/*.icc
 %_kde_datadir/mime/packages/krita_ora.xml
 
 #--------------------------------------------------------------------
@@ -578,9 +588,9 @@ art.
 %_kde_libdir/kde4/karbonfiltereffects.so
 %_kde_libdir/kde4/karbon_flattenpathplugin.so
 %_kde_libdir/kde4/karbon_whirlpinchplugin.so
+%_kde_libdir/kde4/karbonimageexport.so
 %_kde_libdir/kde4/karbontools.so
 %_kde_libdir/kde4/karbonpart.so
-%_kde_libdir/kde4/karbonpngexport.so
 %_kde_libdir/kde4/karbonsvgexport.so
 %_kde_libdir/kde4/karbonepsimport.so
 %_kde_libdir/kde4/karbonsvgimport.so
@@ -668,18 +678,17 @@ the database, making it easy to share data and design.
 %files -n kexi
 %defattr(-,root,root)
 %{_kde_bindir}/kexi
+%{_kde_bindir}/kexi_sqlite3_dump
 %{_kde_appsdir}/kexi
 %{_kde_datadir}/config/kexirc
 %{_kde_services}/kexi
 %{_kde_services}/kexidb_mysqldriver.desktop
-%{_kde_services}/kexidb_pqxxsqldriver.desktop
 %{_kde_services}/kexidb_sqlite3driver.desktop
 %{_kde_services}/kexidb_sybasedriver.desktop
 %{_kde_services}/kexidb_xbasedriver.desktop
 #%{_kde_services}/keximigrate_kspread.desktop
 %{_kde_services}/keximigrate_mdb.desktop
 %{_kde_services}/keximigrate_mysql.desktop
-%{_kde_services}/keximigrate_pqxx.desktop
 %{_kde_services}/keximigrate_sybase.desktop
 %{_kde_services}/keximigrate_txt.desktop
 %{_kde_services}/keximigrate_spreadsheet.desktop
@@ -691,12 +700,13 @@ the database, making it easy to share data and design.
 %{_kde_servicetypes}/keximigration_driver.desktop
 %{_kde_applicationsdir}/kexi.desktop
 %{_kde_libdir}/kde4/kformdesigner_containers.so
+%{_kde_libdir}/kde4/kformdesigner_mapbrowser.so
 %{_kde_libdir}/kde4/kformdesigner_kexidbwidgets.so
 %{_kde_libdir}/kde4/kformdesigner_stdwidgets.so
 %{_kde_libdir}/kde4/kformdesigner_webbrowser.so
 %{_kde_libdir}/kde4/kexidb_mysqldriver.so
-%{_kde_libdir}/kde4/kexidb_pqxxsqldriver.so
 %{_kde_libdir}/kde4/kexidb_sqlite3driver.so
+%{_kde_libdir}/kde4/kexidb_sqlite3_icu.so
 %{_kde_libdir}/kde4/kexidb_sybasedriver.so
 %{_kde_libdir}/kde4/kexidb_xbasedriver.so
 %{_kde_libdir}/kde4/kexihandler_csv_importexport.so
@@ -708,13 +718,13 @@ the database, making it easy to share data and design.
 #%{_kde_libdir}/kde4/keximigrate_kspread.so
 %{_kde_libdir}/kde4/keximigrate_mdb.so
 %{_kde_libdir}/kde4/keximigrate_mysql.so
-%{_kde_libdir}/kde4/keximigrate_pqxx.so
 %{_kde_libdir}/kde4/keximigrate_sybase.so
 %{_kde_libdir}/kde4/keximigrate_txt.so
 %{_kde_libdir}/kde4/keximigrate_spreadsheet.so
 %{_kde_libdir}/kde4/kexirelationdesignshape.so
 %{_kde_libdir}/kde4/krossmodulekexidb.so
 %{_kde_libdir}/kde4/kexihandler_report.so
+%doc %_docdir/HTML/en/kexi
 
 #--------------------------------------------------------------------
 
@@ -769,10 +779,27 @@ Calligra Web Shape.
 
 #--------------------------------------------------------------------
 
+%define libbraindumpcore_major 9
+%define libbraindumpcore %mklibname braindumpcore %libbraindumpcore_major
+
+%package -n %libbraindumpcore
+Summary: Calligra Braindump core library
+Group: System/Libraries
+
+%description -n %libbraindumpcore
+Calligra Braindump core library.
+
+%files -n %libbraindumpcore
+%defattr(-,root,root)
+%_kde_libdir/libbraindumpcore.so.%{libbraindumpcore_major}*
+
+#--------------------------------------------------------------------
+
 %package -n braindump
 Summary:	State Shape
 Group:		Graphical desktop/KDE
 Requires:	%name-core = %epoch:%version-%release
+Requires:	%libbraindumpcore = %epoch:%version-%release
 
 %description -n braindump
 Calligra State Shape.
@@ -783,6 +810,7 @@ Calligra State Shape.
 %_kde_applicationsdir/braindump.desktop
 %_kde_appsdir/braindump
 %_kde_servicetypes/braindump_extensions.desktop
+%_kde_iconsdir/*/*/*/braindump.*
 
 #--------------------------------------------------------------------
 
@@ -790,7 +818,7 @@ Calligra State Shape.
 Summary:        A document viewer for touch based tablets
 Group:          Graphical desktop/KDE
 Requires:       %{name}-words = %epoch:%version-%release
-Requires:	tables = %epoch:%version-%release
+Requires:	sheets = %epoch:%version-%release
 Requires:	stage = %epoch:%version-%release
 
 %description active
@@ -831,9 +859,10 @@ Group: System/Libraries
 %description -n %libkoreport
 Calligra core library.
 It's an application-independent reporting library for the generation of both
-printed and ODS and HTML reports from various sources of data. It provides a gui
-based designer and renderer, and is currently used by Kexi for the generation of
-database reports, and KPlato for the generation of planning reports
+printed and ODS and HTML reports from various sources of data. It provides a
+gui based designer and renderer, and is currently used by Kexi for the
+generation of database reports, and Calligra Plan for the generation of
+planning reports.
 
 %files -n %libkoreport
 %defattr(-,root,root)
@@ -951,8 +980,8 @@ Group: System/Libraries
 Calligra core library.
 Flake is the object library for Calligra. It provides a basic concept of a
 'shape' which can be a square, circle or any other form. The shape can contain
-any sort of media because it is responsible for painting itself. This means that
-Words can provide a textShape which has text flowing inside.
+any sort of media because it is responsible for painting itself. This means
+that Words can provide a textShape which has text flowing inside.
 
 %files -n %libflake
 %defattr(-,root,root)
@@ -1210,34 +1239,36 @@ Calligra core library.
 #--------------------------------------------------------------------
 
 %define tables_major 9
-%define libcalligratablescommon %mklibname calligratablescommon %tables_major
+%define libcalligrasheetscommon %mklibname calligrasheetscommon %tables_major
 
-%package -n %libcalligratablescommon
+%package -n %libcalligrasheetscommon
 Summary: Calligra core library
 Group: System/Libraries
+Obsoletes: %mklibname calligratablescommon 9
 
-%description -n %libcalligratablescommon
+%description -n %libcalligrasheetscommon
 Calligra core library.
 
-%files -n %libcalligratablescommon
+%files -n %libcalligrasheetscommon
 %defattr(-,root,root)
-%_kde_libdir/libcalligratablescommon.so.%{tables_major}*
+%_kde_libdir/libcalligrasheetscommon.so.%{tables_major}*
 
 #--------------------------------------------------------------------
 
-%define tablesodf_major 9
-%define libcalligratablesodf %mklibname calligratablesodf %tablesodf_major
+%define sheetsodf_major 9
+%define libcalligrasheetsodf %mklibname calligrasheetsodf %sheetsodf_major
 
-%package -n %libcalligratablesodf
+%package -n %libcalligrasheetsodf
 Summary: Calligra core library
 Group: System/Libraries
+Obsoletes: %mklibname calligratablesodf 9
 
-%description -n %libcalligratablesodf
+%description -n %libcalligrasheetsodf
 Calligra core library.
 
-%files -n %libcalligratablesodf
+%files -n %libcalligrasheetsodf
 %defattr(-,root,root)
-%_kde_libdir/libcalligratablesodf.so.%{tablesodf_major}*
+%_kde_libdir/libcalligrasheetsodf.so.%{sheetsodf_major}*
 
 #--------------------------------------------------------------------
 
@@ -1734,8 +1765,8 @@ Requires: %libkritaimage = %{epoch}:%{version}-%{release}
 Requires: %libkritalibbrush = %{epoch}:%{version}-%{release}
 Requires: %libkritalibpaintop = %{epoch}:%{version}-%{release}
 Requires: %libkritaui = %{epoch}:%{version}-%{release}
-Requires: %libcalligratablescommon = %{epoch}:%{version}-%{release}
-Requires: %libcalligratablesodf = %{epoch}:%{version}-%{release}
+Requires: %libcalligrasheetscommon = %{epoch}:%{version}-%{release}
+Requires: %libcalligrasheetsodf = %{epoch}:%{version}-%{release}
 Requires: %libwordsexportfilters = %{epoch}:%{version}-%{release}
 Requires: %libwordsprivate = %{epoch}:%{version}-%{release}
 Requires: %libmsooxml = %{epoch}:%{version}-%{release}
@@ -1745,7 +1776,6 @@ Requires: %libkundo2 = %{epoch}:%{version}-%{release}
 Requires: %librtfreader = %{epoch}:%{version}-%{release}
 Requires: %librcps_plan = %{epoch}:%{version}-%{release}
 Requires: %name-core = %{epoch}:%{version}-%{release}
-Provides: %name-devel = %{epoch}:%{version}-%{release}
 Conflicts: koffice2-kchart
 Conflicts: karbon < 11:1.9.95.8-3
 Conflicts: kchart < 11:1.9.95.8-3
@@ -1806,14 +1836,13 @@ Header files needed for developing calligra applications.
 %_kde_libdir/libkritalibbrush.so
 %_kde_libdir/libkritalibpaintop.so
 %_kde_libdir/libkritaui.so
-%_kde_libdir/libcalligratablescommon.so
-%_kde_libdir/libcalligratablesodf.so
+%_kde_libdir/libcalligrasheetscommon.so
+%_kde_libdir/libcalligrasheetsodf.so
 %_kde_libdir/libwordsexportfilters.so
 %_kde_libdir/libwordsprivate.so
 %_kde_libdir/libmsooxml.so
 %_kde_libdir/libpigmentcms.so
 %_kde_libdir/libflowprivate.so
-%_kde_libdir/libbraindumpcore.so
 %_kde_libdir/libkoabstraction.so
 %_kde_libdir/libtextlayout.so
 %_kde_libdir/liblibwmf.so
@@ -1846,15 +1875,16 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 #--------------------------------------------------------------------
 
 %prep
-%setup -q -n %name-2.3.84
+%setup -q
 %patch0 -p1 -b .koabstraction
+%patch1 -p1 -b .openjpeg~
 
 %build
 #sh initrepo.sh
 %if %_mobile
-%cmake_kde4 -DBUILD_xbase=OFF
+%cmake_kde4 -DBUILD_xbase=OFF -DIHAVEPATCHEDQT:BOOL=TRUE
 %else
-%cmake_kde4 -DBUILD_xbase=OFF  -DBUILD_mobile=OFF
+%cmake_kde4 -DBUILD_xbase=OFF  -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE
 %endif
 %make
 
