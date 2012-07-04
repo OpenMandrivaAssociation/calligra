@@ -7,17 +7,17 @@ Epoch: 16
 Name: calligra
 URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
-Version: 2.4.1
+Version: 2.4.3
 %if "%prerel" != ""
 Release: %mkrel -c %prerel 1
 %else
-Release: 2
+Release: 1
 %endif
-Source: http://fr2.rpmfind.net/linux/KDE/stable/calligra-%version/calligra-%version.tar.bz2
+Source0: http://fr2.rpmfind.net/linux/KDE/stable/calligra-%version/calligra-%version.tar.bz2
 Patch0: calligra-fix-koabstraction-includes.patch
 Patch1: calligra-2.4.0-find-openjpeg.patch
 Group: Office
-License: GPL
+License: GPLv2+ and LGPLv2+ and GFDL
 BuildRequires: kdepimlibs4-devel
 Source100: %name.rpmlintrc
 
@@ -112,7 +112,6 @@ Obsoletes: koshell
 Obsoletes: kugar
 Obsoletes: kplatowork
 Obsoletes: kivio
-Obsoletes: koffice-core
 Requires: kdebase4-runtime
 
 %description core
@@ -370,7 +369,7 @@ Obsoletes:      koffice-kspread
 Obsoletes:      koffice2-kspread
 Obsoletes:      kspread
 # Sheets used to be called tables in early betas
-Obsoletes:	tables
+%rename		tables
 Conflicts:      kword < 11:2.1.91-2
 
 
@@ -402,7 +401,7 @@ such as income and expenditure, employee working hours, etc…
 %_kde_datadir/applications/kde4/sheets.desktop
 %_kde_datadir/config.kcfg/sheets.kcfg
 %_kde_services/sheetspart.desktop
-%_kde_appsdir/tables
+#%_kde_appsdir/tables
 %_kde_appsdir/sheets
 %_kde_datadir/config/sheetsrc
 %_kde_datadir/templates/.source/SpreadSheet.kst
@@ -431,8 +430,8 @@ Obsoletes:      kpresenter
 
 %description -n stage
 Stage is an easy to use yet still flexible presentation application. You can
-easily create presentations containing a rich variety of elements, from graphics
-to text, from charts to images.
+easily create presentations containing a rich variety of elements,
+from graphics to text, from charts to images.
 Stage is extensible through a plugin system, so it is easy to add new effects,
 new content elements or even new ways of managing your presentation. Because of
 the integration with Calligra, all the power and flexibility of the Calligra
@@ -578,8 +577,8 @@ Conflicts:      oxygen-icon-theme < 1:4.4.2-2
 %description -n karbon
 Karbon is a vector drawing application with an user interface that is easy to
 use, highly customizable and extensible.
-That makes Karbon a great application for users starting to explore the world of
-vector graphics as well as for artists wanting to create breathtaking vector
+That makes Karbon a great application for users starting to explore the world
+of vector graphics as well as for artists wanting to create breathtaking vector
 art.
 
 %files -n karbon
@@ -671,9 +670,9 @@ Obsoletes:  keximdb
 %description -n kexi
 Kexi is an integrated data management application.
 It can be used for creating database schemas, inserting data, performing
-queries, and processing data. Forms can be created to provide a custom interface
-to your data. All database objects – tables, queries and forms – are stored in
-the database, making it easy to share data and design.
+queries, and processing data. Forms can be created to provide a custom
+interface to your data. All database objects – tables, queries and forms –
+are stored in the database, making it easy to share data and design.
 
 %files -n kexi
 %defattr(-,root,root)
@@ -1002,10 +1001,10 @@ Obsoletes:   %{_lib}libpigmentcms1 < 1:1.9.95.3-0.766453.1
 %description -n %libpigmentcms
 Calligra core library.
 Pigment is the Color Manipulation System library for Calligra, this include but
-it is not limited to full color management. Originating from Krita it provides a
-generic KoColor class wich represents the notion of a color. The same color can
-often be specified in different colorspaces. Some colors however can only be
-specified in some colorspaces. 
+it is not limited to full color management. Originating from Krita it provides
+a generic KoColor class wich represents the notion of a color. The same color
+can often be specified in different colorspaces. Some colors however can only
+be specified in some colorspaces. 
 
 %files -n %libpigmentcms
 %defattr(-,root,root)
@@ -1238,8 +1237,8 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define tables_major 9
-%define libcalligrasheetscommon %mklibname calligrasheetscommon %tables_major
+%define sheets_major 9
+%define libcalligrasheetscommon %mklibname calligrasheetscommon %sheets_major
 
 %package -n %libcalligrasheetscommon
 Summary: Calligra core library
@@ -1251,7 +1250,7 @@ Calligra core library.
 
 %files -n %libcalligrasheetscommon
 %defattr(-,root,root)
-%_kde_libdir/libcalligrasheetscommon.so.%{tables_major}*
+%_kde_libdir/libcalligrasheetscommon.so.%{sheets_major}*
 
 #--------------------------------------------------------------------
 
@@ -1888,28 +1887,23 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 %endif
 %make
 
-%if %compile_apidox
+%if %{compile_apidox}
 make apidox
 %endif
 
 %install
-rm -fr %buildroot
-
 %makeinstall_std -C build
 
 %if %compile_apidox
-make install-apidox DESTDIR=%buildroot/
+make install-apidox DESTDIR=%{buildroot}/
 list=`ls -d */ -1`;
 echo $list;
 for i in $list ; do
 	cd $i;
 		if grep '^include .*Doxyfile.am' Makefile.am; then
 			echo "installing apidox from $i" ;	
-			make install-apidox DESTDIR=%buildroot/ ; 
+			make install-apidox DESTDIR=%{buildroot}/ ; 
 		fi
 	cd ../;
 done;
 %endif
-
-
-
