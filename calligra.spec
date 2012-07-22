@@ -11,7 +11,7 @@ Version: 2.4.3
 %if "%prerel" != ""
 Release: %mkrel -c %prerel 1
 %else
-Release: 1
+Release: 2
 %endif
 Source0: http://fr2.rpmfind.net/linux/KDE/stable/calligra-%version/calligra-%version.tar.bz2
 Patch0: calligra-fix-koabstraction-includes.patch
