@@ -14,12 +14,14 @@ Release: %mkrel -c %prerel 1
 Release: 2
 %endif
 Source0: http://fr2.rpmfind.net/linux/KDE/stable/calligra-%version/calligra-%version.tar.bz2
+Source1: %{name}.rpmlintrc
 Patch0: calligra-fix-koabstraction-includes.patch
 Patch1: calligra-2.4.0-find-openjpeg.patch
+Patch2: calligra-2.4.3-upstream-marble.patch
 Group: Office
 License: GPLv2+ and LGPLv2+ and GFDL
 BuildRequires: kdepimlibs4-devel
-Source100: %name.rpmlintrc
+#Source100: %name.rpmlintrc
 
 #For version upper or equal 2012
 BuildRequires: pkgconfig(libkexiv2)
@@ -118,9 +120,7 @@ Requires: kdebase4-runtime
 Common files for Calligra
 
 %files core
-%defattr(-,root,root)
-%doc %_kde_docdir/HTML/en/calligra
-%doc %_kde_docdir/HTML/en/thesaurus
+%defattr(0755,root,root,0755)
 %_kde_bindir/calligra
 %_kde_bindir/calligraconverter
 %_kde_bindir/kthesaurus
@@ -159,6 +159,7 @@ Common files for Calligra
 %_kde_libdir/kde4/xsltexport.so
 %_kde_libdir/kde4/xsltimport.so
 %_kde_libdir/libkdeinit4_kthesaurus.so
+%defattr(0644,root,root,0755)
 %_kde_applicationsdir/KThesaurus.desktop
 %_kde_applicationsdir/calligra.desktop
 %_kde_appsdir/calligra
@@ -240,6 +241,8 @@ Common files for Calligra
 %_kde_servicetypes/textvariableplugin.desktop
 %_kde_servicetypes/calligra_deferred_plugin.desktop
 %_kde_datadir/mime/packages/msooxml-all.xml
+%doc %_kde_docdir/HTML/en/calligra
+%doc %_kde_docdir/HTML/en/thesaurus
 
 #--------------------------------------------------------------------
 
@@ -261,7 +264,7 @@ features.
 With it, you can create informative and attractive documents with ease.
 
 %files words
-%defattr(-,root,root)
+%defattr(755,root,root)
 %_kde_bindir/calligrawords
 %_kde_libdir/kde4/abiwordexport.so
 %_kde_libdir/kde4/abiwordimport.so
@@ -290,6 +293,7 @@ With it, you can create informative and attractive documents with ease.
 %_kde_libdir/kde4/wpexport.so
 %_kde_libdir/kde4/wpimport.so
 %_kde_libdir/libkdeinit4_calligrawords.so
+%defattr(0644,root,root,0755)
 %_kde_applicationsdir/words.desktop
 #%_kde_appsdir/kword
 %_kde_appsdir/words
@@ -327,14 +331,9 @@ It is intended for managing moderately large projects with multiple resources.
 
 
 %files -n plan
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %_kde_bindir/calligraplan
 %_kde_bindir/calligraplanwork
-%_kde_applicationsdir/plan.desktop
-%_kde_applicationsdir/planwork.desktop
-%_kde_appsdir/plan
-%_kde_appsdir/planwork
-%_kde_datadir/config/planrc
 %_kde_libdir/libkdeinit4_calligraplan.so
 %_kde_libdir/libkdeinit4_calligraplanwork.so
 %_kde_libdir/kde4/krossmoduleplan.so
@@ -343,6 +342,12 @@ It is intended for managing moderately large projects with multiple resources.
 %_kde_libdir/kde4/planicalexport.so
 %_kde_libdir/kde4/plankplatoimport.so
 %{_kde_libdir}/kde4/plantjscheduler.so
+%defattr(0644,root,root,0755)
+%_kde_applicationsdir/plan.desktop
+%_kde_applicationsdir/planwork.desktop
+%_kde_appsdir/plan
+%_kde_appsdir/planwork
+%_kde_datadir/config/planrc
 %_kde_services/krossmoduleplan.desktop
 %_kde_services/plan_icalendar_export.desktop
 %_kde_services/planpart.desktop
@@ -379,7 +384,7 @@ Use it to quickly create and calculate various business-related spreadsheets,
 such as income and expenditure, employee working hours, etc…
 
 %files -n sheets
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %_kde_bindir/calligrasheets
 %_kde_libdir/kde4/applixspreadimport.so
 %_kde_libdir/kde4/calligrasheetspart.so
@@ -398,6 +403,7 @@ such as income and expenditure, employee working hours, etc…
 %_kde_libdir/kde4/spreadsheetshape.so
 %_kde_libdir/kde4/xlsximport.so
 %_kde_libdir/libkdeinit4_calligrasheets.so
+%defattr(0644,root,root,0755)
 %_kde_datadir/applications/kde4/sheets.desktop
 %_kde_datadir/config.kcfg/sheets.kcfg
 %_kde_services/sheetspart.desktop
@@ -438,7 +444,7 @@ the integration with Calligra, all the power and flexibility of the Calligra
 content elements are available to Stage.
 
 %files -n stage
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %_kde_bindir/calligrastage
 %_kde_libdir/kde4/calligrastagepart.so
 %_kde_libdir/kde4/kpr_pageeffect_barwipe.so
@@ -458,6 +464,7 @@ content elements are available to Stage.
 %_kde_libdir/kde4/Filterkpr2odf.so
 %_kde_libdir/kde4/pptximport.so
 %_kde_libdir/libkdeinit4_calligrastage.so
+%defattr(0644,root,root,0755)
 %_kde_applicationsdir/stage.desktop
 %_kde_services/ServiceMenus/kpresenter_konqi.desktop
 %_kde_appsdir/stage
@@ -506,8 +513,9 @@ Provides:       koffice2-kchart = %epoch:%version-%release
 Kchart is a chart and diagram drawing program.
 
 %files -n kchart
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %_kde_libdir/kde4/chartshape.so
+%defattr(0644,root,root,0755)
 %_kde_services/chartshape.desktop
 %_kde_services/kchartpart.desktop
 
@@ -531,10 +539,11 @@ Obsoletes:	%{_lib}krossmodulekrita8
 Krita is a pixel-based image manipulation program.
 
 %files -n krita
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %_kde_bindir/krita
 %_kde_libdir/kde4/*krita*
 %_kde_libdir/libkdeinit4_krita.so
+%defattr(0644,root,root,0755)
 %_kde_applicationsdir/krita.desktop
 %_kde_applicationsdir/krita_jpeg.desktop
 %_kde_applicationsdir/krita_png.desktop
@@ -582,7 +591,7 @@ of vector graphics as well as for artists wanting to create breathtaking vector
 art.
 
 %files -n karbon
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %_kde_bindir/karbon
 %_kde_libdir/kde4/karbonfiltereffects.so
 %_kde_libdir/kde4/karbon_flattenpathplugin.so
@@ -601,6 +610,7 @@ art.
 %_kde_libdir/kde4/karbon_refinepathplugin.so
 %_kde_libdir/kde4/karbon_roundcornersplugin.so
 %_kde_libdir/libkdeinit4_karbon.so
+%defattr(0644,root,root,0755)
 %_kde_applicationsdir/karbon.desktop
 %_kde_iconsdir/*/*/apps/karbon.*
 %_kde_configdir/karbonrc
@@ -625,8 +635,9 @@ Requires:       %name-core = %{epoch}:%{version}-%{release}
 Kformula is a formula editor for kde project.
 
 %files -n kformula
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %_kde_libdir/kde4/formulashape.so
+%defattr(0644,root,root,0755)
 %_kde_datadir/apps/formulashape
 %_kde_services/formulashape.desktop
 %{_kde_services}/kformulapart.desktop
@@ -643,11 +654,12 @@ Requires:       %name-core = %{epoch}:%{version}-%{release}
 Flow is for diagramming and flowcharting. 
 
 %files -n flow
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %_kde_bindir/calligraflow
 %_kde_libdir/kde4/flowdockersplugin.so
 %_kde_libdir/kde4/flowpart.so
 %_kde_libdir/libkdeinit4_calligraflow.so
+%defattr(0644,root,root,0755)
 %_kde_datadir/applications/kde4/flow.desktop
 %_kde_datadir/config/flowrc
 %_kde_datadir/config/flow_stencils.knsrc
@@ -675,29 +687,9 @@ interface to your data. All database objects – tables, queries and forms –
 are stored in the database, making it easy to share data and design.
 
 %files -n kexi
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %{_kde_bindir}/kexi
 %{_kde_bindir}/kexi_sqlite3_dump
-%{_kde_appsdir}/kexi
-%{_kde_datadir}/config/kexirc
-%{_kde_services}/kexi
-%{_kde_services}/kexidb_mysqldriver.desktop
-%{_kde_services}/kexidb_sqlite3driver.desktop
-%{_kde_services}/kexidb_sybasedriver.desktop
-%{_kde_services}/kexidb_xbasedriver.desktop
-#%{_kde_services}/keximigrate_kspread.desktop
-%{_kde_services}/keximigrate_mdb.desktop
-%{_kde_services}/keximigrate_mysql.desktop
-%{_kde_services}/keximigrate_sybase.desktop
-%{_kde_services}/keximigrate_txt.desktop
-%{_kde_services}/keximigrate_spreadsheet.desktop
-%{_kde_services}/kexirelationdesignshape.desktop
-%{_kde_services}/kformdesigner
-%{_kde_servicetypes}/widgetfactory.desktop
-%{_kde_servicetypes}/kexidb_driver.desktop
-%{_kde_servicetypes}/kexihandler.desktop
-%{_kde_servicetypes}/keximigration_driver.desktop
-%{_kde_applicationsdir}/kexi.desktop
 %{_kde_libdir}/kde4/kformdesigner_containers.so
 %{_kde_libdir}/kde4/kformdesigner_mapbrowser.so
 %{_kde_libdir}/kde4/kformdesigner_kexidbwidgets.so
@@ -723,6 +715,27 @@ are stored in the database, making it easy to share data and design.
 %{_kde_libdir}/kde4/kexirelationdesignshape.so
 %{_kde_libdir}/kde4/krossmodulekexidb.so
 %{_kde_libdir}/kde4/kexihandler_report.so
+%defattr(0644,root,root,0755)
+%{_kde_appsdir}/kexi
+%{_kde_datadir}/config/kexirc
+%{_kde_services}/kexi
+%{_kde_services}/kexidb_mysqldriver.desktop
+%{_kde_services}/kexidb_sqlite3driver.desktop
+%{_kde_services}/kexidb_sybasedriver.desktop
+%{_kde_services}/kexidb_xbasedriver.desktop
+#%{_kde_services}/keximigrate_kspread.desktop
+%{_kde_services}/keximigrate_mdb.desktop
+%{_kde_services}/keximigrate_mysql.desktop
+%{_kde_services}/keximigrate_sybase.desktop
+%{_kde_services}/keximigrate_txt.desktop
+%{_kde_services}/keximigrate_spreadsheet.desktop
+%{_kde_services}/kexirelationdesignshape.desktop
+%{_kde_services}/kformdesigner
+%{_kde_servicetypes}/widgetfactory.desktop
+%{_kde_servicetypes}/kexidb_driver.desktop
+%{_kde_servicetypes}/kexihandler.desktop
+%{_kde_servicetypes}/keximigration_driver.desktop
+%{_kde_applicationsdir}/kexi.desktop
 %doc %_docdir/HTML/en/kexi
 
 #--------------------------------------------------------------------
@@ -737,8 +750,9 @@ Requires:	okular
 ODP file renderer for Okular.
 
 %files -n okular-odp
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %_kde_libdir/kde4/okularGenerator_odp.so
+%defattr(0644,root,root,0755)
 %_kde_applicationsdir/okularApplication_odp.desktop
 %_kde_services/libokularGenerator_odp.desktop
 %_kde_services/okularOdp.desktop
@@ -754,12 +768,13 @@ Requires:	%name-core = %epoch:%version-%release
 Calligra State Shape.
 
 %files -n stateshape
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
+%_kde_libdir/kde4/stateshape.so
+%defattr(0644,root,root,0755)
 %_kde_appsdir/stateshape
 %_kde_iconsdir/hicolor/*/*/stateshape*
 %_kde_iconsdir/hicolor/*/*/statetool*
 %_kde_services/stateshape.desktop
-%_kde_libdir/kde4/stateshape.so
 
 #--------------------------------------------------------------------
 
@@ -772,9 +787,10 @@ Requires:	%name-core = %epoch:%version-%release
 Calligra Web Shape.
 
 %files -n webshape
-%defattr(-,root,root)
-%_kde_services/webshape.desktop
+%defattr(0755,root,root,0755)
 %_kde_libdir/kde4/webshape.so
+%defattr(0644,root,root,0755)
+%_kde_services/webshape.desktop
 
 #--------------------------------------------------------------------
 
@@ -804,8 +820,9 @@ Requires:	%libbraindumpcore = %epoch:%version-%release
 Calligra State Shape.
 
 %files -n braindump
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %_kde_bindir/braindump
+%defattr(0644,root,root,0755)
 %_kde_applicationsdir/braindump.desktop
 %_kde_appsdir/braindump
 %_kde_servicetypes/braindump_extensions.desktop
@@ -824,8 +841,9 @@ Requires:	stage = %epoch:%version-%release
 Calligra's QML UI.
 
 %files active
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %{_kde_bindir}/calligraactive
+%defattr(0644,root,root,0755)
 %{_kde_datadir}/applications/calligraactive.desktop
 %{_kde_datadir}/calligraactive
 
@@ -1306,14 +1324,13 @@ Calligra core library.
 %package -n katelier
 Summary: Krita and karbon meta package
 Group: Graphical desktop/KDE
-Requires: krita = %{epoch}:%{version}-%{release}
-Requires: karbon = %{epoch}:%{version}-%{release}
+Requires: krita = %{EVRD}
+Requires: karbon = %{EVRD}
 
 %description -n katelier
 Krita and karbon meta package
 
 %files -n katelier
-%defattr(-,root,root,-)
 
 #--------------------------------------------------------------------
 
@@ -1859,8 +1876,9 @@ Group:   Graphical desktop/KDE
 Calligra Mobile is a mobile user interaction of Calligra Suite
 
 %files mobile
-%defattr(-,root,root)
+%defattr(0755,root,root,0755)
 %_kde_bindir/calligramobile
+%defattr(0644,root,root,0755)
 %_kde_datadir/applications/hildon/calligramobile.desktop
 %_kde_datadir/calligramobile-templates/
 %_kde_datadir/dbus-1/services/com.nokia.CalligraMobile.service
@@ -1875,8 +1893,9 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 
 %prep
 %setup -q
-%patch0 -p1 -b .koabstraction
+%patch0 -p1 -b .koabstraction~
 %patch1 -p1 -b .openjpeg~
+%patch2 -p1 -b .marble~
 
 %build
 #sh initrepo.sh
@@ -1885,7 +1904,7 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 %else
 %cmake_kde4 -DBUILD_xbase=OFF  -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE
 %endif
-%make
+make
 
 %if %{compile_apidox}
 make apidox
@@ -1907,3 +1926,6 @@ for i in $list ; do
 	cd ../;
 done;
 %endif
+
+# Remove shebang from non-executable files
+find %{buildroot}%{_kde_appsdir}/ -type f -name '*.py' -exec sed -i '1s/^#!.*$//' {} \;
