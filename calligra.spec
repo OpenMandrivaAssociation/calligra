@@ -7,11 +7,11 @@ Epoch: 16
 Name: calligra
 URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
-Version: 2.4.3
+Version: 2.5.0
 %if "%prerel" != ""
-Release: %mkrel -c %prerel 1
+Release: -c %prerel 1
 %else
-Release: 2
+Release: 1
 %endif
 Source0: http://fr2.rpmfind.net/linux/KDE/stable/calligra-%version/calligra-%version.tar.bz2
 Source1: %{name}.rpmlintrc
