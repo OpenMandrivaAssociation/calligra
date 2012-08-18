@@ -15,9 +15,7 @@ Release: 1
 %endif
 Source0: http://fr2.rpmfind.net/linux/KDE/stable/calligra-%version/calligra-%version.tar.bz2
 Source1: %{name}.rpmlintrc
-Patch0: calligra-fix-koabstraction-includes.patch
 Patch1: calligra-2.4.0-find-openjpeg.patch
-Patch2: calligra-2.4.3-upstream-marble.patch
 Group: Office
 License: GPLv2+ and LGPLv2+ and GFDL
 BuildRequires: kdepimlibs4-devel
@@ -1893,9 +1891,7 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 
 %prep
 %setup -q
-%patch0 -p1 -b .koabstraction~
 %patch1 -p1 -b .openjpeg~
-%patch2 -p1 -b .marble~
 
 %build
 #sh initrepo.sh
