@@ -63,6 +63,8 @@ BuildRequires: freetds-devel
 BuildRequires: sqlite-devel
 BuildRequires: marble-devel
 BuildRequires: fftw3-devel >= 3.2
+BuildRequires: libvisio-devel
+BuildRequires: libwps-devel
 %if %compile_apidox
 BuildRequires: graphviz
 BuildRequires: doxygen
@@ -121,7 +123,6 @@ Common files for Calligra
 %defattr(0755,root,root,0755)
 %_kde_bindir/calligra
 %_kde_bindir/calligraconverter
-%_kde_bindir/kthesaurus
 %_kde_bindir/cstester
 %_kde_bindir/cstrunner
 %_kde_bindir/visualimagecompare
@@ -130,10 +131,8 @@ Common files for Calligra
 %_kde_libdir/kde4/changecase.so
 %_kde_libdir/kde4/commentshape.so
 %_kde_libdir/kde4/defaulttools.so
-%_kde_libdir/kde4/generickofilter.so
 %_kde_libdir/kde4/kodocinfopropspage.so
 %_kde_libdir/kde4/calligradockers.so
-%_kde_libdir/kde4/calligrascan.so
 %_kde_libdir/kde4/calligrathumbnail.so
 %_kde_libdir/kde4/calligragoogledocs.so
 %_kde_libdir/kde4/kolcmsengine.so
@@ -151,14 +150,9 @@ Common files for Calligra
 %_kde_libdir/kde4/textshape.so
 %_kde_libdir/kde4/textvariables.so
 %_kde_libdir/kde4/thesaurustool.so
-%_kde_libdir/kde4/treeshape.so
 %_kde_libdir/kde4/vectorshape.so
 %_kde_libdir/kde4/videoshape.so
-%_kde_libdir/kde4/xsltexport.so
-%_kde_libdir/kde4/xsltimport.so
-%_kde_libdir/libkdeinit4_kthesaurus.so
 %defattr(0644,root,root,0755)
-%_kde_applicationsdir/KThesaurus.desktop
 %_kde_applicationsdir/calligra.desktop
 %_kde_appsdir/calligra
 %_kde_appsdir/koproperty
@@ -194,7 +188,6 @@ Common files for Calligra
 %_kde_services/changecase.desktop
 %_kde_services/commentshape.desktop
 %_kde_services/defaulttools.desktop
-%_kde_services/generic_filter.desktop
 %_kde_services/kodocinfopropspage.desktop
 %_kde_services/calligradockers.desktop
 %_kde_services/calligrathumbnail.desktop
@@ -204,7 +197,6 @@ Common files for Calligra
 %_kde_services/koreport_chartplugin.desktop
 %_kde_services/koreport_mapsplugin.desktop
 %_kde_services/koreport_webplugin.desktop
-%_kde_services/kounavail.desktop
 %_kde_services/musicshape.desktop
 #%_kde_services/paragraphtool.desktop
 %_kde_services/pathshapes.desktop
@@ -214,11 +206,8 @@ Common files for Calligra
 %_kde_services/textshape.desktop
 %_kde_services/textvariables.desktop
 %_kde_services/thesaurustool.desktop
-%_kde_services/treeshape.desktop
 %_kde_services/vectorshape.desktop
 %_kde_services/videoshape.desktop
-%_kde_services/xslt_export.desktop
-%_kde_services/xslt_import.desktop
 %_kde_servicetypes/calligra_application.desktop
 %_kde_servicetypes/flake.desktop
 %_kde_servicetypes/flakedevice.desktop
@@ -240,7 +229,6 @@ Common files for Calligra
 %_kde_servicetypes/calligra_deferred_plugin.desktop
 %_kde_datadir/mime/packages/msooxml-all.xml
 %doc %_kde_docdir/HTML/en/calligra
-%doc %_kde_docdir/HTML/en/thesaurus
 
 #--------------------------------------------------------------------
 
