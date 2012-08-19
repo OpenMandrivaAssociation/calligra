@@ -182,7 +182,6 @@ Common files for Calligra
 %_kde_iconsdir/*/*/actions/x-shape-formula.*
 %_kde_iconsdir/*/*/actions/x-shape-image.*
 %_kde_iconsdir/*/*/actions/x-shape-text.*
-%_kde_services/ServiceMenus/kchart_konqi.desktop
 %_kde_services/artistictextshape.desktop
 %_kde_services/autocorrect.desktop
 %_kde_services/changecase.desktop
@@ -252,46 +251,26 @@ With it, you can create informative and attractive documents with ease.
 %files words
 %defattr(755,root,root)
 %_kde_bindir/calligrawords
-%_kde_libdir/kde4/abiwordexport.so
-%_kde_libdir/kde4/abiwordimport.so
-%_kde_libdir/kde4/amiproexport.so
-%_kde_libdir/kde4/amiproimport.so
 %_kde_libdir/kde4/applixwordimport.so
-%_kde_libdir/kde4/asciiexport.so
 %_kde_libdir/kde4/asciiimport.so
-%_kde_libdir/kde4/docbookexport.so
 %_kde_libdir/kde4/docximport.so
-%_kde_libdir/kde4/hancomwordimport.so
 %_kde_libdir/kde4/htmlodf_export.so
-%_kde_libdir/kde4/kounavailpart.so
 #%_kde_libdir/kde4/krossmodulekword.so
-%_kde_libdir/kde4/kwordkword1dot3import.so
 %_kde_libdir/kde4/wordspart.so
 %_kde_libdir/kde4/mswordodf_import.so
-%_kde_libdir/kde4/oowriterexport.so
-%_kde_libdir/kde4/oowriterimport.so
-%_kde_libdir/kde4/palmdocexport.so
-%_kde_libdir/kde4/palmdocimport.so
-%_kde_libdir/kde4/rtfexport.so
 %_kde_libdir/kde4/rtfimport.so
-%_kde_libdir/kde4/wmlexport.so
-%_kde_libdir/kde4/wmlimport.so
-%_kde_libdir/kde4/wpexport.so
-%_kde_libdir/kde4/wpimport.so
+%_kde_libdir/kde4/wpsimport.so
 %_kde_libdir/libkdeinit4_calligrawords.so
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/words.desktop
 #%_kde_appsdir/kword
 %_kde_appsdir/words
-%_kde_appsdir/xsltfilter/export/words/xslfo/words2xslfo-table.xsl
-%_kde_appsdir/xsltfilter/export/words/xslfo/main.xsl
 %_kde_configdir/wordsrc
 %_kde_iconsdir/hicolor/*/apps/words.*
 %_kde_services/ServiceMenus/words_konqi.desktop
 %_kde_services/html-odf_export.desktop
 #%_kde_services/krossmodulekword.desktop
 %_kde_services/words*.desktop
-%_kde_datadir/templates/.source/TextDocument.kwt
 %_kde_datadir/templates/TextDocument.desktop
 
 #--------------------------------------------------------------------
@@ -396,7 +375,6 @@ such as income and expenditure, employee working hours, etc…
 #%_kde_appsdir/tables
 %_kde_appsdir/sheets
 %_kde_datadir/config/sheetsrc
-%_kde_datadir/templates/.source/SpreadSheet.kst
 %_kde_datadir/templates/SpreadSheet.desktop
 %_kde_iconsdir/*/*/*/kspread.*
 %_kde_services/krossmodulekspread.desktop
@@ -454,7 +432,6 @@ content elements are available to Stage.
 %_kde_applicationsdir/stage.desktop
 %_kde_services/ServiceMenus/kpresenter_konqi.desktop
 %_kde_appsdir/stage
-%_kde_datadir/templates/.source/Presentation.kpt
 %_kde_datadir/templates/Presentation.desktop
 %_kde_datadir/config/stagerc
 %_kde_iconsdir/hicolor/*/apps/stage.png
@@ -601,7 +578,6 @@ art.
 %_kde_iconsdir/*/*/apps/karbon.*
 %_kde_configdir/karbonrc
 %_kde_appsdir/karbon
-%_kde_datadir/templates/.source/Illustration.karbon
 %_kde_datadir/templates/Illustration.desktop
 %_kde_services/ServiceMenus/karbon_konqi.desktop
 %_kde_services/karbon*.desktop
@@ -1045,26 +1021,6 @@ Calligra core library.
 %files -n %libkochart
 %defattr(-,root,root)
 %_kde_libdir/libkochart.so.%{libkochart_major}*
-
-#--------------------------------------------------------------------
-
-%define libkwordexportfilters %mklibname kwordexportfilters 8
-
-%define wordsexportfilters_major 9
-%define libwordsexportfilters %mklibname wordsexportfilters %wordsexportfilters_major
-
-
-%package -n %libwordsexportfilters
-Summary: Calligra core library
-Group: System/Libraries
-Obsoletes: %libkwordexportfilters <= 12:2.4
-
-%description -n %libwordsexportfilters
-Calligra core library.
-
-%files -n %libwordsexportfilters
-%defattr(-,root,root)
-%_kde_libdir/libwordsexportfilters.so.%{wordsexportfilters_major}*
 
 #--------------------------------------------------------------------
 %define kundo2_major 9
@@ -1707,23 +1663,6 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-
-%define libkoabstraction_major 9
-%define libkoabstraction %mklibname koabstraction %libkoabstraction_major
-
-%package -n %libkoabstraction
-Summary: Calligra core library
-Group: System/Libraries
-
-%description -n %libkoabstraction
-Calligra core library.
-
-%files -n %libkoabstraction
-%defattr(-,root,root)
-%_kde_libdir/libkoabstraction.so.%{libkoabstraction_major}*
-
-#--------------------------------------------------------------------
-
 %package devel
 Group: Development/KDE and Qt
 Summary: Header files for developing calligra applications
@@ -1769,7 +1708,6 @@ Requires: %libkritalibpaintop = %{epoch}:%{version}-%{release}
 Requires: %libkritaui = %{epoch}:%{version}-%{release}
 Requires: %libcalligrasheetscommon = %{epoch}:%{version}-%{release}
 Requires: %libcalligrasheetsodf = %{epoch}:%{version}-%{release}
-Requires: %libwordsexportfilters = %{epoch}:%{version}-%{release}
 Requires: %libwordsprivate = %{epoch}:%{version}-%{release}
 Requires: %libmsooxml = %{epoch}:%{version}-%{release}
 Requires: %libpigmentcms = %{epoch}:%{version}-%{release}
@@ -1840,12 +1778,10 @@ Header files needed for developing calligra applications.
 %_kde_libdir/libkritaui.so
 %_kde_libdir/libcalligrasheetscommon.so
 %_kde_libdir/libcalligrasheetsodf.so
-%_kde_libdir/libwordsexportfilters.so
 %_kde_libdir/libwordsprivate.so
 %_kde_libdir/libmsooxml.so
 %_kde_libdir/libpigmentcms.so
 %_kde_libdir/libflowprivate.so
-%_kde_libdir/libkoabstraction.so
 %_kde_libdir/libtextlayout.so
 %_kde_libdir/liblibwmf.so
 %_kde_libdir/libkundo2.so
