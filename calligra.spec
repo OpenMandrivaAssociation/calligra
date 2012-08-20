@@ -160,7 +160,11 @@ Common files for Calligra
 %_kde_appsdir/pigmentcms
 %_kde_datadir/color/icc/pigment/*.icm
 %_kde_iconsdir/*/*/actions/black.*
+%_kde_iconsdir/*/*/actions/curve-connector.*
 %_kde_iconsdir/*/*/actions/highlight.*
+%_kde_iconsdir/*/*/actions/insert-endnote.png
+%_kde_iconsdir/*/*/actions/insert-footnote.png
+%_kde_iconsdir/*/*/actions/lines-connector.png
 %_kde_iconsdir/*/*/actions/object-align-horizontal-center-calligra.*
 %_kde_iconsdir/*/*/actions/object-align-horizontal-left-calligra.*
 %_kde_iconsdir/*/*/actions/object-align-horizontal-right-calligra.*
@@ -175,7 +179,9 @@ Common files for Calligra
 %_kde_iconsdir/*/*/actions/object-order-raise-calligra.*
 %_kde_iconsdir/*/*/actions/object-ungroup-calligra.*
 %_kde_iconsdir/*/*/actions/pen.*
-%_kde_iconsdir/*/*/actions/shape-choose.*
+%_kde_iconsdir/*/*/actions/shape-choose.* 
+%_kde_iconsdir/*/*/actions/standard-connector.*
+%_kde_iconsdir/*/*/actions/straight-connector.*
 %_kde_iconsdir/*/*/actions/table.*
 %_kde_iconsdir/*/*/actions/x-shape-chart.*
 %_kde_iconsdir/*/*/actions/x-shape-connection.*
@@ -271,6 +277,7 @@ With it, you can create informative and attractive documents with ease.
 %_kde_services/html-odf_export.desktop
 #%_kde_services/krossmodulekword.desktop
 %_kde_services/words*.desktop
+%_kde_datadir/templates/.source/TextDocument.odt
 %_kde_datadir/templates/TextDocument.desktop
 
 #--------------------------------------------------------------------
@@ -372,12 +379,14 @@ such as income and expenditure, employee working hours, etc…
 %_kde_datadir/applications/kde4/sheets.desktop
 %_kde_datadir/config.kcfg/sheets.kcfg
 %_kde_services/sheetspart.desktop
-#%_kde_appsdir/tables
+%_kde_appsdir/tables
 %_kde_appsdir/sheets
 %_kde_datadir/config/sheetsrc
 %_kde_datadir/templates/SpreadSheet.desktop
 %_kde_services/krossmodulekspread.desktop
 %_kde_services/kspread*.desktop
+%_kde_datadir/templates/.source/SpreadSheet.ods
+%_kde_iconsdir/hicolor/*/apps/sheets.png
 %_kde_services/ServiceMenus/kspread_konqi.desktop
 %_kde_services/spreadsheetshape.desktop
 %_kde_services/spreadsheetshape-deferred.desktop
@@ -432,6 +441,7 @@ content elements are available to Stage.
 %_kde_services/ServiceMenus/kpresenter_konqi.desktop
 %_kde_appsdir/stage
 %_kde_datadir/templates/Presentation.desktop
+%_kde_datadir/templates/.source/Presentation.odp
 %_kde_datadir/config/stagerc
 %_kde_iconsdir/hicolor/*/apps/stage.png
 %_kde_services/calligrastageeventactions.desktop
@@ -531,6 +541,12 @@ Krita is a pixel-based image manipulation program.
 %dir %_kde_datadir/color/icc/krita
 %_kde_datadir/color/icc/krita/README
 %_kde_datadir/color/icc/krita/*.icm
+%_kde_appsdir/color-schemes/Krita50.colors
+%_kde_appsdir/color-schemes/KritaBlender.colors
+%_kde_appsdir/color-schemes/KritaBright.colors
+%_kde_appsdir/color-schemes/KritaBrighter.colors
+%_kde_appsdir/color-schemes/KritaDark.colors
+%_kde_appsdir/color-schemes/KritaDarker.colors
 %_kde_datadir/mime/packages/krita_ora.xml
 
 #--------------------------------------------------------------------
@@ -564,6 +580,7 @@ art.
 %_kde_libdir/kde4/karbonsvgexport.so
 %_kde_libdir/kde4/karbonepsimport.so
 %_kde_libdir/kde4/karbonsvgimport.so
+%_kde_libdir/kde4/karbonxfigimport.so
 %_kde_libdir/kde4/wmfexport.so
 %_kde_libdir/kde4/wmfimport.so
 %_kde_libdir/kde4/karbon1ximport.so
@@ -578,6 +595,7 @@ art.
 %_kde_configdir/karbonrc
 %_kde_appsdir/karbon
 %_kde_datadir/templates/Illustration.desktop
+%_kde_datadir/templates/.source/Illustration.odg
 %_kde_services/ServiceMenus/karbon_konqi.desktop
 %_kde_services/karbon*.desktop
 %_kde_servicetypes/filtereffect.desktop
@@ -619,6 +637,7 @@ Flow is for diagramming and flowcharting.
 %_kde_bindir/calligraflow
 %_kde_libdir/kde4/flowdockersplugin.so
 %_kde_libdir/kde4/flowpart.so
+%_kde_libdir/kde4/vsdximport.so
 %_kde_libdir/libkdeinit4_calligraflow.so
 %defattr(0644,root,root,0755)
 %_kde_datadir/applications/kde4/flow.desktop
@@ -627,6 +646,7 @@ Flow is for diagramming and flowcharting.
 %_kde_appsdir/flow
 %_kde_services/flowdockersplugin.desktop
 %_kde_services/flowpart.desktop
+%_kde_services/flow_vsdx_import.desktop
 %_kde_servicetypes/flow_dock.desktop
 %_kde_services/ServiceMenus/flow_konqi.desktop
 #--------------------------------------------------------------------
