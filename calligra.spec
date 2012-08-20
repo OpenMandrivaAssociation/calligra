@@ -1,5 +1,5 @@
 %define compile_apidox 0
-%define _mobile 1
+%define _mobile 0
 %define prerel %nil
 
 #koffice has epoch 15. We need upper epoch
