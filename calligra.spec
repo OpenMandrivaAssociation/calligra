@@ -1598,7 +1598,7 @@ Calligra core library.
 
 #-------------------------------------------------------------------- 
 
-%define libkowv2_major 10
+%define libkowv2_major 9
 %define libkowv2 %mklibname kowv2_ %libkowv2_major
    
 %package -n %libkowv2
