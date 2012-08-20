@@ -376,7 +376,6 @@ such as income and expenditure, employee working hours, etc…
 %_kde_appsdir/sheets
 %_kde_datadir/config/sheetsrc
 %_kde_datadir/templates/SpreadSheet.desktop
-%_kde_iconsdir/*/*/*/kspread.*
 %_kde_services/krossmodulekspread.desktop
 %_kde_services/kspread*.desktop
 %_kde_services/ServiceMenus/kspread_konqi.desktop
