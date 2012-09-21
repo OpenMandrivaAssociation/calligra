@@ -7,7 +7,7 @@ Epoch: 16
 Name: calligra
 URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
-Version: 2.5.1
+Version: 2.5.2
 %if "%prerel" != ""
 Release: -c %prerel 1
 %else
@@ -693,6 +693,7 @@ are stored in the database, making it easy to share data and design.
 %{_kde_libdir}/kde4/keximigrate_sybase.so
 %{_kde_libdir}/kde4/keximigrate_txt.so
 %{_kde_libdir}/kde4/keximigrate_spreadsheet.so
+%{_kde_libdir}/kde4/keximigrate_xbase.so
 %{_kde_libdir}/kde4/kexirelationdesignshape.so
 %{_kde_libdir}/kde4/krossmodulekexidb.so
 %{_kde_libdir}/kde4/kexihandler_report.so
@@ -710,6 +711,7 @@ are stored in the database, making it easy to share data and design.
 %{_kde_services}/keximigrate_sybase.desktop
 %{_kde_services}/keximigrate_txt.desktop
 %{_kde_services}/keximigrate_spreadsheet.desktop
+%{_kde_services}/keximigrate_xbase.desktop
 %{_kde_services}/kexirelationdesignshape.desktop
 %{_kde_services}/kformdesigner
 %{_kde_servicetypes}/widgetfactory.desktop
@@ -1841,7 +1843,7 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 %if %_mobile
 %cmake_kde4 -DBUILD_xbase=OFF -DIHAVEPATCHEDQT:BOOL=TRUE
 %else
-%cmake_kde4 -DBUILD_xbase=OFF  -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE
+%cmake_kde4 -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE
 %endif
 make
 
