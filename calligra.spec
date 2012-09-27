@@ -11,7 +11,7 @@ Version: 2.5.2
 %if "%prerel" != ""
 Release: -c %prerel 1
 %else
-Release: 1
+Release: 2
 %endif
 Source0: http://fr2.rpmfind.net/linux/KDE/stable/calligra-%version/calligra-%version.tar.bz2
 Source1: %{name}.rpmlintrc
@@ -78,6 +78,8 @@ Suggests: plan
 Suggests: kchart
 Suggests: kformula
 Suggests: kexi
+Suggests: flow
+Suggests: braindump
 Obsoletes: f-office
 Obsoletes: koshell
 Obsoletes: kugar
@@ -241,7 +243,7 @@ Common files for Calligra
 Summary:	    Word processor for calligra
 Group:		    Graphical desktop/KDE
 URL:            http://www.calligra-suite.org/words/
-Requires:	    %name-core = %{epoch}:%{version}-%{release}
+Requires:	    %name-core = %{EVRD}
 Requires:	    wordnet
 Provides:	    %name-apps
 Obsoletes:      koffice-kword
@@ -286,7 +288,7 @@ With it, you can create informative and attractive documents with ease.
 Summary:	Project management application for Calligra
 Group:		Graphical desktop/KDE
 URL:            http://www.calligra-suite.org/plan/
-Requires:	%name-core = %{epoch}:%{version}-%{release}
+Requires:	%name-core = %{EVRD}
 Provides:       %name-apps
 Provides:       kplato2
 Obsoletes:      kplatowork
@@ -340,7 +342,7 @@ It is intended for managing moderately large projects with multiple resources.
 Summary:	SpreadSheet for calligra
 Group:		Graphical desktop/KDE
 URL:            http://www.calligra-suite.org/sheets/
-Requires:	%name-core = %{epoch}:%{version}-%{release}
+Requires:	%name-core = %{EVRD}
 Provides:       %name-apps
 Obsoletes:      koffice-kspread
 Obsoletes:      koffice2-kspread
@@ -351,9 +353,9 @@ Conflicts:      kword < 11:2.1.91-2
 
 
 %description -n sheets
-Tables is a fully-featured calculation and spreadsheet tool.
+Sheets is a fully-featured calculation and spreadsheet tool.
 Use it to quickly create and calculate various business-related spreadsheets,
-such as income and expenditure, employee working hours, etc…
+such as income and expenditure, employee working hours, etc.
 
 %files -n sheets
 %defattr(0755,root,root,0755)
@@ -398,7 +400,7 @@ such as income and expenditure, employee working hours, etc…
 Summary:	Presentation for calligra-suite
 Group:		Graphical desktop/KDE
 URL:            http://www.calligra-suite.org/stage/
-Requires:	%name-core = %{epoch}:%{version}-%{release}
+Requires:	%name-core = %{EVRD}
 Requires:	xdg-utils
 Provides:       %name-apps
 Obsoletes:      koffice-kpresenter
@@ -471,14 +473,14 @@ content elements are available to Stage.
 %package -n kchart
 Summary:        Chart and diagram drawing
 Group:          Graphical desktop/KDE
-Requires:       %name-core = %{epoch}:%{version}-%{release}
+Requires:       %name-core = %{EVRD}
 URL:            http://www.koffice.org/
 Provides:       %name-apps
 Provides:       kchart2
 Obsoletes:      %name-kchart
-Provides:       %name-kchart = %epoch:%version-%release
+Provides:       %name-kchart = %{EVRD}
 Obsoletes:      koffice2-kchart
-Provides:       koffice2-kchart = %epoch:%version-%release
+Provides:       koffice2-kchart = %{EVRD}
 
 
 %description -n kchart
@@ -494,10 +496,10 @@ Kchart is a chart and diagram drawing program.
 #--------------------------------------------------------------------
 
 %package -n krita
-Summary:        A pixel-based image manipulation program
+Summary:        Sketching and painting program
 Group:          Graphical desktop/KDE
 URL:            http://www.calligra-suite.org/krita/
-Requires:       %name-core = %{epoch}:%{version}-%{release}
+Requires:       %name-core = %{EVRD}
 Requires:       libkdcraw-common
 Provides:       %name-apps
 Obsoletes:      koffice-krita
@@ -508,7 +510,9 @@ Obsoletes:      %{_lib}kritargbf32hdr5
 Obsoletes:	%{_lib}krossmodulekrita8
 
 %description -n krita
-Krita is a pixel-based image manipulation program.
+Krita offers an end–to–end solution for creating digital painting files
+from scratch by masters. It supports concept art, creation of comics
+and textures for rendering.
 
 %files -n krita
 %defattr(0755,root,root,0755)
@@ -555,7 +559,7 @@ Krita is a pixel-based image manipulation program.
 Summary:	Scalable drawing for calligra
 Group:		Graphical desktop/KDE
 URL:            http://www.calligra-suite.org/karbon/
-Requires:	%name-core = %{epoch}:%{version}-%{release}
+Requires:	%name-core = %{EVRD}
 Provides:       %name-apps
 Obsoletes:      koffice-karbon
 Obsoletes:      koffice2-karbon
@@ -607,7 +611,7 @@ art.
 Summary:        Formula Editor for calligra
 Group:          Graphical desktop/KDE
 URL:            http://www.koffice.org/
-Requires:       %name-core = %{epoch}:%{version}-%{release}
+Requires:       %name-core = %{EVRD}
 
 
 %description -n kformula
@@ -627,10 +631,13 @@ Kformula is a formula editor for kde project.
 Summary:        Diagramming and flowcharting apps for calligra
 Group:          Graphical desktop/KDE
 URL:            http://www.calligra-suite.org/flow/
-Requires:       %name-core = %{epoch}:%{version}-%{release}
+Requires:       %name-core = %{EVRD}
 
 %description -n flow
-Flow is for diagramming and flowcharting. 
+Use Flow to make network diagrams, organization charts, flowcharts and much
+more. Flow also comes with numerous stencils that can be used to make anything
+you want. There are options for Networking, Renewable Energy, Chemistry,
+Building sites, and many other options to help you make your diagrams.
 
 %files -n flow
 %defattr(0755,root,root,0755)
@@ -655,7 +662,7 @@ Flow is for diagramming and flowcharting.
 Summary:    An integrated environment for managing data
 Group:      Graphical desktop/KDE
 URL:        http://www.calligra-suite.org/kexi/
-Requires:   %name-core = %epoch:%version-%release
+Requires:   %name-core = %{EVRD}
 Provides:   %name-apps
 Obsoletes:  keximdb
 
@@ -726,7 +733,7 @@ are stored in the database, making it easy to share data and design.
 %package -n okular-odp
 Summary:	ODP file renderer for Okular
 Group:		Graphical desktop/KDE
-Requires:	%name-core = %epoch:%version-%release
+Requires:	%name-core = %{EVRD}
 Requires:	okular
 
 %description -n okular-odp
@@ -745,7 +752,7 @@ ODP file renderer for Okular.
 %package -n stateshape
 Summary:	State Shape
 Group:		Graphical desktop/KDE
-Requires:	%name-core = %epoch:%version-%release
+Requires:	%name-core = %{EVRD}
 
 %description -n stateshape
 Calligra State Shape.
@@ -764,7 +771,7 @@ Calligra State Shape.
 %package -n webshape
 Summary:	Calligra Web Shape
 Group:		Graphical desktop/KDE
-Requires:	%name-core = %epoch:%version-%release
+Requires:	%name-core = %{EVRD}
 
 %description -n webshape
 Calligra Web Shape.
@@ -794,13 +801,17 @@ Calligra Braindump core library.
 #--------------------------------------------------------------------
 
 %package -n braindump
-Summary:	State Shape
+Summary:	Calligra mind mapping tool
 Group:		Graphical desktop/KDE
-Requires:	%name-core = %epoch:%version-%release
-Requires:	%libbraindumpcore = %epoch:%version-%release
+Requires:	%name-core = %{EVRD}
+Requires:	%libbraindumpcore = %{EVRD}
 
 %description -n braindump
-Calligra State Shape.
+Braindump is a tool to dump and organize the content of your brain (ideas,
+drawings, images, texts...) to your computer. It works by allowing to create
+and edit whiteboards, which are infinite canvas on which you can add texts,
+images, charts, drawings. You can also organize your ideas into diagrams
+and flowcharts.
 
 %files -n braindump
 %defattr(0755,root,root,0755)
@@ -816,9 +827,9 @@ Calligra State Shape.
 %package active
 Summary:        A document viewer for touch based tablets
 Group:          Graphical desktop/KDE
-Requires:       %{name}-words = %epoch:%version-%release
-Requires:	sheets = %epoch:%version-%release
-Requires:	stage = %epoch:%version-%release
+Requires:       %{name}-words = %{EVRD}
+Requires:	sheets = %{EVRD}
+Requires:	stage = %{EVRD}
 
 %description active
 Calligra's QML UI.
@@ -1207,7 +1218,7 @@ Calligra core library.
 %package -n %libplanworkfactory
 Summary: Calligra core library
 Group: System/Libraries
-Obsoletes: %{_lib}kplatoworkapp8 < %epoch:%version-%release
+Obsoletes: %{_lib}kplatoworkapp8 < %{EVRD}
 
 %description -n %libplanworkfactory
 Calligra core library.
@@ -1687,56 +1698,56 @@ Calligra core library.
 %package devel
 Group: Development/KDE and Qt
 Summary: Header files for developing calligra applications
-Requires: %libchartshapelib = %{epoch}:%{version}-%{release}
-Requires: %libflake = %{epoch}:%{version}-%{release}
-Requires: %libkarboncommon = %{epoch}:%{version}-%{release}
-Requires: %libkarbonui = %{epoch}:%{version}-%{release}
-Requires: %libkdchart = %{epoch}:%{version}-%{release}
-Requires: %libkexicore = %{epoch}:%{version}-%{release}
-Requires: %libkexidatatable = %{epoch}:%{version}-%{release}
-Requires: %libkexidataviewcommon = %{epoch}:%{version}-%{release}
-Requires: %libkexidb = %{epoch}:%{version}-%{release}
-Requires: %libkexiextendedwidgets = %{epoch}:%{version}-%{release}
-Requires: %libkexiformutils = %{epoch}:%{version}-%{release}
-Requires: %libkexiguiutils = %{epoch}:%{version}-%{release}
-Requires: %libkeximain = %{epoch}:%{version}-%{release}
-Requires: %libkeximigrate = %{epoch}:%{version}-%{release}
-Requires: %libkexirelationsview = %{epoch}:%{version}-%{release}
-Requires: %libkexiutils = %{epoch}:%{version}-%{release}
-Requires: %libkformdesigner = %{epoch}:%{version}-%{release}
-Requires: %libkformulalib = %{epoch}:%{version}-%{release}
-Requires: %libkochart = %{epoch}:%{version}-%{release}
-Requires: %libkokross = %{epoch}:%{version}-%{release}
-Requires: %libkomain = %{epoch}:%{version}-%{release}
-Requires: %libkoodf = %{epoch}:%{version}-%{release}
-Requires: %libkopageapp = %{epoch}:%{version}-%{release}
-Requires: %libkoplugin = %{epoch}:%{version}-%{release}
-Requires: %libkoproperty = %{epoch}:%{version}-%{release}
-Requires: %libkoreport = %{epoch}:%{version}-%{release}
-Requires: %libkotext = %{epoch}:%{version}-%{release}
-Requires: %libkowidgets = %{epoch}:%{version}-%{release}
-Requires: %libkowv2 = %{epoch}:%{version}-%{release}
-Requires: %libkplatokernel = %{epoch}:%{version}-%{release}
-Requires: %libkplatomodels = %{epoch}:%{version}-%{release}
-Requires: %libplanprivate = %{epoch}:%{version}-%{release}
-Requires: %libkplatoui = %{epoch}:%{version}-%{release}
-Requires: %libplanworkapp = %{epoch}:%{version}-%{release}
-Requires: %libplanworkfactory = %{epoch}:%{version}-%{release}
-Requires: %libcalligrastageprivate = %{epoch}:%{version}-%{release}
-Requires: %libkritaimage = %{epoch}:%{version}-%{release}
-Requires: %libkritalibbrush = %{epoch}:%{version}-%{release}
-Requires: %libkritalibpaintop = %{epoch}:%{version}-%{release}
-Requires: %libkritaui = %{epoch}:%{version}-%{release}
-Requires: %libcalligrasheetscommon = %{epoch}:%{version}-%{release}
-Requires: %libcalligrasheetsodf = %{epoch}:%{version}-%{release}
-Requires: %libwordsprivate = %{epoch}:%{version}-%{release}
-Requires: %libmsooxml = %{epoch}:%{version}-%{release}
-Requires: %libpigmentcms = %{epoch}:%{version}-%{release}
-Requires: %liblibwmf = %{epoch}:%{version}-%{release}
-Requires: %libkundo2 = %{epoch}:%{version}-%{release}
-Requires: %librtfreader = %{epoch}:%{version}-%{release}
-Requires: %librcps_plan = %{epoch}:%{version}-%{release}
-Requires: %name-core = %{epoch}:%{version}-%{release}
+Requires: %libchartshapelib = %{EVRD}
+Requires: %libflake = %{EVRD}
+Requires: %libkarboncommon = %{EVRD}
+Requires: %libkarbonui = %{EVRD}
+Requires: %libkdchart = %{EVRD}
+Requires: %libkexicore = %{EVRD}
+Requires: %libkexidatatable = %{EVRD}
+Requires: %libkexidataviewcommon = %{EVRD}
+Requires: %libkexidb = %{EVRD}
+Requires: %libkexiextendedwidgets = %{EVRD}
+Requires: %libkexiformutils = %{EVRD}
+Requires: %libkexiguiutils = %{EVRD}
+Requires: %libkeximain = %{EVRD}
+Requires: %libkeximigrate = %{EVRD}
+Requires: %libkexirelationsview = %{EVRD}
+Requires: %libkexiutils = %{EVRD}
+Requires: %libkformdesigner = %{EVRD}
+Requires: %libkformulalib = %{EVRD}
+Requires: %libkochart = %{EVRD}
+Requires: %libkokross = %{EVRD}
+Requires: %libkomain = %{EVRD}
+Requires: %libkoodf = %{EVRD}
+Requires: %libkopageapp = %{EVRD}
+Requires: %libkoplugin = %{EVRD}
+Requires: %libkoproperty = %{EVRD}
+Requires: %libkoreport = %{EVRD}
+Requires: %libkotext = %{EVRD}
+Requires: %libkowidgets = %{EVRD}
+Requires: %libkowv2 = %{EVRD}
+Requires: %libkplatokernel = %{EVRD}
+Requires: %libkplatomodels = %{EVRD}
+Requires: %libplanprivate = %{EVRD}
+Requires: %libkplatoui = %{EVRD}
+Requires: %libplanworkapp = %{EVRD}
+Requires: %libplanworkfactory = %{EVRD}
+Requires: %libcalligrastageprivate = %{EVRD}
+Requires: %libkritaimage = %{EVRD}
+Requires: %libkritalibbrush = %{EVRD}
+Requires: %libkritalibpaintop = %{EVRD}
+Requires: %libkritaui = %{EVRD}
+Requires: %libcalligrasheetscommon = %{EVRD}
+Requires: %libcalligrasheetsodf = %{EVRD}
+Requires: %libwordsprivate = %{EVRD}
+Requires: %libmsooxml = %{EVRD}
+Requires: %libpigmentcms = %{EVRD}
+Requires: %liblibwmf = %{EVRD}
+Requires: %libkundo2 = %{EVRD}
+Requires: %librtfreader = %{EVRD}
+Requires: %librcps_plan = %{EVRD}
+Requires: %name-core = %{EVRD}
 Conflicts: koffice2-kchart
 Conflicts: karbon < 11:1.9.95.8-3
 Conflicts: kchart < 11:1.9.95.8-3
