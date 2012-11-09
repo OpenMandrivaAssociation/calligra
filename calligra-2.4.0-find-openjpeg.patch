@@ -1,0 +1,13 @@
+--- calligra-2.4.0/cmake/modules/FindOpenJPEG.cmake.bero	2012-04-18 23:39:33.025698761 +0200
++++ calligra-2.4.0/cmake/modules/FindOpenJPEG.cmake	2012-04-18 23:40:00.521699381 +0200
+@@ -11,8 +11,10 @@
+ 
+ FIND_PATH(OPENJPEG_INCLUDE_DIR openjpeg.h
+ PATHS
++    /usr/local/include/openjpeg-1.5
+     /usr/local/include/openjpeg
+     /usr/local/include
++    /usr/include/openjpeg-1.5
+     /usr/include/openjpeg
+     /usr/include
+ PATH_SUFFIXES openjpeg
