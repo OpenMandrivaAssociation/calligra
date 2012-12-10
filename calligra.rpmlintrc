@@ -1,0 +1,5 @@
+# False positives: -core is wrongfully considered a library package
+addFilter("E: non-versioned-file-in-library-package")
+addFilter("E: executable-in-library-package")
+# kdeinit "libraries"
+addFilter("E: invalid-soname")

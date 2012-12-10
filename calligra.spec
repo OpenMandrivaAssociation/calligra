@@ -11,9 +11,9 @@ Version: 2.5.3
 %if "%prerel" != ""
 Release: -c %prerel 1
 %else
-Release: 2
+Release: 1
 %endif
-Source0: http://fr2.rpmfind.net/linux/KDE/stable/calligra-%version/calligra-%version.tar.bz2
+Source0: http://master.kde.org/stable/%{name}-%{version}/%{name}-%{version}.tar.bz2
 Source1: %{name}.rpmlintrc
 Patch1: calligra-2.4.0-find-openjpeg.patch
 Group: Office
@@ -37,7 +37,7 @@ BuildRequires: libexif-devel
 BuildRequires: libexiv-devel
 BuildRequires: boost-devel
 BuildRequires: pkgconfig(poppler-qt4)
-BuildRequires: libjbig-devel
+BuildRequires: jbig-devel
 BuildRequires: openjpeg-devel >= 1.5
 BuildRequires: libxml2-devel >= 2.4.28-2mdk
 BuildRequires: python-devel
@@ -296,7 +296,7 @@ Obsoletes:      kplato
 Obsoletes:      %{_lib}kplatoworkprivat5
 Obsoletes:      koffice-kplato
 Obsoletes:      koffice2-kplato
-
+%rename		%{name}-plan
 
 
 %description -n plan
@@ -349,6 +349,7 @@ Obsoletes:      koffice2-kspread
 Obsoletes:      kspread
 # Sheets used to be called tables in early betas
 %rename		tables
+%rename		%{name}-sheets
 Conflicts:      kword < 11:2.1.91-2
 
 
@@ -406,6 +407,7 @@ Provides:       %name-apps
 Obsoletes:      koffice-kpresenter
 Obsoletes:      koffice2-kpresenter
 Obsoletes:      kpresenter
+%rename		%{name}-stage
 
 
 %description -n stage
@@ -481,6 +483,7 @@ Obsoletes:      %name-kchart
 Provides:       %name-kchart = %{EVRD}
 Obsoletes:      koffice2-kchart
 Provides:       koffice2-kchart = %{EVRD}
+%rename		%{name}-kchart
 
 
 %description -n kchart
@@ -508,6 +511,7 @@ Obsoletes:      %{_lib}kritafilterslistdynamicprogram5
 Obsoletes:      %{_lib}krita_gray_u165
 Obsoletes:      %{_lib}kritargbf32hdr5
 Obsoletes:	%{_lib}krossmodulekrita8
+%rename		%{name}-krita
 
 %description -n krita
 Krita offers an end–to–end solution for creating digital painting files
@@ -564,6 +568,7 @@ Provides:       %name-apps
 Obsoletes:      koffice-karbon
 Obsoletes:      koffice2-karbon
 Conflicts:      oxygen-icon-theme < 1:4.4.2-2
+%rename		%{name}-karbon
 
 %description -n karbon
 Karbon is a vector drawing application with an user interface that is easy to
@@ -612,6 +617,7 @@ Summary:        Formula Editor for calligra
 Group:          Graphical desktop/KDE
 URL:            http://www.koffice.org/
 Requires:       %name-core = %{EVRD}
+%rename		%{name}-kformula
 
 
 %description -n kformula
@@ -632,6 +638,7 @@ Summary:        Diagramming and flowcharting apps for calligra
 Group:          Graphical desktop/KDE
 URL:            http://www.calligra-suite.org/flow/
 Requires:       %name-core = %{EVRD}
+%rename         %{name}-flow
 
 %description -n flow
 Use Flow to make network diagrams, organization charts, flowcharts and much
@@ -665,6 +672,7 @@ URL:        http://www.calligra-suite.org/kexi/
 Requires:   %name-core = %{EVRD}
 Provides:   %name-apps
 Obsoletes:  keximdb
+%rename     %{name}-kexi
 
 
 %description -n kexi
@@ -735,6 +743,7 @@ Summary:	ODP file renderer for Okular
 Group:		Graphical desktop/KDE
 Requires:	%name-core = %{EVRD}
 Requires:	okular
+%rename		%{name}-okular-odp
 
 %description -n okular-odp
 ODP file renderer for Okular.
@@ -753,6 +762,7 @@ ODP file renderer for Okular.
 Summary:	State Shape
 Group:		Graphical desktop/KDE
 Requires:	%name-core = %{EVRD}
+%rename		%{name}-stateshape
 
 %description -n stateshape
 Calligra State Shape.
@@ -772,6 +782,7 @@ Calligra State Shape.
 Summary:	Calligra Web Shape
 Group:		Graphical desktop/KDE
 Requires:	%name-core = %{EVRD}
+%rename		%{name}-webshape
 
 %description -n webshape
 Calligra Web Shape.
@@ -805,6 +816,7 @@ Summary:	Calligra mind mapping tool
 Group:		Graphical desktop/KDE
 Requires:	%name-core = %{EVRD}
 Requires:	%libbraindumpcore = %{EVRD}
+%rename		%{name}-braindump
 
 %description -n braindump
 Braindump is a tool to dump and organize the content of your brain (ideas,
@@ -1852,7 +1864,7 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 %build
 #sh initrepo.sh
 %if %_mobile
-%cmake_kde4 -DBUILD_xbase=OFF -DIHAVEPATCHEDQT:BOOL=TRUE
+%cmake_kde4 -DIHAVEPATCHEDQT:BOOL=TRUE
 %else
 %cmake_kde4 -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE
 %endif
