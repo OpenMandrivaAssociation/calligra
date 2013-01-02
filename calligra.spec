@@ -833,6 +833,7 @@ and flowcharts.
 %_kde_appsdir/braindump
 %_kde_servicetypes/braindump_extensions.desktop
 %_kde_iconsdir/*/*/*/braindump.*
+%{_kde_configdir}/braindumprc
 
 #--------------------------------------------------------------------
 
