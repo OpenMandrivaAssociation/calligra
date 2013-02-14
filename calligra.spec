@@ -17,6 +17,7 @@ Release: 1
 Source0: http://master.kde.org/stable/%{name}-%{version}/%{name}-%{version}.tar.bz2
 Source1: %{name}.rpmlintrc
 Patch1: calligra-2.4.0-find-openjpeg.patch
+Patch2: calligra-2.6.0-xbase-3.1.2.patch
 Group: Office
 License: GPLv2+ and LGPLv2+ and GFDL
 BuildRequires: kdepimlibs4-devel
@@ -1862,6 +1863,7 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 %prep
 %setup -q
 %patch1 -p1 -b .openjpeg~
+%patch2 -p0 -b .xbase312~
 
 %build
 #sh initrepo.sh
