@@ -259,7 +259,6 @@ With it, you can create informative and attractive documents with ease.
 %_kde_libdir/kde4/applixwordimport.so
 %_kde_libdir/kde4/asciiimport.so
 %_kde_libdir/kde4/docximport.so
-%_kde_libdir/kde4/htmlodf_export.so
 #%_kde_libdir/kde4/krossmodulekword.so
 %_kde_libdir/kde4/wordspart.so
 %_kde_libdir/kde4/mswordodf_import.so
@@ -271,9 +270,6 @@ With it, you can create informative and attractive documents with ease.
 #%_kde_appsdir/kword
 %_kde_appsdir/words
 %_kde_configdir/wordsrc
-%_kde_iconsdir/hicolor/*/apps/words.*
-%_kde_services/ServiceMenus/words_konqi.desktop
-%_kde_services/html-odf_export.desktop
 #%_kde_services/krossmodulekword.desktop
 %_kde_services/words*.desktop
 %_kde_datadir/templates/.source/TextDocument.odt
