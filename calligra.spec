@@ -132,6 +132,7 @@ Common files for Calligra
 %_kde_bindir/visualimagecompare
 %_kde_libdir/kde4/artistictextshape.so
 %_kde_libdir/kde4/autocorrect.so
+%_kde_libdir/kde4/calligraimagethumbnail.so
 %_kde_libdir/kde4/changecase.so
 %_kde_libdir/kde4/defaulttools.so
 %_kde_libdir/kde4/kodocinfopropspage.so
@@ -191,6 +192,7 @@ Common files for Calligra
 %_kde_iconsdir/*/*/actions/x-shape-text.*
 %_kde_services/artistictextshape.desktop
 %_kde_services/autocorrect.desktop
+%_kde_services/calligra_odg_thumbnail.desktop
 %_kde_services/changecase.desktop
 %_kde_services/defaulttools.desktop
 %_kde_services/kodocinfopropspage.desktop
@@ -232,6 +234,7 @@ Common files for Calligra
 %_kde_servicetypes/textvariableplugin.desktop
 %_kde_servicetypes/calligra_deferred_plugin.desktop
 %_kde_datadir/mime/packages/msooxml-all.xml
+%_kde_datadir/mime/packages/calligra_svm.xml
 %doc %_kde_docdir/HTML/en/calligra
 
 #--------------------------------------------------------------------
@@ -259,21 +262,46 @@ With it, you can create informative and attractive documents with ease.
 %_kde_libdir/kde4/applixwordimport.so
 %_kde_libdir/kde4/asciiimport.so
 %_kde_libdir/kde4/docximport.so
+%_kde_libdir/kde4/exportepub2.so
+%_kde_libdir/kde4/exporthtml.so
 #%_kde_libdir/kde4/krossmodulekword.so
 %_kde_libdir/kde4/wordspart.so
 %_kde_libdir/kde4/mswordodf_import.so
 %_kde_libdir/kde4/rtfimport.so
 %_kde_libdir/kde4/wpsimport.so
+%_kde_libdir/kde4/wpdimport.so
 %_kde_libdir/libkdeinit4_calligrawords.so
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/words.desktop
 #%_kde_appsdir/kword
 %_kde_appsdir/words
 %_kde_configdir/wordsrc
+%_kde_services/ServiceMenus/words_print.desktop
 #%_kde_services/krossmodulekword.desktop
 %_kde_services/words*.desktop
 %_kde_datadir/templates/.source/TextDocument.odt
 %_kde_datadir/templates/TextDocument.desktop
+%_kde_iconsdir/hicolor/*/*/calligrawords*
+%_kde_iconsdir/hicolor/*/actions/tool_pagelayout.*
+
+#--------------------------------------------------------------------
+
+%package author
+Summary: Write ebooks and textbooks
+Group: Office/Word processor
+Requires: %name-words = %epoch:%version-%release
+
+%description author
+Write ebooks and textbooks.
+
+%files author
+%{_kde_bindir}/calligraauthor
+%{_kde_libdir}/kde4/authorpart.so
+%{_kde_libdir}/libkdeinit4_calligraauthor.so
+%{_kde_applicationsdir}/author.desktop
+%{_kde_appsdir}/author
+%{_kde_configdir}/authorrc
+%{_kde_services}/authorpart.desktop
 
 #--------------------------------------------------------------------
 
@@ -368,6 +396,7 @@ such as income and expenditure, employee working hours, etc.
 %_kde_libdir/kde4/opencalcexport.so
 %_kde_libdir/kde4/opencalcimport.so
 %_kde_libdir/kde4/qproimport.so
+%_kde_libdir/kde4/sheetssolver.so
 %_kde_libdir/kde4/spreadsheetshape.so
 %_kde_libdir/kde4/xlsximport.so
 %_kde_libdir/libkdeinit4_calligrasheets.so
@@ -375,6 +404,10 @@ such as income and expenditure, employee working hours, etc.
 %_kde_datadir/applications/kde4/sheets.desktop
 %_kde_datadir/config.kcfg/sheets.kcfg
 %_kde_services/sheetspart.desktop
+%_kde_services/sheets_excel_thumbnail.desktop
+%_kde_services/sheets_ods_thumbnail.desktop
+%_kde_services/sheets_xlsx_thumbnail.desktop
+%_kde_services/ServiceMenus/sheets_print.desktop
 %_kde_appsdir/sheets
 %_kde_datadir/config/sheetsrc
 %_kde_datadir/templates/SpreadSheet.desktop
@@ -384,6 +417,7 @@ such as income and expenditure, employee working hours, etc.
 %_kde_services/spreadsheetshape-deferred.desktop
 %_kde_services/krossmodulesheets.desktop
 %_kde_servicetypes/sheets_plugin.desktop
+%_kde_iconsdir/hicolor/*/*/calligrasheets*
 %doc %_docdir/HTML/en/sheets
 #--------------------------------------------------------------------
 
@@ -429,6 +463,7 @@ content elements are available to Stage.
 %_kde_libdir/kde4/powerpointimport.so
 %_kde_libdir/kde4/Filterkpr2odf.so
 %_kde_libdir/kde4/pptximport.so
+%_kde_libdir/kde4/threedshape.so
 %_kde_libdir/libkdeinit4_calligrastage.so
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/stage.desktop
@@ -437,7 +472,7 @@ content elements are available to Stage.
 %_kde_datadir/templates/Presentation.desktop
 %_kde_datadir/templates/.source/Presentation.odp
 %_kde_datadir/config/stagerc
-%_kde_iconsdir/hicolor/*/apps/calligrastage.png
+%_kde_iconsdir/hicolor/*/apps/calligrastage.*
 %_kde_services/calligrastageeventactions.desktop
 %_kde_servicetypes/presentationeventaction.desktop
 %_kde_services/kpr_pageeffect_barwipe.desktop
@@ -455,6 +490,11 @@ content elements are available to Stage.
 %_kde_services/kpresenter_pptx_import.desktop
 %_kde_services/kprvariables.desktop
 %_kde_services/Filterkpr2odf.desktop
+%_kde_services/stage_kpr_thumbnail.desktop
+%_kde_services/stage_odp_thumbnail.desktop
+%_kde_services/stage_powerpoint_thumbnail.desktop
+%_kde_services/stage_pptx_thumbnail.desktop
+%_kde_services/threedshape.desktop
 %_kde_servicetypes/kpr_pageeffect.desktop
 %_kde_servicetypes/kpr_shapeanimation.desktop
 %_kde_datadir/kde4/services/stagepart.desktop
@@ -531,7 +571,7 @@ and textures for rendering.
 %_kde_services/ServiceMenus/krita_print.desktop
 %_kde_services/*krita*.desktop
 %_kde_servicetypes/*krita*.desktop
-%_kde_iconsdir/hicolor/*/apps/krita.png
+%_kde_iconsdir/hicolor/*/apps/calligrakrita.*
 %_kde_appsdir/krita
 %_kde_appsdir/kritaplugins
 %_kde_configdir/kritarc
@@ -539,6 +579,7 @@ and textures for rendering.
 %dir %_kde_datadir/color/icc/krita
 %_kde_datadir/color/icc/krita/README
 %_kde_datadir/color/icc/krita/*.icm
+%_kde_datadir/color/icc/krita/*.icc
 %_kde_appsdir/color-schemes/Krita50.colors
 %_kde_appsdir/color-schemes/KritaBlender.colors
 %_kde_appsdir/color-schemes/KritaBright.colors
@@ -590,7 +631,7 @@ art.
 %_kde_libdir/libkdeinit4_karbon.so
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/karbon.desktop
-%_kde_iconsdir/*/*/apps/karbon.*
+%_kde_iconsdir/*/*/apps/calligrakarbon.*
 %_kde_configdir/karbonrc
 %_kde_appsdir/karbon
 %_kde_datadir/templates/Illustration.desktop
@@ -651,8 +692,10 @@ Building sites, and many other options to help you make your diagrams.
 %_kde_services/flowdockersplugin.desktop
 %_kde_services/flowpart.desktop
 %_kde_services/flow_vsdx_import.desktop
+%_kde_services/flow_vsdx_thumbnail.desktop
 %_kde_servicetypes/flow_dock.desktop
 %_kde_services/ServiceMenus/flow_print.desktop
+%_kde_iconsdir/hicolor/*/*/calligraflow*
 #--------------------------------------------------------------------
 
 %package -n kexi
@@ -720,10 +763,11 @@ are stored in the database, making it easy to share data and design.
 %{_kde_services}/kexirelationdesignshape.desktop
 %{_kde_services}/kformdesigner
 %{_kde_servicetypes}/widgetfactory.desktop
-%{_kde_servicetypes}/kexidb_driver.desktop
+%{_kde_servicetypes}/calligradb_driver.desktop
 %{_kde_servicetypes}/kexihandler.desktop
 %{_kde_servicetypes}/keximigration_driver.desktop
 %{_kde_applicationsdir}/kexi.desktop
+%_kde_iconsdir/hicolor/*/*/calligrakexi*
 %doc %_docdir/HTML/en/kexi
 
 #--------------------------------------------------------------------
@@ -823,10 +867,9 @@ and flowcharts.
 %_kde_appsdir/braindump
 %_kde_servicetypes/braindump_extensions.desktop
 %_kde_iconsdir/*/*/*/braindump.*
-%{_kde_configdir}/braindumprc
 
 #--------------------------------------------------------------------
-
+%if 0
 %package active
 Summary:        A document viewer for touch based tablets
 Group:          Graphical desktop/KDE
@@ -843,7 +886,7 @@ Calligra's QML UI.
 %defattr(0644,root,root,0755)
 %{_kde_datadir}/applications/calligraactive.desktop
 %{_kde_datadir}/calligraactive
-
+%endif
 #--------------------------------------------------------------------
 
 %define libtextlayout_major 11
@@ -860,6 +903,22 @@ Calligra core library.
 %files -n %libtextlayout
 %defattr(-,root,root)
 %_kde_libdir/libtextlayout.so.%{libtextlayout_major}*
+
+#--------------------------------------------------------------------
+
+%define libcalligradb_major 11
+%define libcalligradb %mklibname calligradb %libcalligradb_major
+
+%package -n %libcalligradb
+Summary: Calligra core library
+Group: System/Libraries
+
+%description -n %libcalligradb
+Calligra core library.
+
+%files -n %libcalligradb
+%_kde_libdir/libcalligradb.so.%{libcalligradb_major}*
+
 
 #----------------------------------------------------------------------
 
@@ -964,22 +1023,6 @@ ODF Library
 %files -n %libkoodf
 %defattr(-,root,root)
 %_kde_libdir/libkoodf.so.%{libkoodf_major}*
-
-#--------------------------------------------------------------------
-
-%define liblibwmf_major 11
-%define liblibwmf %mklibname libwmf %liblibwmf_major
-
-%package -n %liblibwmf
-Summary: Calligra core library
-Group: System/Libraries
-
-%description -n %liblibwmf
-Calligra core library.
-
-%files -n %liblibwmf
-%defattr(-,root,root)
-%_kde_libdir/liblibwmf.so.%{liblibwmf_major}*
 
 #--------------------------------------------------------------------
 
@@ -1295,6 +1338,22 @@ Calligra core library.
 %files -n %libkdchart
 %defattr(-,root,root)
 %_kde_libdir/libkdchart.so.%{kdchart_major}*
+
+#--------------------------------------------------------------------
+
+%define libkdgantt_major 11
+%define libkdgantt %mklibname kdgantt %libkdgantt_major
+
+%package -n %libkdgantt
+Summary: Calligra core library
+Group: System/Libraries
+
+%description -n %libkdgantt
+Calligra core library.
+
+%files -n %libkdgantt
+%_kde_libdir/libkdgantt.so.%{libkdgantt_major}*
+
 
 #--------------------------------------------------------------------
 
@@ -1698,11 +1757,27 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
+%define vectorimage_major 11
+%define libvectorimage %mklibname vectorimage %vectorimage_major
+
+%package -n %libvectorimage
+Summary: Calligra core library
+Group: System/Libraries
+
+%description -n %libvectorimage
+Calligra core library.
+
+%files -n %libvectorimage
+%_kde_libdir/libvectorimage.so.%{vectorimage_major}*
+
+#--------------------------------------------------------------------
+
 %package devel
 Group: Development/KDE and Qt
 Summary: Header files for developing calligra applications
 Requires: %libchartshapelib = %{EVRD}
 Requires: %libflake = %{EVRD}
+Requires: %libkdgantt = %{EVRD} 
 Requires: %libkarboncommon = %{EVRD}
 Requires: %libkarbonui = %{EVRD}
 Requires: %libkdchart = %{EVRD}
@@ -1741,12 +1816,13 @@ Requires: %libkritaimage = %{EVRD}
 Requires: %libkritalibbrush = %{EVRD}
 Requires: %libkritalibpaintop = %{EVRD}
 Requires: %libkritaui = %{EVRD}
+Requires: %libcalligradb = %{EVRD}
 Requires: %libcalligrasheetscommon = %{EVRD}
 Requires: %libcalligrasheetsodf = %{EVRD}
 Requires: %libwordsprivate = %{EVRD}
+Requires: %libvectorimage = %{EVRD}
 Requires: %libmsooxml = %{EVRD}
 Requires: %libpigmentcms = %{EVRD}
-Requires: %liblibwmf = %{EVRD}
 Requires: %libkundo2 = %{EVRD}
 Requires: %librtfreader = %{EVRD}
 Requires: %librcps_plan = %{EVRD}
@@ -1771,11 +1847,13 @@ Header files needed for developing calligra applications.
 %defattr(-,root,root)
 %_kde_appsdir/cmake/*/*
 %_kde_includedir/*
+%_kde_libdir/libcalligradb.so
 %_kde_libdir/libchartshapelib.so
 %_kde_libdir/libflake.so
 %_kde_libdir/libkarboncommon.so
 %_kde_libdir/libkarbonui.so
 %_kde_libdir/libkdchart.so
+%_kde_libdir/libkdgantt.so
 %_kde_libdir/libkexicore.so
 %_kde_libdir/libkexidatatable.so
 %_kde_libdir/libkexidataviewcommon.so
@@ -1818,10 +1896,10 @@ Header files needed for developing calligra applications.
 %_kde_libdir/libpigmentcms.so
 %_kde_libdir/libflowprivate.so
 %_kde_libdir/libtextlayout.so
-%_kde_libdir/liblibwmf.so
 %_kde_libdir/libkundo2.so
 %_kde_libdir/libRtfReader.so
 %_kde_libdir/librcps_plan.so
+%_kde_libdir/libvectorimage.so
 
 #--------------------------------------------------------------------
 %if %_mobile
