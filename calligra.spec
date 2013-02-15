@@ -354,6 +354,7 @@ such as income and expenditure, employee working hours, etc.
 %files -n sheets
 %defattr(0755,root,root,0755)
 %_kde_bindir/calligrasheets
+%_kde_libdir/kde4/krossmodulesheets.so
 %_kde_libdir/kde4/applixspreadimport.so
 %_kde_libdir/kde4/calligrasheetspart.so
 %_kde_libdir/kde4/csvexport.so
@@ -364,7 +365,6 @@ such as income and expenditure, employee working hours, etc.
 %_kde_libdir/kde4/gnumericimport.so
 %_kde_libdir/kde4/kplatorcpsscheduler.so
 %_kde_libdir/kde4/kspread*.so
-%_kde_libdir/kde4/krossmodulekspread.so
 %_kde_libdir/kde4/opencalcexport.so
 %_kde_libdir/kde4/opencalcimport.so
 %_kde_libdir/kde4/qproimport.so
@@ -375,17 +375,14 @@ such as income and expenditure, employee working hours, etc.
 %_kde_datadir/applications/kde4/sheets.desktop
 %_kde_datadir/config.kcfg/sheets.kcfg
 %_kde_services/sheetspart.desktop
-%_kde_appsdir/tables
 %_kde_appsdir/sheets
 %_kde_datadir/config/sheetsrc
 %_kde_datadir/templates/SpreadSheet.desktop
-%_kde_services/krossmodulekspread.desktop
 %_kde_services/kspread*.desktop
 %_kde_datadir/templates/.source/SpreadSheet.ods
-%_kde_iconsdir/hicolor/*/apps/sheets.png
-%_kde_services/ServiceMenus/kspread_konqi.desktop
 %_kde_services/spreadsheetshape.desktop
 %_kde_services/spreadsheetshape-deferred.desktop
+%_kde_services/krossmodulesheets.desktop
 %_kde_servicetypes/sheets_plugin.desktop
 %doc %_docdir/HTML/en/sheets
 #--------------------------------------------------------------------
@@ -435,7 +432,7 @@ content elements are available to Stage.
 %_kde_libdir/libkdeinit4_calligrastage.so
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/stage.desktop
-%_kde_services/ServiceMenus/kpresenter_konqi.desktop
+%_kde_services/ServiceMenus/stage_print.desktop
 %_kde_appsdir/stage
 %_kde_datadir/templates/Presentation.desktop
 %_kde_datadir/templates/.source/Presentation.odp
@@ -531,7 +528,7 @@ and textures for rendering.
 %_kde_applicationsdir/krita_ppm.desktop
 %_kde_applicationsdir/krita_xcf.desktop
 %_kde_applicationsdir/krita_psd.desktop
-%_kde_services/ServiceMenus/krita_konqi.desktop
+%_kde_services/ServiceMenus/krita_print.desktop
 %_kde_services/*krita*.desktop
 %_kde_servicetypes/*krita*.desktop
 %_kde_iconsdir/hicolor/*/apps/krita.png
@@ -598,7 +595,7 @@ art.
 %_kde_appsdir/karbon
 %_kde_datadir/templates/Illustration.desktop
 %_kde_datadir/templates/.source/Illustration.odg
-%_kde_services/ServiceMenus/karbon_konqi.desktop
+%_kde_services/ServiceMenus/karbon_print.desktop
 %_kde_services/karbon*.desktop
 %_kde_servicetypes/filtereffect.desktop
 %_kde_servicetypes/karbon_module.desktop
@@ -655,7 +652,7 @@ Building sites, and many other options to help you make your diagrams.
 %_kde_services/flowpart.desktop
 %_kde_services/flow_vsdx_import.desktop
 %_kde_servicetypes/flow_dock.desktop
-%_kde_services/ServiceMenus/flow_konqi.desktop
+%_kde_services/ServiceMenus/flow_print.desktop
 #--------------------------------------------------------------------
 
 %package -n kexi
