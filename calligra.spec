@@ -437,7 +437,7 @@ content elements are available to Stage.
 %_kde_datadir/templates/Presentation.desktop
 %_kde_datadir/templates/.source/Presentation.odp
 %_kde_datadir/config/stagerc
-%_kde_iconsdir/hicolor/*/apps/stage.png
+%_kde_iconsdir/hicolor/*/apps/calligrastage.png
 %_kde_services/calligrastageeventactions.desktop
 %_kde_servicetypes/presentationeventaction.desktop
 %_kde_services/kpr_pageeffect_barwipe.desktop
