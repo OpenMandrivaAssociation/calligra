@@ -3,3 +3,6 @@ addFilter("E: non-versioned-file-in-library-package")
 addFilter("E: executable-in-library-package")
 # kdeinit "libraries"
 addFilter("E: invalid-soname")
+# Not an actual problem, the packager tag is added by the build system anyway
+addFilter("E: no-packager-tag")
+

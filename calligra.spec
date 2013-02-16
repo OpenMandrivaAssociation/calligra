@@ -288,7 +288,7 @@ With it, you can create informative and attractive documents with ease.
 
 %package author
 Summary: Write ebooks and textbooks
-Group: Office/Word processor
+Group: Office
 Requires: %name-words = %epoch:%version-%release
 
 %description author
