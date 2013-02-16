@@ -512,7 +512,6 @@ Provides:       kchart2
 Obsoletes:      %name-kchart
 Provides:       %name-kchart = %{EVRD}
 Obsoletes:      koffice2-kchart
-Provides:       koffice2-kchart = %{EVRD}
 %rename		%{name}-kchart
 
 
@@ -1827,7 +1826,6 @@ Requires: %libkundo2 = %{EVRD}
 Requires: %librtfreader = %{EVRD}
 Requires: %librcps_plan = %{EVRD}
 Requires: %name-core = %{EVRD}
-Conflicts: koffice2-kchart
 Conflicts: karbon < 11:1.9.95.8-3
 Conflicts: kchart < 11:1.9.95.8-3
 Conflicts: kivio < 11:1.9.95.8-3
