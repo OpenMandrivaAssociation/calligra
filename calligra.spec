@@ -8,7 +8,7 @@ Epoch: 16
 Name: calligra
 URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
-Version: 2.6.0
+Version: 2.6.4
 %if "%prerel" != ""
 Release: -c %prerel 1
 %else
@@ -26,47 +26,45 @@ BuildRequires: kdepimlibs4-devel
 #For version upper or equal 2012
 BuildRequires: pkgconfig(libkexiv2)
 #BuildRequires:	kdegraphics4-devel
-BuildRequires: libkdcraw-devel
+BuildRequires: pkgconfig(libkdcraw)
 #For version upper or equal 2012
 BuildRequires: okular-devel
-BuildRequires: lcms2-devel
-BuildRequires: qca2-devel
+BuildRequires: pkgconfig(lcms2)
+BuildRequires: pkgconfig(qca2)
 BuildRequires: xbase-devel
-BuildRequires: libwpd-devel
-BuildRequires: libwpg-devel
+BuildRequires: pkgconfig(libwpd-0.9)
+BuildRequires: pkgconfig(libwpg-0.2)
 BuildRequires: pkgconfig(QtShiva) >= 0.9.2
-BuildRequires: libexif-devel
-BuildRequires: libexiv-devel
+BuildRequires: pkgconfig(libexif)
+BuildRequires: pkgconfig(exiv2)
 BuildRequires: boost-devel
 BuildRequires: pkgconfig(poppler-qt4)
 BuildRequires: jbig-devel
-BuildRequires: openjpeg-devel >= 1.5
-BuildRequires: libxml2-devel >= 2.4.28-2mdk
-BuildRequires: python-devel
+BuildRequires: pkgconfig(libopenjpeg1)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(python)
 BuildRequires: readline-devel
-BuildRequires: libpqxx-devel
+BuildRequires: pkgconfig(libpqxx)
 BuildRequires: postgresql-devel
-BuildRequires: eigen2
+BuildRequires: pkgconfig(eigen2)
 BuildRequires: pstoedit
 BuildRequires: mysql-devel
-BuildRequires: qimageblitz-devel
-BuildRequires: gsl-devel
-BuildRequires: qca2-devel
+BuildRequires: pkgconfig(qimageblitz)
+BuildRequires: pkgconfig(gsl)
 BuildRequires: glpk-devel
-BuildRequires: freeglut-devel
-BuildRequires: glew-devel
+BuildRequires: pkgconfig(glut)
+BuildRequires: pkgconfig(glew)
 BuildRequires: pkgconfig(GraphicsMagick)
-BuildRequires: opengtl-devel >= 0.9.16
-BuildRequires: mysql-devel
+BuildRequires: pkgconfig(OpenCTL)
 BuildRequires: wv2-devel >= 0.4.2
-BuildRequires: getfem++
-BuildRequires: ctemplate-devel
+BuildRequires: getfem-devel
+BuildRequires: pkgconfig(libctemplate)
 BuildRequires: freetds-devel
-BuildRequires: sqlite-devel
+BuildRequires: pkgconfig(sqlite3)
 BuildRequires: marble-devel
-BuildRequires: fftw3-devel >= 3.2
-BuildRequires: libvisio-devel
-BuildRequires: libwps-devel
+BuildRequires: pkgconfig(fftw3)
+BuildRequires: pkgconfig(libvisio-0.0)
+BuildRequires: pkgconfig(libwps-0.2)
 %if %compile_apidox
 BuildRequires: graphviz
 BuildRequires: doxygen
@@ -264,6 +262,7 @@ With it, you can create informative and attractive documents with ease.
 %_kde_libdir/kde4/docximport.so
 %_kde_libdir/kde4/exportepub2.so
 %_kde_libdir/kde4/exporthtml.so
+%_kde_libdir/kde4/exportMobi.so
 #%_kde_libdir/kde4/krossmodulekword.so
 %_kde_libdir/kde4/wordspart.so
 %_kde_libdir/kde4/mswordodf_import.so
@@ -282,6 +281,7 @@ With it, you can create informative and attractive documents with ease.
 %_kde_datadir/templates/.source/TextDocument.odt
 %_kde_datadir/templates/TextDocument.desktop
 %_kde_iconsdir/hicolor/*/*/calligrawords*
+%_kde_iconsdir/hicolor/*/*/calligraauthor*
 %_kde_iconsdir/hicolor/*/actions/tool_pagelayout.*
 
 #--------------------------------------------------------------------
@@ -337,6 +337,8 @@ It is intended for managing moderately large projects with multiple resources.
 %_kde_libdir/kde4/planicalexport.so
 %_kde_libdir/kde4/plankplatoimport.so
 %{_kde_libdir}/kde4/plantjscheduler.so
+%_kde_libdir/kde4/planmpxjimport.so
+%_kde_libdir/kde4/planconvert
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/plan.desktop
 %_kde_applicationsdir/planwork.desktop
@@ -348,6 +350,8 @@ It is intended for managing moderately large projects with multiple resources.
 %_kde_services/planpart.desktop
 %_kde_services/planworkpart.desktop
 %_kde_services/plan_kplato_import.desktop
+%_kde_services/plan_msproject_import.desktop
+%_kde_services/plan_planner_import.desktop
 %_kde_services/planrcpsscheduler.desktop
 %_kde_services/plantjscheduler.desktop
 %_kde_servicetypes/plan_schedulerplugin.desktop
@@ -541,6 +545,8 @@ Obsoletes:      %{_lib}krita_gray_u165
 Obsoletes:      %{_lib}kritargbf32hdr5
 Obsoletes:	%{_lib}krossmodulekrita8
 %rename		%{name}-krita
+BuildRequires:	pkgconfig(OpenColorIO)
+BuildRequires:	vc-devel
 
 %description -n krita
 Krita offers an end–to–end solution for creating digital painting files
