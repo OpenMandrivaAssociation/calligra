@@ -317,6 +317,8 @@ Obsoletes:      kplato
 Obsoletes:      %{_lib}kplatoworkprivat5
 Obsoletes:      koffice-kplato
 Obsoletes:      koffice2-kplato
+# For M$ Project import filter
+BuildRequires:	java-1.6.0-openjdk-devel
 %rename		%{name}-plan
 
 
