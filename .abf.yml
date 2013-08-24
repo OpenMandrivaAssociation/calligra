@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   calligra-2.6.4.tar.bz2: 0c42cf1235c222fe5d482eb57763737bbd14869f
+sources:
+  calligra-2.7.2.tar.xz: d3f1fdc2339da637bb8443ddf25f19e7135c9eeb

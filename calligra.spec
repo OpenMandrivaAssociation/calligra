@@ -8,13 +8,13 @@ Epoch: 16
 Name: calligra
 URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
-Version: 2.6.4
+Version: 2.7.2
 %if "%prerel" != ""
 Release: -c %prerel 1
 %else
 Release: 1
 %endif
-Source0: http://master.kde.org/stable/%{name}-%{version}/%{name}-%{version}.tar.bz2
+Source0: http://master.kde.org/stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1: %{name}.rpmlintrc
 Patch1: calligra-2.4.0-find-openjpeg.patch
 Patch2: calligra-2.6.0-xbase-3.1.2.patch
@@ -130,17 +130,17 @@ Common files for Calligra
 %_kde_bindir/visualimagecompare
 %_kde_libdir/kde4/artistictextshape.so
 %_kde_libdir/kde4/autocorrect.so
+%_kde_libdir/kde4/basicflakesplugin.so
+%_kde_libdir/kde4/calligradocinfopropspage.so
 %_kde_libdir/kde4/calligraimagethumbnail.so
 %_kde_libdir/kde4/changecase.so
 %_kde_libdir/kde4/defaulttools.so
-%_kde_libdir/kde4/kodocinfopropspage.so
 %_kde_libdir/kde4/calligradockers.so
 %_kde_libdir/kde4/calligrathumbnail.so
 %_kde_libdir/kde4/calligragoogledocs.so
 %_kde_libdir/kde4/kolcmsengine.so
 %_kde_libdir/kde4/kopabackgroundtool.so
 %_kde_libdir/kde4/koreport_barcodeplugin.so
-%_kde_libdir/kde4/koreport_chartplugin.so
 %_kde_libdir/kde4/koreport_mapsplugin.so
 %_kde_libdir/kde4/koreport_webplugin.so
 %_kde_libdir/kde4/musicshape.so
@@ -193,12 +193,10 @@ Common files for Calligra
 %_kde_services/calligra_odg_thumbnail.desktop
 %_kde_services/changecase.desktop
 %_kde_services/defaulttools.desktop
-%_kde_services/kodocinfopropspage.desktop
 %_kde_services/calligradockers.desktop
 %_kde_services/kolcmsengine.desktop
 %_kde_services/kopabackgroundtool.desktop
 %_kde_services/koreport_barcodeplugin.desktop
-%_kde_services/koreport_chartplugin.desktop
 %_kde_services/koreport_mapsplugin.desktop
 %_kde_services/koreport_webplugin.desktop
 %_kde_services/musicshape.desktop
@@ -218,21 +216,20 @@ Common files for Calligra
 %_kde_servicetypes/flakeshape.desktop
 %_kde_servicetypes/flaketool.desktop
 %_kde_servicetypes/inlinetextobject.desktop
-%_kde_servicetypes/kochart.desktop
 %_kde_servicetypes/calligradocker.desktop
-%_kde_servicetypes/calligrapart.desktop
-%_kde_servicetypes/kofilter.desktop
-%_kde_servicetypes/kofilterwrapper.desktop
-%_kde_servicetypes/koplugin.desktop
 %_kde_servicetypes/koreport_itemplugin.desktop
 %_kde_servicetypes/pigment.desktop
 %_kde_servicetypes/pigmentextension.desktop
 %_kde_servicetypes/scripteventaction.desktop
 %_kde_servicetypes/texteditingplugin.desktop
-%_kde_servicetypes/textvariableplugin.desktop
 %_kde_servicetypes/calligra_deferred_plugin.desktop
 %_kde_datadir/mime/packages/msooxml-all.xml
 %_kde_datadir/mime/packages/calligra_svm.xml
+%_kde_services/basicflakesplugin.desktop
+%_kde_services/calligradocinfopropspage.desktop
+%_kde_services/textdocumentinspection.desktop
+%_kde_servicetypes/calligra_filter.desktop
+%_kde_servicetypes/calligra_part.desktop
 %doc %_kde_docdir/HTML/en/calligra
 
 #--------------------------------------------------------------------
@@ -258,6 +255,7 @@ With it, you can create informative and attractive documents with ease.
 %defattr(755,root,root)
 %_kde_bindir/calligrawords
 %_kde_libdir/kde4/applixwordimport.so
+%_kde_libdir/kde4/asciiexport.so
 %_kde_libdir/kde4/asciiimport.so
 %_kde_libdir/kde4/docximport.so
 %_kde_libdir/kde4/exportepub2.so
@@ -359,9 +357,12 @@ It is intended for managing moderately large projects with multiple resources.
 %_kde_servicetypes/plan_schedulerplugin.desktop
 %_kde_iconsdir/hicolor/*/*/calligraplan*
 %_kde_iconsdir/hicolor/*/*/application-x-vnd.kde.plan*
+%_kde_iconsdir/hicolor/*/*/*kde.kplato*
 %_kde_datadir/config.kcfg/plansettings.kcfg
 %_kde_datadir/config.kcfg/planworksettings.kcfg
 %_kde_datadir/config/planworkrc
+%_kde_services/plan_msprojectexchange_import.desktop
+%_kde_datadir/mime/packages/calligra_planner_mpp.xml
 
 #--------------------------------------------------------------------
 
@@ -391,6 +392,7 @@ such as income and expenditure, employee working hours, etc.
 %_kde_libdir/kde4/krossmodulesheets.so
 %_kde_libdir/kde4/applixspreadimport.so
 %_kde_libdir/kde4/calligrasheetspart.so
+%_kde_libdir/kde4/sheetspivottables.so
 %_kde_libdir/kde4/csvexport.so
 %_kde_libdir/kde4/csvimport.so
 %_kde_libdir/kde4/dbaseimport.so
@@ -467,7 +469,6 @@ content elements are available to Stage.
 %_kde_libdir/kde4/calligrastagetoolanimation.so
 %_kde_libdir/kde4/kprvariables.so
 %_kde_libdir/kde4/powerpointimport.so
-%_kde_libdir/kde4/Filterkpr2odf.so
 %_kde_libdir/kde4/pptximport.so
 %_kde_libdir/kde4/threedshape.so
 %_kde_libdir/libkdeinit4_calligrastage.so
@@ -495,8 +496,6 @@ content elements are available to Stage.
 %_kde_services/kpresenter_powerpoint_import.desktop
 %_kde_services/kpresenter_pptx_import.desktop
 %_kde_services/kprvariables.desktop
-%_kde_services/Filterkpr2odf.desktop
-%_kde_services/stage_kpr_thumbnail.desktop
 %_kde_services/stage_odp_thumbnail.desktop
 %_kde_services/stage_powerpoint_thumbnail.desktop
 %_kde_services/stage_pptx_thumbnail.desktop
@@ -529,7 +528,6 @@ Kchart is a chart and diagram drawing program.
 %_kde_libdir/kde4/chartshape.so
 %defattr(0644,root,root,0755)
 %_kde_services/chartshape.desktop
-%_kde_services/kchartpart.desktop
 
 #--------------------------------------------------------------------
 
@@ -575,6 +573,7 @@ and textures for rendering.
 %_kde_applicationsdir/krita_ppm.desktop
 %_kde_applicationsdir/krita_xcf.desktop
 %_kde_applicationsdir/krita_psd.desktop
+%_kde_applicationsdir/krita_flipbook.desktop
 %_kde_services/ServiceMenus/krita_print.desktop
 %_kde_services/*krita*.desktop
 %_kde_servicetypes/*krita*.desktop
@@ -594,6 +593,7 @@ and textures for rendering.
 %_kde_appsdir/color-schemes/KritaDark.colors
 %_kde_appsdir/color-schemes/KritaDarker.colors
 %_kde_datadir/mime/packages/krita_ora.xml
+%_kde_datadir/mime/packages/krita.xml
 
 #--------------------------------------------------------------------
 
@@ -836,7 +836,7 @@ Calligra Web Shape.
 
 #--------------------------------------------------------------------
 
-%define libbraindumpcore_major 11
+%define libbraindumpcore_major 12
 %define libbraindumpcore %mklibname braindumpcore %libbraindumpcore_major
 
 %package -n %libbraindumpcore
@@ -876,7 +876,7 @@ and flowcharts.
 %_kde_iconsdir/*/*/*/braindump.*
 
 #--------------------------------------------------------------------
-%if 0
+%if 1
 %package active
 Summary:        A document viewer for touch based tablets
 Group:          Graphical desktop/KDE
@@ -896,7 +896,7 @@ Calligra's QML UI.
 %endif
 #--------------------------------------------------------------------
 
-%define libtextlayout_major 11
+%define libtextlayout_major 12
 %define libtextlayout %mklibname textlayout %libtextlayout_major
 
 %package -n %libtextlayout
@@ -913,7 +913,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libcalligradb_major 11
+%define libcalligradb_major 12
 %define libcalligradb %mklibname calligradb %libcalligradb_major
 
 %package -n %libcalligradb
@@ -929,7 +929,7 @@ Calligra core library.
 
 #----------------------------------------------------------------------
 
-%define libkoreport_major 11
+%define libkoreport_major 12
 %define libkoreport %mklibname koreport %libkoreport_major
 
 %package -n %libkoreport
@@ -950,7 +950,7 @@ planning reports.
 
 #--------------------------------------------------------------------
 
-%define libkokross_major 11
+%define libkokross_major 12
 %define libkokross %mklibname kokross %libkokross_major
 
 %package -n %libkokross
@@ -966,7 +966,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkomain_major 11
+%define libkomain_major 12
 %define libkomain %mklibname komain %libkomain_major
 
 %package -n %libkomain
@@ -983,7 +983,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkopageapp_major 11
+%define libkopageapp_major 12
 %define libkopageapp %mklibname kopageapp %libkopageapp_major
 
 %package -n %libkopageapp
@@ -999,7 +999,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkotext_major 11
+%define libkotext_major 12
 %define libkotext %mklibname kotext %libkotext_major
 
 %package -n %libkotext
@@ -1016,7 +1016,7 @@ loading/saving.
 %_kde_libdir/libkotext.so.%{libkotext_major}*
 
 #--------------------------------------------------------------------
-%define libkoodf_major 11
+%define libkoodf_major 12
 %define libkoodf %mklibname koodf %libkoodf_major
 
 %package -n %libkoodf
@@ -1033,7 +1033,75 @@ ODF Library
 
 #--------------------------------------------------------------------
 
-%define libflake_major 11
+%define libbasicflakes_major 12
+%define libbasicflakes %mklibname basicflakes %libbasicflakes_major
+
+%package -n %libbasicflakes
+Summary: Calligra core library
+Group: System/Libraries
+
+%description -n %libbasicflakes
+Calligra core library.
+Flake is the object library for Calligra. It provides a basic concept of a
+'shape' which can be a square, circle or any other form. The shape can contain
+any sort of media because it is responsible for painting itself. This means
+that Words can provide a textShape which has text flowing inside.
+
+%files -n %libbasicflakes
+%defattr(-,root,root)
+%_kde_libdir/libbasicflakes.so.%{libbasicflakes_major}*
+
+#--------------------------------------------------------------------
+
+%define libkordf_major 12
+%define libkordf %mklibname kordf %libkordf_major
+
+%package -n %libkordf
+Summary: Calligra core library
+Group: System/Libraries
+
+%description -n %libkordf
+Calligra core library.
+
+%files -n %libkordf
+%defattr(-,root,root)
+%_kde_libdir/libkordf.so.%{libkordf_major}*
+
+#--------------------------------------------------------------------
+
+%define libkowidgetutils_major 12
+%define libkowidgetutils %mklibname kowidgetutils %libkowidgetutils_major
+
+%package -n %libkowidgetutils
+Summary: Calligra core library
+Group: System/Libraries
+
+%description -n %libkowidgetutils
+Calligra core library.
+
+%files -n %libkowidgetutils
+%defattr(-,root,root)
+%_kde_libdir/libkowidgetutils.so.%{libkowidgetutils_major}*
+
+#--------------------------------------------------------------------
+
+%define libodftraverse_major 12
+%define libodftraverse %mklibname odftraverse %libodftraverse_major
+
+%package -n %libodftraverse
+Summary: Calligra core library
+Group: System/Libraries
+
+%description -n %libodftraverse
+Calligra core library.
+
+%files -n %libodftraverse
+%defattr(-,root,root)
+%_kde_libdir/libodftraverse.so.%{libodftraverse_major}*
+
+#--------------------------------------------------------------------
+
+%define libflake_major 12
 %define libflake %mklibname flake %libflake_major
 
 %package -n %libflake
@@ -1053,7 +1121,7 @@ that Words can provide a textShape which has text flowing inside.
 
 #--------------------------------------------------------------------
 
-%define libpigmentcms_major 11
+%define libpigmentcms_major 12
 %define libpigmentcms %mklibname pigmentcms %libpigmentcms_major
 
 %package -n %libpigmentcms
@@ -1077,7 +1145,7 @@ be specified in some colorspaces.
 
 #--------------------------------------------------------------------
 
-%define libkformdesigner_major 11
+%define libkformdesigner_major 12
 %define libkformdesigner %mklibname kformdesigner %libkformdesigner_major
 
 %package -n %libkformdesigner
@@ -1093,22 +1161,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkochart_major 11
-%define libkochart %mklibname kochart %libkochart_major
-
-%package -n %libkochart
-Summary: Calligra core library
-Group: System/Libraries
-
-%description -n %libkochart
-Calligra core library.
-
-%files -n %libkochart
-%defattr(-,root,root)
-%_kde_libdir/libkochart.so.%{libkochart_major}*
-
-#--------------------------------------------------------------------
-%define kundo2_major 11
+%define kundo2_major 12
 %define libkundo2 %mklibname kundo2_ %kundo2_major
 
 %package -n %libkundo2
@@ -1123,7 +1176,7 @@ Calligra core library.
 %_kde_libdir/libkundo2.so.%{kundo2_major}*
 
 #--------------------------------------------------------------------
-%define rtfreader_major 11
+%define rtfreader_major 12
 %define librtfreader %mklibname rtfreader %rtfreader_major
 
 %package -n %librtfreader
@@ -1139,7 +1192,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define librcps_plan_major 11
+%define librcps_plan_major 12
 %define librcps_plan %mklibname rcps_plan %librcps_plan_major
 
 %package -n %librcps_plan
@@ -1154,7 +1207,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define wordsprivate_major 11
+%define wordsprivate_major 12
 %define libwordsprivate %mklibname wordsprivate %wordsprivate_major
 
 %package -n %libwordsprivate
@@ -1170,7 +1223,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define chartshapelib_major 11
+%define chartshapelib_major 12
 %define libchartshapelib %mklibname chartshapelib %chartshapelib_major
 
 %package -n %libchartshapelib
@@ -1185,7 +1238,7 @@ Calligra core library.
 %_kde_libdir/libchartshapelib.so.%{chartshapelib_major}*
 
 #--------------------------------------------------------------------
-%define kplatomodels_major 11
+%define kplatomodels_major 12
 %define  libkplatomodels %mklibname kplatomodels %kplatomodels_major
 
 %package -n %libkplatomodels
@@ -1201,7 +1254,7 @@ Calligra core library.
 
 #-------------------------------------------------------------------
 
-%define  kplatokernel_major 11
+%define  kplatokernel_major 12
 %define  libkplatokernel %mklibname kplatokernel %kplatokernel_major
 
 %package -n %libkplatokernel
@@ -1217,7 +1270,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define planprivate_major 11
+%define planprivate_major 12
 %define libplanprivate %mklibname planprivate %planprivate_major
 
 %package -n %libplanprivate
@@ -1233,7 +1286,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define kplatoui_major 11
+%define kplatoui_major 12
 %define libkplatoui %mklibname kplatoui %kplatoui_major
 
 %package -n %libkplatoui
@@ -1249,7 +1302,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define planworkapp_major 11
+%define planworkapp_major 12
 %define libplanworkapp %mklibname planworkapp %planworkapp_major
 
 %package -n %libplanworkapp
@@ -1265,7 +1318,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define kplatoworkfactory_major 11
+%define kplatoworkfactory_major 12
 %define libplanworkfactory %mklibname kplatoworkfactory %kplatoworkfactory_major
 
 %package -n %libplanworkfactory
@@ -1282,7 +1335,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define sheets_major 11
+%define sheets_major 12
 %define libcalligrasheetscommon %mklibname calligrasheetscommon %sheets_major
 
 %package -n %libcalligrasheetscommon
@@ -1299,7 +1352,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define sheetsodf_major 11
+%define sheetsodf_major 12
 %define libcalligrasheetsodf %mklibname calligrasheetsodf %sheetsodf_major
 
 %package -n %libcalligrasheetsodf
@@ -1316,7 +1369,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define calligrastageprivate_major 11
+%define calligrastageprivate_major 12
 %define libcalligrastageprivate %mklibname calligrastageprivate %calligrastageprivate_major
 
 %package -n %libcalligrastageprivate
@@ -1332,34 +1385,34 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define  kdchart_major 11
-%define  libkdchart %mklibname kdchart  %kdchart_major
+%define  calligrakdchart_major 12
+%define  libcalligrakdchart %mklibname calligrakdchart  %calligrakdchart_major
 
-%package -n %libkdchart
-Summary: Calligra core library
+%package -n %libcalligrakdchart
+Summary: Calligra chart library
 Group: System/Libraries
 
-%description -n %libkdchart
-Calligra core library.
+%description -n %libcalligrakdchart
+Calligra chart library.
 
-%files -n %libkdchart
+%files -n %libcalligrakdchart
 %defattr(-,root,root)
-%_kde_libdir/libkdchart.so.%{kdchart_major}*
+%_kde_libdir/libcalligrakdchart.so.%{calligrakdchart_major}*
 
 #--------------------------------------------------------------------
 
-%define libkdgantt_major 11
-%define libkdgantt %mklibname kdgantt %libkdgantt_major
+%define libcalligrakdgantt_major 12
+%define libcalligrakdgantt %mklibname calligrakdgantt %libcalligrakdgantt_major
 
-%package -n %libkdgantt
-Summary: Calligra core library
+%package -n %libcalligrakdgantt
+Summary: Calligra Gantt library
 Group: System/Libraries
 
-%description -n %libkdgantt
-Calligra core library.
+%description -n %libcalligrakdgantt
+Calligra Gantt library.
 
-%files -n %libkdgantt
-%_kde_libdir/libkdgantt.so.%{libkdgantt_major}*
+%files -n %libcalligrakdgantt
+%_kde_libdir/libcalligrakdgantt.so.%{libcalligrakdgantt_major}*
 
 
 #--------------------------------------------------------------------
@@ -1377,7 +1430,7 @@ Krita and karbon meta package
 
 #--------------------------------------------------------------------
 
-%define  libkritaui_major 11
+%define  libkritaui_major 12
 %define  libkritaui %mklibname kritaui  %libkritaui_major
 
 %package -n %libkritaui
@@ -1393,7 +1446,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define  libkritaimage_major 11
+%define  libkritaimage_major 12
 %define  libkritaimage %mklibname kritaimage  %libkritaimage_major
 
 %package -n %libkritaimage
@@ -1409,7 +1462,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define  libkritalibbrush_major 11
+%define  libkritalibbrush_major 12
 %define  libkritalibbrush %mklibname kritalibbrush  %libkritalibbrush_major
 
 %package -n %libkritalibbrush
@@ -1425,7 +1478,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define  libkritalibpaintop_major 11
+%define  libkritalibpaintop_major 12
 %define  libkritalibpaintop %mklibname kritalibpaintop  %libkritalibpaintop_major
 
 %package -n %libkritalibpaintop
@@ -1441,7 +1494,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define  libkoplugin_major 11
+%define  libkoplugin_major 12
 %define  libkoplugin %mklibname koplugin  %libkoplugin_major
 
 %package -n %libkoplugin
@@ -1457,7 +1510,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define  libkowidgets_major 11
+%define  libkowidgets_major 12
 %define  libkowidgets %mklibname kowidgets  %libkowidgets_major
 #
 %package -n %libkowidgets
@@ -1474,7 +1527,7 @@ Calligra core library.
 #--------------------------------------------------------------------
 
 
-%define  karboncommon_major 11
+%define  karboncommon_major 12
 %define  libkarboncommon %mklibname karboncommon  %karboncommon_major
 
 %package -n %libkarboncommon
@@ -1490,7 +1543,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define  karbonui_major 11
+%define  karbonui_major 12
 %define  libkarbonui %mklibname karbonui  %karbonui_major
 
 %package -n %libkarbonui
@@ -1508,7 +1561,7 @@ Calligra core library.
 
 
 
-%define libkformulalib_major 11
+%define libkformulalib_major 12
 %define libkformulalib %mklibname kformulalib %libkformulalib_major
 
 %package -n %libkformulalib
@@ -1524,7 +1577,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
    
-%define libkexicore_major 11
+%define libkexicore_major 12
 %define libkexicore %mklibname kexicore %libkexicore_major
    
 %package -n %libkexicore
@@ -1540,7 +1593,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkexidatatable_major 11
+%define libkexidatatable_major 12
 %define libkexidatatable %mklibname kexidatatable %libkexidatatable_major
 
 %package -n %libkexidatatable
@@ -1556,7 +1609,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkexidb_major 11
+%define libkexidb_major 12
 %define libkexidb %mklibname kexidb %libkexidb_major
 
 %package -n %libkexidb
@@ -1572,7 +1625,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkexiextendedwidgets_major 11
+%define libkexiextendedwidgets_major 12
 %define libkexiextendedwidgets %mklibname kexiextendedwidgets %libkexiextendedwidgets_major
 
 %package -n %libkexiextendedwidgets
@@ -1588,7 +1641,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkexiformutils_major 11
+%define libkexiformutils_major 12
 %define libkexiformutils %mklibname kexiformutils %libkexiformutils_major
 
 %package -n %libkexiformutils
@@ -1604,7 +1657,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkeximain_major 11
+%define libkeximain_major 12
 %define libkeximain %mklibname keximain %libkeximain_major
 
 %package -n %libkeximain
@@ -1620,7 +1673,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkeximigrate_major 11
+%define libkeximigrate_major 12
 %define libkeximigrate %mklibname keximigrate %libkeximigrate_major
 
 %package -n %libkeximigrate
@@ -1636,7 +1689,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkexirelationsview_major 11
+%define libkexirelationsview_major 12
 %define libkexirelationsview %mklibname kexirelationsview %libkexirelationsview_major
 
 %package -n %libkexirelationsview
@@ -1652,7 +1705,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkexiutils_major 11
+%define libkexiutils_major 12
 %define libkexiutils %mklibname kexiutils %libkexiutils_major
    
 %package -n %libkexiutils
@@ -1668,7 +1721,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkexiguiutils_major 11
+%define libkexiguiutils_major 12
 %define libkexiguiutils %mklibname kexiguiutils %libkexiguiutils_major
 
 %package -n %libkexiguiutils
@@ -1684,7 +1737,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkexidataviewcommon_major 11
+%define libkexidataviewcommon_major 12
 %define libkexidataviewcommon %mklibname kexidataviewcommon %libkexidataviewcommon_major
 
 %package -n %libkexidataviewcommon
@@ -1716,7 +1769,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libmsooxml_major 11
+%define libmsooxml_major 12
 %define libmsooxml %mklibname msooxml %libmsooxml_major
    
 %package -n %libmsooxml
@@ -1732,7 +1785,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libkoproperty_major 11
+%define libkoproperty_major 12
 %define libkoproperty %mklibname koproperty %libkoproperty_major
    
 %package -n %libkoproperty
@@ -1748,7 +1801,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define libflowprivate_major 11
+%define libflowprivate_major 12
 %define libflowprivate %mklibname flowprivate %libflowprivate_major
 
 %package -n %libflowprivate
@@ -1764,7 +1817,7 @@ Calligra core library.
 
 #--------------------------------------------------------------------
 
-%define vectorimage_major 11
+%define vectorimage_major 12
 %define libvectorimage %mklibname vectorimage %vectorimage_major
 
 %package -n %libvectorimage
@@ -1784,10 +1837,10 @@ Group: Development/KDE and Qt
 Summary: Header files for developing calligra applications
 Requires: %libchartshapelib = %{EVRD}
 Requires: %libflake = %{EVRD}
-Requires: %libkdgantt = %{EVRD} 
+Requires: %libcalligrakdgantt = %{EVRD} 
 Requires: %libkarboncommon = %{EVRD}
 Requires: %libkarbonui = %{EVRD}
-Requires: %libkdchart = %{EVRD}
+Requires: %libcalligrakdchart = %{EVRD}
 Requires: %libkexicore = %{EVRD}
 Requires: %libkexidatatable = %{EVRD}
 Requires: %libkexidataviewcommon = %{EVRD}
@@ -1801,7 +1854,6 @@ Requires: %libkexirelationsview = %{EVRD}
 Requires: %libkexiutils = %{EVRD}
 Requires: %libkformdesigner = %{EVRD}
 Requires: %libkformulalib = %{EVRD}
-Requires: %libkochart = %{EVRD}
 Requires: %libkokross = %{EVRD}
 Requires: %libkomain = %{EVRD}
 Requires: %libkoodf = %{EVRD}
@@ -1855,11 +1907,15 @@ Header files needed for developing calligra applications.
 %_kde_includedir/*
 %_kde_libdir/libcalligradb.so
 %_kde_libdir/libchartshapelib.so
+%_kde_libdir/libbasicflakes.so
 %_kde_libdir/libflake.so
 %_kde_libdir/libkarboncommon.so
 %_kde_libdir/libkarbonui.so
-%_kde_libdir/libkdchart.so
-%_kde_libdir/libkdgantt.so
+%_kde_libdir/libkordf.so
+%_kde_libdir/libkowidgetutils.so
+%_kde_libdir/libodftraverse.so
+%_kde_libdir/libcalligrakdchart.so
+%_kde_libdir/libcalligrakdgantt.so
 %_kde_libdir/libkexicore.so
 %_kde_libdir/libkexidatatable.so
 %_kde_libdir/libkexidataviewcommon.so
@@ -1873,7 +1929,6 @@ Header files needed for developing calligra applications.
 %_kde_libdir/libkexiutils.so
 %_kde_libdir/libkformdesigner.so
 %_kde_libdir/libkformulalib.so
-%_kde_libdir/libkochart.so
 %_kde_libdir/libkokross.so
 %_kde_libdir/libkomain.so
 %_kde_libdir/libkoodf.so
