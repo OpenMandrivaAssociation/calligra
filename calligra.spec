@@ -65,6 +65,8 @@ BuildRequires: marble-devel
 BuildRequires: pkgconfig(fftw3)
 BuildRequires: pkgconfig(libvisio-0.0)
 BuildRequires: pkgconfig(libwps-0.2)
+BuildRequires: pkgconfig(OpenEXR)
+BuildRequires: tiff-devel
 %if %compile_apidox
 BuildRequires: graphviz
 BuildRequires: doxygen
@@ -137,7 +139,7 @@ Common files for Calligra
 %_kde_libdir/kde4/defaulttools.so
 %_kde_libdir/kde4/calligradockers.so
 %_kde_libdir/kde4/calligrathumbnail.so
-%_kde_libdir/kde4/calligragoogledocs.so
+#%_kde_libdir/kde4/calligragoogledocs.so
 %_kde_libdir/kde4/kolcmsengine.so
 %_kde_libdir/kde4/kopabackgroundtool.so
 %_kde_libdir/kde4/koreport_barcodeplugin.so
@@ -227,7 +229,7 @@ Common files for Calligra
 %_kde_datadir/mime/packages/calligra_svm.xml
 %_kde_services/basicflakesplugin.desktop
 %_kde_services/calligradocinfopropspage.desktop
-%_kde_services/textdocumentinspection.desktop
+#%_kde_services/textdocumentinspection.desktop
 %_kde_servicetypes/calligra_filter.desktop
 %_kde_servicetypes/calligra_part.desktop
 %doc %_kde_docdir/HTML/en/calligra
@@ -392,7 +394,7 @@ such as income and expenditure, employee working hours, etc.
 %_kde_libdir/kde4/krossmodulesheets.so
 %_kde_libdir/kde4/applixspreadimport.so
 %_kde_libdir/kde4/calligrasheetspart.so
-%_kde_libdir/kde4/sheetspivottables.so
+#%_kde_libdir/kde4/sheetspivottables.so
 %_kde_libdir/kde4/csvexport.so
 %_kde_libdir/kde4/csvimport.so
 %_kde_libdir/kde4/dbaseimport.so
@@ -470,7 +472,7 @@ content elements are available to Stage.
 %_kde_libdir/kde4/kprvariables.so
 %_kde_libdir/kde4/powerpointimport.so
 %_kde_libdir/kde4/pptximport.so
-%_kde_libdir/kde4/threedshape.so
+#%_kde_libdir/kde4/threedshape.so
 %_kde_libdir/libkdeinit4_calligrastage.so
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/stage.desktop
@@ -499,7 +501,7 @@ content elements are available to Stage.
 %_kde_services/stage_odp_thumbnail.desktop
 %_kde_services/stage_powerpoint_thumbnail.desktop
 %_kde_services/stage_pptx_thumbnail.desktop
-%_kde_services/threedshape.desktop
+#%_kde_services/threedshape.desktop
 %_kde_servicetypes/kpr_pageeffect.desktop
 %_kde_servicetypes/kpr_shapeanimation.desktop
 %_kde_datadir/kde4/services/stagepart.desktop
