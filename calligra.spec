@@ -153,6 +153,7 @@ Common files for Calligra
 %_kde_libdir/kde4/spellcheck.so
 %_kde_libdir/kde4/textshape.so
 %_kde_libdir/kde4/textvariables.so
+%_kde_libdir/kde4/threedshape.so
 %_kde_libdir/kde4/thesaurustool.so
 %_kde_libdir/kde4/vectorshape.so
 %_kde_libdir/kde4/videoshape.so
@@ -207,6 +208,7 @@ Common files for Calligra
 %_kde_services/pictureshape.desktop
 %_kde_services/pluginshape.desktop
 %_kde_services/spellcheck.desktop
+%_kde_services/threedshape.desktop
 %_kde_services/textshape.desktop
 %_kde_services/textvariables.desktop
 %_kde_services/thesaurustool.desktop
@@ -229,7 +231,7 @@ Common files for Calligra
 %_kde_datadir/mime/packages/calligra_svm.xml
 %_kde_services/basicflakesplugin.desktop
 %_kde_services/calligradocinfopropspage.desktop
-#%_kde_services/textdocumentinspection.desktop
+%_kde_services/textdocumentinspection.desktop
 %_kde_servicetypes/calligra_filter.desktop
 %_kde_servicetypes/calligra_part.desktop
 %doc %_kde_docdir/HTML/en/calligra
@@ -269,6 +271,7 @@ With it, you can create informative and attractive documents with ease.
 %_kde_libdir/kde4/rtfimport.so
 %_kde_libdir/kde4/wpsimport.so
 %_kde_libdir/kde4/wpdimport.so
+%_kde_libdir/kde4/calligragoogledocs.so
 %_kde_libdir/libkdeinit4_calligrawords.so
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/words.desktop
@@ -406,6 +409,7 @@ such as income and expenditure, employee working hours, etc.
 %_kde_libdir/kde4/opencalcexport.so
 %_kde_libdir/kde4/opencalcimport.so
 %_kde_libdir/kde4/qproimport.so
+%_kde_libdir/kde4/sheetspivottables.so
 %_kde_libdir/kde4/sheetssolver.so
 %_kde_libdir/kde4/spreadsheetshape.so
 %_kde_libdir/kde4/xlsximport.so
