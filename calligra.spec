@@ -232,10 +232,11 @@ Common files for Calligra
 %_kde_datadir/mime/packages/calligra_svm.xml
 %_kde_services/basicflakesplugin.desktop
 %_kde_services/calligradocinfopropspage.desktop
-%_kde_services/textdocumentinspection.desktop
 %_kde_servicetypes/calligra_filter.desktop
 %_kde_servicetypes/calligra_part.desktop
 %doc %_kde_docdir/HTML/en/calligra
+# This isn't built in release mode
+%optional %_kde_services/textdocumentinspection.desktop
 
 #--------------------------------------------------------------------
 
