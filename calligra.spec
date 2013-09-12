@@ -10,14 +10,15 @@ URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
 Version: 2.7.2
 %if "%prerel" != ""
-Release: -c %prerel 1
+Release: 0.%prerel.1
 %else
-Release: 1
+Release: 2
 %endif
 Source0: http://master.kde.org/stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1: %{name}.rpmlintrc
 Patch1: calligra-2.4.0-find-openjpeg.patch
 Patch2: calligra-2.6.0-xbase-3.1.2.patch
+Patch3: calligra-optionize-staging.patch
 Group: Office
 License: GPLv2+ and LGPLv2+ and GFDL
 BuildRequires: kdepimlibs4-devel
@@ -1997,18 +1998,19 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 %setup -q
 %patch1 -p1 -b .openjpeg~
 %patch2 -p0 -b .xbase312~
+%patch3 -p1 -b .staging~
 
 %build
 #sh initrepo.sh
 %if %_mobile
-%cmake_kde4 -DIHAVEPATCHEDQT:BOOL=TRUE
+%cmake_kde4 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON
 %else
-%cmake_kde4 -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE
+%cmake_kde4 -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON
 %endif
-make
+%make
 
 %if %{compile_apidox}
-make apidox
+%make apidox
 %endif
 
 %install
