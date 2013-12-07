@@ -12,7 +12,7 @@ Version: 2.7.3
 %if "%prerel" != ""
 Release: 0.%prerel.1
 %else
-Release: 1
+Release: 2
 %endif
 Source0: http://master.kde.org/stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1: %{name}.rpmlintrc
