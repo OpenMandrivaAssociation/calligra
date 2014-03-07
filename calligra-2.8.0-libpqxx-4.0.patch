@@ -1,0 +1,22 @@
+--- calligra-2.8.0/kexi/kexidb/drivers/pqxx/pqxxcursor.cpp.omv~	2014-03-06 14:08:29.655641967 +0100
++++ calligra-2.8.0/kexi/kexidb/drivers/pqxx/pqxxcursor.cpp	2014-03-06 14:08:36.179679646 +0100
+@@ -31,7 +31,7 @@ using namespace KexiDB;
+ 
+ unsigned int pqxxSqlCursor_trans_num = 0; //!< debug helper
+ 
+-static QByteArray pgsqlByteaToByteArray(const pqxx::result::field& r)
++static QByteArray pgsqlByteaToByteArray(const pqxx::field& r)
+ {
+     return KexiDB::pgsqlByteaToByteArray(r.c_str(), r.size());
+ }
+--- calligra-2.8.0/kexi/kexidb/drivers/pqxx/pqxxcursor.h.omv~	2014-03-06 14:05:44.053685659 +0100
++++ calligra-2.8.0/kexi/kexidb/drivers/pqxx/pqxxcursor.h	2014-03-06 14:06:32.132963283 +0100
+@@ -77,7 +77,7 @@ private:
+     friend class pqxxSqlConnection;
+ };
+ 
+-inline QVariant pgsqlCStrToVariant(const pqxx::result::field& r)
++inline QVariant pgsqlCStrToVariant(const pqxx::field& r)
+ {
+     switch (r.type()) {
+     case BOOLOID:

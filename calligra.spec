@@ -2,23 +2,28 @@
 %define _mobile 0
 %define prerel %nil
 %define _disable_ld_no_undefined 1
+%define defaultmajor 13
+
+%define service(s) %_libdir/kde4/%{1}.so \
+%_datadir/kde4/services/%{1}.desktop
 
 #koffice has epoch 15. We need upper epoch
 Epoch: 16
 Name: calligra
 URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
-Version: 2.7.5
+Version: 2.8.0
 %if "%prerel" != ""
 Release: 0.%prerel.1
 %else
 Release: 2
 %endif
-Source0: http://master.kde.org/stable/%{name}-%{version}/%{name}-%{version}.tar.xz
+Source0: http://master.kde.org/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1: %{name}.rpmlintrc
 Patch1: calligra-2.4.0-find-openjpeg.patch
 Patch2: calligra-2.6.0-xbase-3.1.2.patch
 Patch3: calligra-optionize-staging.patch
+Patch4: calligra-2.8.0-libpqxx-4.0.patch
 Group: Office
 License: GPLv2+ and LGPLv2+ and GFDL
 BuildRequires: kdepimlibs4-devel
@@ -30,6 +35,7 @@ BuildRequires: pkgconfig(libkexiv2)
 BuildRequires: pkgconfig(libkdcraw)
 #For version upper or equal 2012
 BuildRequires: okular-devel
+BuildRequires: gmic-devel
 BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(qca2)
 BuildRequires: xbase-devel
@@ -64,9 +70,13 @@ BuildRequires: freetds-devel
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: marble-devel
 BuildRequires: pkgconfig(fftw3)
+BuildRequires: pkgconfig(libodfgen-0.0)
 BuildRequires: pkgconfig(libvisio-0.0)
 BuildRequires: pkgconfig(libwps-0.2)
+BuildRequires: pkgconfig(libetonyek-0.0)
 BuildRequires: pkgconfig(OpenEXR)
+BuildRequires: pkgconfig(libkactivities)
+BuildRequires: nepomuk-core-devel nepomuk-widgets-devel
 BuildRequires: tiff-devel
 %if %compile_apidox
 BuildRequires: graphviz
@@ -126,44 +136,44 @@ Common files for Calligra
 
 %files core
 %defattr(0755,root,root,0755)
-%_kde_bindir/calligra
-%_kde_bindir/calligraconverter
-%_kde_bindir/cstester
-%_kde_bindir/cstrunner
-%_kde_bindir/visualimagecompare
-%_kde_libdir/kde4/artistictextshape.so
-%_kde_libdir/kde4/autocorrect.so
-%_kde_libdir/kde4/basicflakesplugin.so
-%_kde_libdir/kde4/calligradocinfopropspage.so
-%_kde_libdir/kde4/calligraimagethumbnail.so
-%_kde_libdir/kde4/changecase.so
-%_kde_libdir/kde4/defaulttools.so
-%_kde_libdir/kde4/calligradockers.so
-%_kde_libdir/kde4/calligrathumbnail.so
-#%_kde_libdir/kde4/calligragoogledocs.so
-%_kde_libdir/kde4/kolcmsengine.so
-%_kde_libdir/kde4/kopabackgroundtool.so
-%_kde_libdir/kde4/koreport_barcodeplugin.so
-%_kde_libdir/kde4/koreport_mapsplugin.so
-%_kde_libdir/kde4/koreport_webplugin.so
-%_kde_libdir/kde4/musicshape.so
-%_kde_libdir/kde4/spreadsheetshape-deferred.so
-%_kde_libdir/kde4/pathshapes.so
-%_kde_libdir/kde4/pictureshape.so
-%_kde_libdir/kde4/pluginshape.so
-%_kde_libdir/kde4/spellcheck.so
-%_kde_libdir/kde4/textshape.so
-%_kde_libdir/kde4/textvariables.so
-%_kde_libdir/kde4/threedshape.so
-%_kde_libdir/kde4/thesaurustool.so
-%_kde_libdir/kde4/vectorshape.so
-%_kde_libdir/kde4/videoshape.so
+%_bindir/calligra
+%_bindir/calligraconverter
+%_bindir/cstester
+%_bindir/cstrunner
+%_bindir/visualimagecompare
+%{service calligra_docker_defaults}
+%{service calligra_shape_artistictext}
+%{service calligra_textediting_autocorrect}
+%{service calligra_textediting_changecase}
+%{service calligra_textediting_spellcheck}
+%{service calligra_textediting_thesaurus}
+%{service calligra_tool_basicflakes}
+%{service calligra_tool_defaults}
+%{service calligra_shape_music}
+%{service calligra_shape_paths}
+%{service calligra_shape_picture}
+%{service calligra_shape_plugin}
+%{service calligra_shape_text}
+%{service calligra_shape_threed}
+%{service calligra_shape_vector}
+%{service calligra_shape_video}
+%{service calligra_textinlineobject_variables}
+%_libdir/kde4/calligradocinfopropspage.so
+%_libdir/kde4/calligraimagethumbnail.so
+%_libdir/kde4/calligrathumbnail.so
+#%_libdir/kde4/calligragoogledocs.so
+%_libdir/kde4/kolcmsengine.so
+%_libdir/kde4/kopabackgroundtool.so
+%_libdir/kde4/koreport_barcodeplugin.so
+%_libdir/kde4/koreport_mapsplugin.so
+%_libdir/kde4/koreport_webplugin.so
+%_datadir/icons/*/*/*/insert-tableofcontents.*
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/calligra.desktop
 %_kde_appsdir/calligra
 %_kde_appsdir/koproperty
 %_kde_appsdir/musicshape
-%_kde_datadir/color/icc/pigment/*.icm
+%_datadir/color/icc/pigment/*.icm
 %_kde_iconsdir/*/*/actions/black.*
 %_kde_iconsdir/*/*/actions/curve-connector.*
 %_kde_iconsdir/*/*/actions/highlight.*
@@ -192,29 +202,12 @@ Common files for Calligra
 %_kde_iconsdir/*/*/actions/x-shape-formula.*
 %_kde_iconsdir/*/*/actions/x-shape-image.*
 %_kde_iconsdir/*/*/actions/x-shape-text.*
-%_kde_services/artistictextshape.desktop
-%_kde_services/autocorrect.desktop
 %_kde_services/calligra_odg_thumbnail.desktop
-%_kde_services/changecase.desktop
-%_kde_services/defaulttools.desktop
-%_kde_services/calligradockers.desktop
 %_kde_services/kolcmsengine.desktop
 %_kde_services/kopabackgroundtool.desktop
 %_kde_services/koreport_barcodeplugin.desktop
 %_kde_services/koreport_mapsplugin.desktop
 %_kde_services/koreport_webplugin.desktop
-%_kde_services/musicshape.desktop
-#%_kde_services/paragraphtool.desktop
-%_kde_services/pathshapes.desktop
-%_kde_services/pictureshape.desktop
-%_kde_services/pluginshape.desktop
-%_kde_services/spellcheck.desktop
-%_kde_services/threedshape.desktop
-%_kde_services/textshape.desktop
-%_kde_services/textvariables.desktop
-%_kde_services/thesaurustool.desktop
-%_kde_services/vectorshape.desktop
-%_kde_services/videoshape.desktop
 %_kde_servicetypes/calligra_application.desktop
 %_kde_servicetypes/flake.desktop
 %_kde_servicetypes/flakedevice.desktop
@@ -228,15 +221,18 @@ Common files for Calligra
 %_kde_servicetypes/scripteventaction.desktop
 %_kde_servicetypes/texteditingplugin.desktop
 %_kde_servicetypes/calligra_deferred_plugin.desktop
-%_kde_datadir/mime/packages/msooxml-all.xml
-%_kde_datadir/mime/packages/calligra_svm.xml
-%_kde_services/basicflakesplugin.desktop
+%_datadir/mime/packages/msooxml-all.xml
+%_datadir/mime/packages/calligra_svm.xml
 %_kde_services/calligradocinfopropspage.desktop
 %_kde_servicetypes/calligra_filter.desktop
 %_kde_servicetypes/calligra_part.desktop
 %doc %_kde_docdir/HTML/en/calligra
-# This isn't built in release mode
-%optional %_kde_services/textdocumentinspection.desktop
+# FIXME Should those remain core or move to a separate package?
+%_kde_servicetypes/calligra_semanticitem.desktop
+%{service calligra_semanticitem_contact}
+%{service calligra_semanticitem_event}
+%{service calligra_semanticitem_location}
+%_datadir/kde4/services/calligra_docker_textdocumentinspection.desktop
 
 #--------------------------------------------------------------------
 
@@ -259,22 +255,21 @@ With it, you can create informative and attractive documents with ease.
 
 %files words
 %defattr(755,root,root)
-%_kde_bindir/calligrawords
-%_kde_libdir/kde4/applixwordimport.so
-%_kde_libdir/kde4/asciiexport.so
-%_kde_libdir/kde4/asciiimport.so
-%_kde_libdir/kde4/docximport.so
-%_kde_libdir/kde4/exportepub2.so
-%_kde_libdir/kde4/exporthtml.so
-%_kde_libdir/kde4/exportMobi.so
-#%_kde_libdir/kde4/krossmodulekword.so
-%_kde_libdir/kde4/wordspart.so
-%_kde_libdir/kde4/mswordodf_import.so
-%_kde_libdir/kde4/rtfimport.so
-%_kde_libdir/kde4/wpsimport.so
-%_kde_libdir/kde4/wpdimport.so
-%_kde_libdir/kde4/calligragoogledocs.so
-%_kde_libdir/libkdeinit4_calligrawords.so
+%_bindir/calligrawords
+%{service calligra_filter_odt2ascii}
+%{service calligra_filter_doc2odt}
+%{service calligra_filter_ascii2words}
+%{service calligra_filter_applixword2odt}
+%{service calligra_filter_docx2odt}
+%{service calligra_filter_odt2epub2}
+%{service calligra_filter_odt2html}
+%{service calligra_filter_odt2mobi}
+%{service calligra_filter_rtf2odt}
+%{service calligra_filter_wps2odt}
+%{service calligra_filter_wpd2odt}
+#%_libdir/kde4/krossmodulekword.so
+%_libdir/kde4/wordspart.so
+%_libdir/libkdeinit4_calligrawords.so
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/words.desktop
 #%_kde_appsdir/kword
@@ -283,8 +278,8 @@ With it, you can create informative and attractive documents with ease.
 %_kde_services/ServiceMenus/words_print.desktop
 #%_kde_services/krossmodulekword.desktop
 %_kde_services/words*.desktop
-%_kde_datadir/templates/.source/TextDocument.odt
-%_kde_datadir/templates/TextDocument.desktop
+%_datadir/templates/.source/TextDocument.odt
+%_datadir/templates/TextDocument.desktop
 %_kde_iconsdir/hicolor/*/*/calligrawords*
 %_kde_iconsdir/hicolor/*/*/calligraauthor*
 %_kde_iconsdir/hicolor/*/actions/tool_pagelayout.*
@@ -300,9 +295,9 @@ Requires: %name-words = %epoch:%version-%release
 Write ebooks and textbooks.
 
 %files author
-%{_kde_bindir}/calligraauthor
-%{_kde_libdir}/kde4/authorpart.so
-%{_kde_libdir}/libkdeinit4_calligraauthor.so
+%{_bindir}/calligraauthor
+%{_libdir}/kde4/authorpart.so
+%{_libdir}/libkdeinit4_calligraauthor.so
 %{_kde_applicationsdir}/author.desktop
 %{_kde_appsdir}/author
 %{_kde_configdir}/authorrc
@@ -334,42 +329,45 @@ It is intended for managing moderately large projects with multiple resources.
 
 %files -n plan
 %defattr(0755,root,root,0755)
-%_kde_bindir/calligraplan
-%_kde_bindir/calligraplanwork
-%_kde_libdir/libkdeinit4_calligraplan.so
-%_kde_libdir/libkdeinit4_calligraplanwork.so
-%_kde_libdir/kde4/krossmoduleplan.so
-%_kde_libdir/kde4/planpart.so
-%_kde_libdir/kde4/planworkpart.so
-%_kde_libdir/kde4/planicalexport.so
-%_kde_libdir/kde4/plankplatoimport.so
-%{_kde_libdir}/kde4/plantjscheduler.so
-%_kde_libdir/kde4/planmpxjimport.so
-%_kde_libdir/kde4/planconvert
+%_bindir/calligraplan
+%_bindir/calligraplanwork
+%_libdir/libkdeinit4_calligraplan.so
+%_libdir/libkdeinit4_calligraplanwork.so
+%_libdir/kde4/krossmoduleplan.so
+%_libdir/kde4/planpart.so
+%_libdir/kde4/planworkpart.so
+%_libdir/kde4/planicalexport.so
+%_libdir/kde4/plankplatoimport.so
+%{_libdir}/kde4/plantjscheduler.so
+# Doesn't fit the regular service naming scheme, can't use %%service
+%_libdir/kde4/calligra_filter_mpxj2plan.so
+%_libdir/kde4/planconvert
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/plan.desktop
 %_kde_applicationsdir/planwork.desktop
 %_kde_appsdir/plan
 %_kde_appsdir/planwork
-%_kde_datadir/config/planrc
+%_datadir/config/planrc
 %_kde_services/krossmoduleplan.desktop
 %_kde_services/plan_icalendar_export.desktop
 %_kde_services/planpart.desktop
 %_kde_services/planworkpart.desktop
 %_kde_services/plan_kplato_import.desktop
-%_kde_services/plan_msproject_import.desktop
-%_kde_services/plan_planner_import.desktop
 %_kde_services/planrcpsscheduler.desktop
 %_kde_services/plantjscheduler.desktop
+%_kde_services/planscripting.desktop
+%_kde_services/calligra_filter_mpp2plan.desktop
+%_kde_services/calligra_filter_mpx2plan.desktop
+%_kde_services/calligra_filter_planner2plan.desktop
 %_kde_servicetypes/plan_schedulerplugin.desktop
+%_kde_servicetypes/plan_viewplugin.desktop
 %_kde_iconsdir/hicolor/*/*/calligraplan*
 %_kde_iconsdir/hicolor/*/*/application-x-vnd.kde.plan*
 %_kde_iconsdir/hicolor/*/*/*kde.kplato*
-%_kde_datadir/config.kcfg/plansettings.kcfg
-%_kde_datadir/config.kcfg/planworksettings.kcfg
-%_kde_datadir/config/planworkrc
-%_kde_services/plan_msprojectexchange_import.desktop
-%_kde_datadir/mime/packages/calligra_planner_mpp.xml
+%_datadir/config.kcfg/plansettings.kcfg
+%_datadir/config.kcfg/planworksettings.kcfg
+%_datadir/config/planworkrc
+%_datadir/mime/packages/calligra_planner_mpp.xml
 
 #--------------------------------------------------------------------
 
@@ -395,42 +393,45 @@ such as income and expenditure, employee working hours, etc.
 
 %files -n sheets
 %defattr(0755,root,root,0755)
-%_kde_bindir/calligrasheets
-%_kde_libdir/kde4/krossmodulesheets.so
-%_kde_libdir/kde4/applixspreadimport.so
-%_kde_libdir/kde4/calligrasheetspart.so
-#%_kde_libdir/kde4/sheetspivottables.so
-%_kde_libdir/kde4/csvexport.so
-%_kde_libdir/kde4/csvimport.so
-%_kde_libdir/kde4/dbaseimport.so
-%_kde_libdir/kde4/excelimporttodoc.so
-%_kde_libdir/kde4/gnumericexport.so
-%_kde_libdir/kde4/gnumericimport.so
-%_kde_libdir/kde4/kplatorcpsscheduler.so
-%_kde_libdir/kde4/kspread*.so
-%_kde_libdir/kde4/opencalcexport.so
-%_kde_libdir/kde4/opencalcimport.so
-%_kde_libdir/kde4/qproimport.so
-%_kde_libdir/kde4/sheetspivottables.so
-%_kde_libdir/kde4/sheetssolver.so
-%_kde_libdir/kde4/spreadsheetshape.so
-%_kde_libdir/kde4/xlsximport.so
-%_kde_libdir/libkdeinit4_calligrasheets.so
+%_bindir/calligrasheets
+%_libdir/kde4/krossmodulesheets.so
+%_libdir/kde4/calligrasheetspart.so
+%{service calligra_filter_gnumeric2sheets}
+%{service calligra_filter_html2ods}
+%{service calligra_filter_kspread2tex}
+%{service calligra_filter_opencalc2sheets}
+%{service calligra_filter_qpro2sheets}
+%{service calligra_filter_sheets2csv}
+%{service calligra_filter_sheets2gnumeric}
+%{service calligra_filter_sheets2html}
+%{service calligra_filter_sheets2opencalc}
+%{service calligra_filter_xls2ods}
+%{service calligra_filter_xlsx2ods}
+%{service calligra_filter_applixspread2kspread}
+%{service calligra_filter_csv2sheets}
+%{service calligra_filter_dbase2kspread}
+%{service calligra_shape_spreadsheet}
+%{service calligra_shape_spreadsheet-deferred}
+%{service sheetspivottables}
+%{service sheetssolver}
+%_kde_services/sheetsscripting.desktop
+%_kde_servicetypes/sheets_viewplugin.desktop
+%_libdir/kde4/kplatorcpsscheduler.so
+%_libdir/kde4/kspread*.so
+%_libdir/libkdeinit4_calligrasheets.so
 %defattr(0644,root,root,0755)
-%_kde_datadir/applications/kde4/sheets.desktop
-%_kde_datadir/config.kcfg/sheets.kcfg
+%_datadir/applications/kde4/sheets.desktop
+%_datadir/config.kcfg/sheets.kcfg
 %_kde_services/sheetspart.desktop
 %_kde_services/sheets_excel_thumbnail.desktop
 %_kde_services/sheets_ods_thumbnail.desktop
 %_kde_services/sheets_xlsx_thumbnail.desktop
 %_kde_services/ServiceMenus/sheets_print.desktop
 %_kde_appsdir/sheets
-%_kde_datadir/config/sheetsrc
-%_kde_datadir/templates/SpreadSheet.desktop
+%_datadir/config/sheetsrc
+%_datadir/templates/SpreadSheet.desktop
 %_kde_services/kspread*.desktop
-%_kde_datadir/templates/.source/SpreadSheet.ods
-%_kde_services/spreadsheetshape.desktop
-%_kde_services/spreadsheetshape-deferred.desktop
+%_datadir/templates/.source/SpreadSheet.ods
 %_kde_services/krossmodulesheets.desktop
 %_kde_servicetypes/sheets_plugin.desktop
 %_kde_iconsdir/hicolor/*/*/calligrasheets*
@@ -461,32 +462,32 @@ content elements are available to Stage.
 
 %files -n stage
 %defattr(0755,root,root,0755)
-%_kde_bindir/calligrastage
-%_kde_libdir/kde4/calligrastagepart.so
-%_kde_libdir/kde4/kpr_pageeffect_barwipe.so
-%_kde_libdir/kde4/kpr_pageeffect_clockwipe.so
-%_kde_libdir/kde4/kpr_pageeffect_edgewipe.so
-%_kde_libdir/kde4/kpr_pageeffect_iriswipe.so
-%_kde_libdir/kde4/kpr_pageeffect_matrixwipe.so
-%_kde_libdir/kde4/kpr_pageeffect_slidewipe.so
-%_kde_libdir/kde4/kpr_pageeffect_fade.so
-%_kde_libdir/kde4/kpr_pageeffect_spacerotation.so
-%_kde_libdir/kde4/kpr_pageeffect_swapeffect.so
-%_kde_libdir/kde4/kpr_shapeanimation_example.so
-%_kde_libdir/kde4/calligrastageeventactions.so 
-%_kde_libdir/kde4/calligrastagetoolanimation.so
-%_kde_libdir/kde4/kprvariables.so
-%_kde_libdir/kde4/powerpointimport.so
-%_kde_libdir/kde4/pptximport.so
-#%_kde_libdir/kde4/threedshape.so
-%_kde_libdir/libkdeinit4_calligrastage.so
+%_bindir/calligrastage
+%_libdir/kde4/calligrastagepart.so
+%_libdir/kde4/kpr_pageeffect_barwipe.so
+%_libdir/kde4/kpr_pageeffect_clockwipe.so
+%_libdir/kde4/kpr_pageeffect_edgewipe.so
+%_libdir/kde4/kpr_pageeffect_iriswipe.so
+%_libdir/kde4/kpr_pageeffect_matrixwipe.so
+%_libdir/kde4/kpr_pageeffect_slidewipe.so
+%_libdir/kde4/kpr_pageeffect_fade.so
+%_libdir/kde4/kpr_pageeffect_spacerotation.so
+%_libdir/kde4/kpr_pageeffect_swapeffect.so
+%_libdir/kde4/kpr_shapeanimation_example.so
+%{service calligra_filter_ppt2odp}
+%{service calligra_filter_pptx2odp}
+%_libdir/kde4/calligrastageeventactions.so 
+%_libdir/kde4/calligrastagetoolanimation.so
+%_libdir/kde4/kprvariables.so
+#%_libdir/kde4/threedshape.so
+%_libdir/libkdeinit4_calligrastage.so
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/stage.desktop
 %_kde_services/ServiceMenus/stage_print.desktop
 %_kde_appsdir/stage
-%_kde_datadir/templates/Presentation.desktop
-%_kde_datadir/templates/.source/Presentation.odp
-%_kde_datadir/config/stagerc
+%_datadir/templates/Presentation.desktop
+%_datadir/templates/.source/Presentation.odp
+%_datadir/config/stagerc
 %_kde_iconsdir/hicolor/*/apps/calligrastage.*
 %_kde_services/calligrastageeventactions.desktop
 %_kde_servicetypes/presentationeventaction.desktop
@@ -501,8 +502,6 @@ content elements are available to Stage.
 %_kde_services/kpr_pageeffect_spacerotation.desktop
 %_kde_services/kpr_pageeffect_swapeffect.desktop
 %_kde_services/calligrastagetoolanimation.desktop
-%_kde_services/kpresenter_powerpoint_import.desktop
-%_kde_services/kpresenter_pptx_import.desktop
 %_kde_services/kprvariables.desktop
 %_kde_services/stage_odp_thumbnail.desktop
 %_kde_services/stage_powerpoint_thumbnail.desktop
@@ -510,7 +509,7 @@ content elements are available to Stage.
 #%_kde_services/threedshape.desktop
 %_kde_servicetypes/kpr_pageeffect.desktop
 %_kde_servicetypes/kpr_shapeanimation.desktop
-%_kde_datadir/kde4/services/stagepart.desktop
+%_datadir/kde4/services/stagepart.desktop
 %doc %_docdir/HTML/en/stage
 
 #--------------------------------------------------------------------
@@ -532,10 +531,7 @@ Obsoletes:      koffice2-kchart
 Kchart is a chart and diagram drawing program.
 
 %files -n kchart
-%defattr(0755,root,root,0755)
-%_kde_libdir/kde4/chartshape.so
-%defattr(0644,root,root,0755)
-%_kde_services/chartshape.desktop
+%{service calligra_shape_chart}
 
 #--------------------------------------------------------------------
 
@@ -563,9 +559,23 @@ and textures for rendering.
 
 %files -n krita
 %defattr(0755,root,root,0755)
-%_kde_bindir/krita
-%_kde_libdir/kde4/*krita*
-%_kde_libdir/libkdeinit4_krita.so
+%_bindir/gmicparser
+%_bindir/krita
+%_bindir/kritagemini
+%_bindir/kritasketch
+%_libdir/kde4/*krita*
+%_libdir/libkdeinit4_krita.so
+%_libdir/calligra/imports/org/krita
+%_libdir/libkritasketchlib.so
+%_datadir/appdata/krita.appdata.xml
+%_datadir/applications/kde4/kritagemini.desktop
+%_datadir/applications/kde4/kritasketch.desktop
+%_datadir/apps/kritagemini
+%_datadir/apps/kritasketch
+%_datadir/config/kritageminipanelsrc
+%_datadir/config/kritageminirc
+%_datadir/config/kritasketchpanelsrc
+%_datadir/config/kritasketchrc
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/krita.desktop
 %_kde_applicationsdir/krita_jpeg.desktop
@@ -590,18 +600,18 @@ and textures for rendering.
 %_kde_appsdir/kritaplugins
 %_kde_configdir/kritarc
 %_kde_configdir/krita*.knsrc
-%dir %_kde_datadir/color/icc/krita
-%_kde_datadir/color/icc/krita/README
-%_kde_datadir/color/icc/krita/*.icm
-%_kde_datadir/color/icc/krita/*.icc
+%dir %_datadir/color/icc/krita
+%_datadir/color/icc/krita/README
+%_datadir/color/icc/krita/*.icm
+%_datadir/color/icc/krita/*.icc
 %_kde_appsdir/color-schemes/Krita50.colors
 %_kde_appsdir/color-schemes/KritaBlender.colors
 %_kde_appsdir/color-schemes/KritaBright.colors
 %_kde_appsdir/color-schemes/KritaBrighter.colors
 %_kde_appsdir/color-schemes/KritaDark.colors
 %_kde_appsdir/color-schemes/KritaDarker.colors
-%_kde_datadir/mime/packages/krita_ora.xml
-%_kde_datadir/mime/packages/krita.xml
+%_datadir/mime/packages/krita_ora.xml
+%_datadir/mime/packages/krita.xml
 
 #--------------------------------------------------------------------
 
@@ -625,36 +635,40 @@ art.
 
 %files -n karbon
 %defattr(0755,root,root,0755)
-%_kde_bindir/karbon
-%_kde_libdir/kde4/karbonfiltereffects.so
-%_kde_libdir/kde4/karbon_flattenpathplugin.so
-%_kde_libdir/kde4/karbon_whirlpinchplugin.so
-%_kde_libdir/kde4/karbonimageexport.so
-%_kde_libdir/kde4/karbontools.so
-%_kde_libdir/kde4/karbonpart.so
-%_kde_libdir/kde4/karbonsvgexport.so
-%_kde_libdir/kde4/karbonepsimport.so
-%_kde_libdir/kde4/karbonsvgimport.so
-%_kde_libdir/kde4/karbonxfigimport.so
-%_kde_libdir/kde4/wmfexport.so
-%_kde_libdir/kde4/wmfimport.so
-%_kde_libdir/kde4/karbon1ximport.so
-%_kde_libdir/kde4/karbonpdfimport.so
-%_kde_libdir/kde4/wpgimport.so
-%_kde_libdir/kde4/karbon_refinepathplugin.so
-%_kde_libdir/kde4/karbon_roundcornersplugin.so
-%_kde_libdir/libkdeinit4_karbon.so
+%_bindir/karbon
+%{service calligra_filter_karbon1x2karbon}
+%{service calligra_filter_karbon2svg}
+%{service calligra_filter_karbon2wmf}
+%{service calligra_filter_pdf2svg}
+%{service calligra_filter_svg2karbon}
+%_kde_services/calligra_filter_svgz2karbon.desktop
+%{service calligra_filter_wmf2svg}
+%{service calligra_filter_wpg2svg}
+%{service calligra_filter_wpg2odg}
+%{service calligra_filter_xfig2odg}
+%_libdir/kde4/calligra_filter_karbon2image.so
+%_kde_services/calligra_filter_karbon2jpg.desktop
+%_kde_services/calligra_filter_karbon2png.desktop
+%_kde_servicetypes/karbon_viewplugin.desktop
+%_kde_servicetypes/karbon_dock.desktop
+%_libdir/kde4/karbonfiltereffects.so
+%_libdir/kde4/karbon_flattenpathplugin.so
+%_libdir/kde4/karbon_whirlpinchplugin.so
+%_libdir/kde4/karbontools.so
+%_libdir/kde4/karbonpart.so
+%_libdir/kde4/karbon_refinepathplugin.so
+%_libdir/kde4/karbon_roundcornersplugin.so
+%_libdir/libkdeinit4_karbon.so
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/karbon.desktop
 %_kde_iconsdir/*/*/apps/calligrakarbon.*
 %_kde_configdir/karbonrc
 %_kde_appsdir/karbon
-%_kde_datadir/templates/Illustration.desktop
-%_kde_datadir/templates/.source/Illustration.odg
+%_datadir/templates/Illustration.desktop
+%_datadir/templates/.source/Illustration.odg
 %_kde_services/ServiceMenus/karbon_print.desktop
 %_kde_services/karbon*.desktop
 %_kde_servicetypes/filtereffect.desktop
-%_kde_servicetypes/karbon_module.desktop
 
 #--------------------------------------------------------------------
 
@@ -670,12 +684,9 @@ Requires:       %name-core = %{EVRD}
 Kformula is a formula editor for kde project.
 
 %files -n kformula
-%defattr(0755,root,root,0755)
-%_kde_libdir/kde4/formulashape.so
-%defattr(0644,root,root,0755)
-%_kde_datadir/apps/formulashape
-%_kde_services/formulashape.desktop
+%_datadir/apps/formulashape
 %{_kde_services}/kformulapart.desktop
+%{service calligra_shape_formular}
 
 #--------------------------------------------------------------------
 
@@ -694,20 +705,20 @@ Building sites, and many other options to help you make your diagrams.
 
 %files -n flow
 %defattr(0755,root,root,0755)
-%_kde_bindir/calligraflow
-%_kde_libdir/kde4/flowdockersplugin.so
-%_kde_libdir/kde4/flowpart.so
-%_kde_libdir/kde4/vsdximport.so
-%_kde_libdir/libkdeinit4_calligraflow.so
+%_bindir/calligraflow
+%_libdir/kde4/flowdockersplugin.so
+%_libdir/kde4/flowpart.so
+%{service calligra_filter_vsdx2odg}
+%_libdir/libkdeinit4_calligraflow.so
 %defattr(0644,root,root,0755)
-%_kde_datadir/applications/kde4/flow.desktop
-%_kde_datadir/config/flowrc
-%_kde_datadir/config/flow_stencils.knsrc
+%_datadir/applications/kde4/flow.desktop
+%_datadir/config/flowrc
+%_datadir/config/flow_stencils.knsrc
 %_kde_appsdir/flow
 %_kde_services/flowdockersplugin.desktop
 %_kde_services/flowpart.desktop
-%_kde_services/flow_vsdx_import.desktop
 %_kde_services/flow_vsdx_thumbnail.desktop
+%_kde_services/flow_wpg_thumbnail.desktop
 %_kde_servicetypes/flow_dock.desktop
 %_kde_services/ServiceMenus/flow_print.desktop
 %_kde_iconsdir/hicolor/*/*/calligraflow*
@@ -732,45 +743,49 @@ are stored in the database, making it easy to share data and design.
 
 %files -n kexi
 %defattr(0755,root,root,0755)
-%{_kde_bindir}/kexi
-%{_kde_bindir}/kexi_sqlite3_dump
-%{_kde_libdir}/kde4/kformdesigner_containers.so
-%{_kde_libdir}/kde4/kformdesigner_mapbrowser.so
-%{_kde_libdir}/kde4/kformdesigner_kexidbwidgets.so
-%{_kde_libdir}/kde4/kformdesigner_stdwidgets.so
-%{_kde_libdir}/kde4/kformdesigner_webbrowser.so
-%{_kde_libdir}/kde4/kexidb_mysqldriver.so
-%{_kde_libdir}/kde4/kexidb_sqlite3driver.so
-%{_kde_libdir}/kde4/kexidb_sqlite3_icu.so
-%{_kde_libdir}/kde4/kexidb_sybasedriver.so
-%{_kde_libdir}/kde4/kexidb_xbasedriver.so
-%{_kde_libdir}/kde4/kexihandler_csv_importexport.so
-%{_kde_libdir}/kde4/kexihandler_form.so
-%{_kde_libdir}/kde4/kexihandler_migration.so
-%{_kde_libdir}/kde4/kexihandler_query.so
-%{_kde_libdir}/kde4/kexihandler_script.so
-%{_kde_libdir}/kde4/kexihandler_table.so
-#%{_kde_libdir}/kde4/keximigrate_kspread.so
-%{_kde_libdir}/kde4/keximigrate_mdb.so
-%{_kde_libdir}/kde4/keximigrate_mysql.so
-%{_kde_libdir}/kde4/keximigrate_sybase.so
-%{_kde_libdir}/kde4/keximigrate_txt.so
-%{_kde_libdir}/kde4/keximigrate_spreadsheet.so
-%{_kde_libdir}/kde4/keximigrate_xbase.so
-%{_kde_libdir}/kde4/kexirelationdesignshape.so
-%{_kde_libdir}/kde4/krossmodulekexidb.so
-%{_kde_libdir}/kde4/kexihandler_report.so
+%{_bindir}/kexi
+%{_bindir}/kexi_sqlite3_dump
+%{_libdir}/kde4/kformdesigner_containers.so
+%{_libdir}/kde4/kformdesigner_mapbrowser.so
+%{_libdir}/kde4/kformdesigner_kexidbwidgets.so
+%{_libdir}/kde4/kformdesigner_stdwidgets.so
+%{_libdir}/kde4/kformdesigner_webbrowser.so
+%{_libdir}/kde4/kexidb_pqxxsqldriver.so
+%{_libdir}/kde4/kexidb_mysqldriver.so
+%{_libdir}/kde4/kexidb_sqlite3driver.so
+%{_libdir}/kde4/kexidb_sqlite3_icu.so
+%{_libdir}/kde4/kexidb_sybasedriver.so
+%{_libdir}/kde4/kexidb_xbasedriver.so
+%{_libdir}/kde4/kexihandler_csv_importexport.so
+%{_libdir}/kde4/kexihandler_form.so
+%{_libdir}/kde4/kexihandler_migration.so
+%{_libdir}/kde4/kexihandler_query.so
+%{_libdir}/kde4/kexihandler_script.so
+%{_libdir}/kde4/kexihandler_table.so
+#%{_libdir}/kde4/keximigrate_kspread.so
+%{_libdir}/kde4/keximigrate_mdb.so
+%{_libdir}/kde4/keximigrate_mysql.so
+%{_libdir}/kde4/keximigrate_pqxx.so
+%{_libdir}/kde4/keximigrate_sybase.so
+%{_libdir}/kde4/keximigrate_txt.so
+%{_libdir}/kde4/keximigrate_spreadsheet.so
+%{_libdir}/kde4/keximigrate_xbase.so
+%{_libdir}/kde4/kexirelationdesignshape.so
+%{_libdir}/kde4/krossmodulekexidb.so
+%{_libdir}/kde4/kexihandler_report.so
 %defattr(0644,root,root,0755)
 %{_kde_appsdir}/kexi
-%{_kde_datadir}/config/kexirc
+%{_datadir}/config/kexirc
 %{_kde_services}/kexi
 %{_kde_services}/kexidb_mysqldriver.desktop
+%{_kde_services}/kexidb_pqxxsqldriver.desktop
 %{_kde_services}/kexidb_sqlite3driver.desktop
 %{_kde_services}/kexidb_sybasedriver.desktop
 %{_kde_services}/kexidb_xbasedriver.desktop
 #%{_kde_services}/keximigrate_kspread.desktop
 %{_kde_services}/keximigrate_mdb.desktop
 %{_kde_services}/keximigrate_mysql.desktop
+%{_kde_services}/keximigrate_pqxx.desktop
 %{_kde_services}/keximigrate_sybase.desktop
 %{_kde_services}/keximigrate_txt.desktop
 %{_kde_services}/keximigrate_spreadsheet.desktop
@@ -799,7 +814,7 @@ ODP file renderer for Okular.
 
 %files -n okular-odp
 %defattr(0755,root,root,0755)
-%_kde_libdir/kde4/okularGenerator_odp.so
+%_libdir/kde4/okularGenerator_odp.so
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/okularApplication_odp.desktop
 %_kde_services/libokularGenerator_odp.desktop
@@ -817,13 +832,9 @@ Requires:	%name-core = %{EVRD}
 Calligra State Shape.
 
 %files -n stateshape
-%defattr(0755,root,root,0755)
-%_kde_libdir/kde4/stateshape.so
-%defattr(0644,root,root,0755)
 %_kde_appsdir/stateshape
 %_kde_iconsdir/hicolor/*/*/stateshape*
 %_kde_iconsdir/hicolor/*/*/statetool*
-%_kde_services/stateshape.desktop
 
 #--------------------------------------------------------------------
 
@@ -837,14 +848,43 @@ Requires:	%name-core = %{EVRD}
 Calligra Web Shape.
 
 %files -n webshape
-%defattr(0755,root,root,0755)
-%_kde_libdir/kde4/webshape.so
-%defattr(0644,root,root,0755)
-%_kde_services/webshape.desktop
 
 #--------------------------------------------------------------------
 
-%define libbraindumpcore_major 12
+%define libkomsooxml_major %{defaultmajor}
+%define libkomsooxml %mklibname komsooxml %libkomsooxml_major
+
+%package -n %libkomsooxml
+Summary: Calligra MS OOXML import library
+Group: System/Libraries
+
+%description -n %libkomsooxml
+Calligra MS OOXML import library.
+
+%files -n %libkomsooxml
+%defattr(-,root,root)
+%_libdir/libkomsooxml.so.%{libkomsooxml_major}*
+
+#--------------------------------------------------------------------
+
+%define libkoodf_major %{defaultmajor}
+%define libkoodf %mklibname koodf %libkoodf_major
+
+%package -n %libkoodf
+Summary: Calligra ODF library
+Group: System/Libraries
+
+%description -n %libkoodf
+Calligra ODF library.
+
+%files -n %libkoodf
+%defattr(-,root,root)
+%_libdir/libkoodf.so.%{libkoodf_major}*
+
+
+#--------------------------------------------------------------------
+
+%define libbraindumpcore_major %{defaultmajor}
 %define libbraindumpcore %mklibname braindumpcore %libbraindumpcore_major
 
 %package -n %libbraindumpcore
@@ -856,7 +896,8 @@ Calligra Braindump core library.
 
 %files -n %libbraindumpcore
 %defattr(-,root,root)
-%_kde_libdir/libbraindumpcore.so.%{libbraindumpcore_major}*
+%_libdir/libbraindumpcore.so.%{libbraindumpcore_major}*
+
 
 #--------------------------------------------------------------------
 
@@ -875,13 +916,13 @@ images, charts, drawings. You can also organize your ideas into diagrams
 and flowcharts.
 
 %files -n braindump
-%defattr(0755,root,root,0755)
-%_kde_bindir/braindump
-%defattr(0644,root,root,0755)
+%_bindir/braindump
 %_kde_applicationsdir/braindump.desktop
 %_kde_appsdir/braindump
 %_kde_servicetypes/braindump_extensions.desktop
 %_kde_iconsdir/*/*/*/braindump.*
+%_datadir/kde4/services/braindump_*.desktop
+%_libdir/kde4/braindump_shape_*.so
 
 #--------------------------------------------------------------------
 %if 1
@@ -897,31 +938,31 @@ Calligra's QML UI.
 
 %files active
 %defattr(0755,root,root,0755)
-%{_kde_bindir}/calligraactive
+%{_bindir}/calligraactive
 %defattr(0644,root,root,0755)
-%{_kde_datadir}/applications/calligraactive.desktop
-%{_kde_datadir}/calligraactive
+%{_datadir}/applications/calligraactive.desktop
+%{_datadir}/calligraactive
 %endif
 #--------------------------------------------------------------------
 
-%define libtextlayout_major 12
-%define libtextlayout %mklibname textlayout %libtextlayout_major
+%define libkotextlayout_major %{defaultmajor}
+%define libkotextlayout %mklibname kotextlayout %libkotextlayout_major
 
-%package -n %libtextlayout
+%package -n %libkotextlayout
 Summary: Calligra core library
 Group: System/Libraries
 
-%description -n %libtextlayout
+%description -n %libkotextlayout
 Calligra core library.
 
 
-%files -n %libtextlayout
+%files -n %libkotextlayout
 %defattr(-,root,root)
-%_kde_libdir/libtextlayout.so.%{libtextlayout_major}*
+%_libdir/libkotextlayout.so.%{libkotextlayout_major}*
 
 #--------------------------------------------------------------------
 
-%define libcalligradb_major 12
+%define libcalligradb_major %{defaultmajor}
 %define libcalligradb %mklibname calligradb %libcalligradb_major
 
 %package -n %libcalligradb
@@ -932,12 +973,12 @@ Group: System/Libraries
 Calligra core library.
 
 %files -n %libcalligradb
-%_kde_libdir/libcalligradb.so.%{libcalligradb_major}*
+%_libdir/libcalligradb.so.%{libcalligradb_major}*
 
 
 #----------------------------------------------------------------------
 
-%define libkoreport_major 12
+%define libkoreport_major %{defaultmajor}
 %define libkoreport %mklibname koreport %libkoreport_major
 
 %package -n %libkoreport
@@ -954,11 +995,11 @@ planning reports.
 
 %files -n %libkoreport
 %defattr(-,root,root)
-%_kde_libdir/libkoreport.so.%{libkoreport_major}*
+%_libdir/libkoreport.so.%{libkoreport_major}*
 
 #--------------------------------------------------------------------
 
-%define libkokross_major 12
+%define libkokross_major %{defaultmajor}
 %define libkokross %mklibname kokross %libkokross_major
 
 %package -n %libkokross
@@ -970,28 +1011,28 @@ Calligra core library.
 
 %files -n %libkokross
 %defattr(-,root,root)
-%_kde_libdir/libkokross.so.%{libkokross_major}*
+%_libdir/libkokross.so.%{libkokross_major}*
 
 #--------------------------------------------------------------------
 
-%define libkomain_major 12
+%define libkomain_major %{defaultmajor}
 %define libkomain %mklibname komain %libkomain_major
 
 %package -n %libkomain
 Summary: Calligra core library
 Group: System/Libraries
-Requires: %name-l10n
+Suggests: %name-l10n
 
 %description -n %libkomain
 Calligra core library.
 
 %files -n %libkomain
 %defattr(-,root,root)
-%_kde_libdir/libkomain.so.%{libkomain_major}*
+%_libdir/libkomain.so.%{libkomain_major}*
 
 #--------------------------------------------------------------------
 
-%define libkopageapp_major 12
+%define libkopageapp_major %{defaultmajor}
 %define libkopageapp %mklibname kopageapp %libkopageapp_major
 
 %package -n %libkopageapp
@@ -1003,11 +1044,11 @@ Calligra core library.
 
 %files -n %libkopageapp
 %defattr(-,root,root)
-%_kde_libdir/libkopageapp.so.%{libkopageapp_major}*
+%_libdir/libkopageapp.so.%{libkopageapp_major}*
 
 #--------------------------------------------------------------------
 
-%define libkotext_major 12
+%define libkotext_major %{defaultmajor}
 %define libkotext %mklibname kotext %libkotext_major
 
 %package -n %libkotext
@@ -1021,27 +1062,27 @@ loading/saving.
 
 %files -n %libkotext
 %defattr(-,root,root)
-%_kde_libdir/libkotext.so.%{libkotext_major}*
+%_libdir/libkotext.so.%{libkotext_major}*
 
 #--------------------------------------------------------------------
-%define libkoodf_major 12
-%define libkoodf %mklibname koodf %libkoodf_major
+%define libkoodf2_major %{defaultmajor}
+%define libkoodf2 %mklibname koodf2 %libkoodf2_major
 
-%package -n %libkoodf
+%package -n %libkoodf2
 Summary: Calligra core library
 Group: System/Libraries
 
-%description -n %libkoodf
+%description -n %libkoodf2
 Calligra core library.
 ODF Library
 
-%files -n %libkoodf
+%files -n %libkoodf2
 %defattr(-,root,root)
-%_kde_libdir/libkoodf.so.%{libkoodf_major}*
+%_libdir/libkoodf2.so.%{libkoodf2_major}*
 
 #--------------------------------------------------------------------
 
-%define libbasicflakes_major 12
+%define libbasicflakes_major %{defaultmajor}
 %define libbasicflakes %mklibname basicflakes %libbasicflakes_major
 
 %package -n %libbasicflakes
@@ -1057,11 +1098,11 @@ that Words can provide a textShape which has text flowing inside.
 
 %files -n %libbasicflakes
 %defattr(-,root,root)
-%_kde_libdir/libbasicflakes.so.%{libbasicflakes_major}*
+%_libdir/libbasicflakes.so.%{libbasicflakes_major}*
 
 #--------------------------------------------------------------------
 
-%define libkordf_major 12
+%define libkordf_major %{defaultmajor}
 %define libkordf %mklibname kordf %libkordf_major
 
 %package -n %libkordf
@@ -1073,11 +1114,11 @@ Calligra core library.
 
 %files -n %libkordf
 %defattr(-,root,root)
-%_kde_libdir/libkordf.so.%{libkordf_major}*
+%_libdir/libkordf.so.%{libkordf_major}*
 
 #--------------------------------------------------------------------
 
-%define libkowidgetutils_major 12
+%define libkowidgetutils_major %{defaultmajor}
 %define libkowidgetutils %mklibname kowidgetutils %libkowidgetutils_major
 
 %package -n %libkowidgetutils
@@ -1089,27 +1130,27 @@ Calligra core library.
 
 %files -n %libkowidgetutils
 %defattr(-,root,root)
-%_kde_libdir/libkowidgetutils.so.%{libkowidgetutils_major}*
+%_libdir/libkowidgetutils.so.%{libkowidgetutils_major}*
 
 #--------------------------------------------------------------------
 
-%define libodftraverse_major 12
-%define libodftraverse %mklibname odftraverse %libodftraverse_major
+%define libkoodfreader_major %{defaultmajor}
+%define libkoodfreader %mklibname koodfreader %libkoodfreader_major
 
-%package -n %libodftraverse
+%package -n %libkoodfreader
 Summary: Calligra core library
 Group: System/Libraries
 
-%description -n %libodftraverse
+%description -n %libkoodfreader
 Calligra core library.
 
-%files -n %libodftraverse
+%files -n %libkoodfreader
 %defattr(-,root,root)
-%_kde_libdir/libodftraverse.so.%{libodftraverse_major}*
+%_libdir/libkoodfreader.so.%{libkoodfreader_major}*
 
 #--------------------------------------------------------------------
 
-%define libflake_major 12
+%define libflake_major %{defaultmajor}
 %define libflake %mklibname flake %libflake_major
 
 %package -n %libflake
@@ -1125,11 +1166,11 @@ that Words can provide a textShape which has text flowing inside.
 
 %files -n %libflake
 %defattr(-,root,root)
-%_kde_libdir/libflake.so.%{libflake_major}*
+%_libdir/libflake.so.%{libflake_major}*
 
 #--------------------------------------------------------------------
 
-%define libpigmentcms_major 12
+%define libpigmentcms_major %{defaultmajor}
 %define libpigmentcms %mklibname pigmentcms %libpigmentcms_major
 
 %package -n %libpigmentcms
@@ -1149,11 +1190,11 @@ be specified in some colorspaces.
 
 %files -n %libpigmentcms
 %defattr(-,root,root)
-%_kde_libdir/libpigmentcms.so.%{libpigmentcms_major}*
+%_libdir/libpigmentcms.so.%{libpigmentcms_major}*
 
 #--------------------------------------------------------------------
 
-%define libkformdesigner_major 12
+%define libkformdesigner_major %{defaultmajor}
 %define libkformdesigner %mklibname kformdesigner %libkformdesigner_major
 
 %package -n %libkformdesigner
@@ -1165,11 +1206,11 @@ Calligra core library.
 
 %files -n %libkformdesigner
 %defattr(-,root,root)
-%_kde_libdir/libkformdesigner.so.%{libkformdesigner_major}*
+%_libdir/libkformdesigner.so.%{libkformdesigner_major}*
 
 #--------------------------------------------------------------------
 
-%define kundo2_major 12
+%define kundo2_major %{defaultmajor}
 %define libkundo2 %mklibname kundo2_ %kundo2_major
 
 %package -n %libkundo2
@@ -1181,10 +1222,10 @@ Calligra core library.
 
 %files -n %libkundo2
 
-%_kde_libdir/libkundo2.so.%{kundo2_major}*
+%_libdir/libkundo2.so.%{kundo2_major}*
 
 #--------------------------------------------------------------------
-%define rtfreader_major 12
+%define rtfreader_major %{defaultmajor}
 %define librtfreader %mklibname rtfreader %rtfreader_major
 
 %package -n %librtfreader
@@ -1196,11 +1237,11 @@ Calligra core library.
 
 %files -n %librtfreader
 
-%_kde_libdir/libRtfReader.so.%{rtfreader_major}*
+%_libdir/libRtfReader.so.%{rtfreader_major}*
 
 #--------------------------------------------------------------------
 
-%define librcps_plan_major 12
+%define librcps_plan_major %{defaultmajor}
 %define librcps_plan %mklibname rcps_plan %librcps_plan_major
 
 %package -n %librcps_plan
@@ -1211,11 +1252,11 @@ Group: System/Libraries
 Calligra core library.
 
 %files -n %librcps_plan
-%_kde_libdir/librcps_plan.so.%{librcps_plan_major}*
+%_libdir/librcps_plan.so.%{librcps_plan_major}*
 
 #--------------------------------------------------------------------
 
-%define wordsprivate_major 12
+%define wordsprivate_major %{defaultmajor}
 %define libwordsprivate %mklibname wordsprivate %wordsprivate_major
 
 %package -n %libwordsprivate
@@ -1227,26 +1268,10 @@ Calligra core library.
 
 %files -n %libwordsprivate
 %defattr(-,root,root)
-%_kde_libdir/libwordsprivate.so.%{wordsprivate_major}*
+%_libdir/libwordsprivate.so.%{wordsprivate_major}*
 
 #--------------------------------------------------------------------
-
-%define chartshapelib_major 12
-%define libchartshapelib %mklibname chartshapelib %chartshapelib_major
-
-%package -n %libchartshapelib
-Summary: Calligra core library
-Group: System/Libraries
-
-%description -n %libchartshapelib
-Calligra core library.
-
-%files -n %libchartshapelib
-%defattr(-,root,root)
-%_kde_libdir/libchartshapelib.so.%{chartshapelib_major}*
-
-#--------------------------------------------------------------------
-%define kplatomodels_major 12
+%define kplatomodels_major %{defaultmajor}
 %define  libkplatomodels %mklibname kplatomodels %kplatomodels_major
 
 %package -n %libkplatomodels
@@ -1258,11 +1283,11 @@ Calligra core library.
 
 %files -n %libkplatomodels
 %defattr(-,root,root)
-%_kde_libdir/libkplatomodels.so.%{kplatomodels_major}*
+%_libdir/libkplatomodels.so.%{kplatomodels_major}*
 
 #-------------------------------------------------------------------
 
-%define  kplatokernel_major 12
+%define  kplatokernel_major %{defaultmajor}
 %define  libkplatokernel %mklibname kplatokernel %kplatokernel_major
 
 %package -n %libkplatokernel
@@ -1274,11 +1299,11 @@ Calligra core library.
 
 %files -n %libkplatokernel
 %defattr(-,root,root)
-%_kde_libdir/libkplatokernel.so.%{kplatokernel_major}*
+%_libdir/libkplatokernel.so.%{kplatokernel_major}*
 
 #--------------------------------------------------------------------
 
-%define planprivate_major 12
+%define planprivate_major %{defaultmajor}
 %define libplanprivate %mklibname planprivate %planprivate_major
 
 %package -n %libplanprivate
@@ -1290,11 +1315,11 @@ Calligra core library.
 
 %files -n %libplanprivate
 %defattr(-,root,root)
-%_kde_libdir/libplanprivate.so.%{planprivate_major}*
+%_libdir/libplanprivate.so.%{planprivate_major}*
 
 #--------------------------------------------------------------------
 
-%define kplatoui_major 12
+%define kplatoui_major %{defaultmajor}
 %define libkplatoui %mklibname kplatoui %kplatoui_major
 
 %package -n %libkplatoui
@@ -1306,11 +1331,11 @@ Calligra core library.
 
 %files -n %libkplatoui
 %defattr(-,root,root)
-%_kde_libdir/libkplatoui.so.%{kplatoui_major}*
+%_libdir/libkplatoui.so.%{kplatoui_major}*
 
 #--------------------------------------------------------------------
 
-%define planworkapp_major 12
+%define planworkapp_major %{defaultmajor}
 %define libplanworkapp %mklibname planworkapp %planworkapp_major
 
 %package -n %libplanworkapp
@@ -1322,11 +1347,11 @@ Calligra core library.
 
 %files -n %libplanworkapp
 %defattr(-,root,root)
-%_kde_libdir/libplanworkapp.so.%{planworkapp_major}*
+%_libdir/libplanworkapp.so.%{planworkapp_major}*
 
 #--------------------------------------------------------------------
 
-%define kplatoworkfactory_major 12
+%define kplatoworkfactory_major %{defaultmajor}
 %define libplanworkfactory %mklibname kplatoworkfactory %kplatoworkfactory_major
 
 %package -n %libplanworkfactory
@@ -1339,11 +1364,11 @@ Calligra core library.
 
 %files -n %libplanworkfactory
 %defattr(-,root,root)
-%_kde_libdir/libplanworkfactory.so.%{kplatoworkfactory_major}*
+%_libdir/libplanworkfactory.so.%{kplatoworkfactory_major}*
 
 #--------------------------------------------------------------------
 
-%define sheets_major 12
+%define sheets_major %{defaultmajor}
 %define libcalligrasheetscommon %mklibname calligrasheetscommon %sheets_major
 
 %package -n %libcalligrasheetscommon
@@ -1356,11 +1381,11 @@ Calligra core library.
 
 %files -n %libcalligrasheetscommon
 %defattr(-,root,root)
-%_kde_libdir/libcalligrasheetscommon.so.%{sheets_major}*
+%_libdir/libcalligrasheetscommon.so.%{sheets_major}*
 
 #--------------------------------------------------------------------
 
-%define sheetsodf_major 12
+%define sheetsodf_major %{defaultmajor}
 %define libcalligrasheetsodf %mklibname calligrasheetsodf %sheetsodf_major
 
 %package -n %libcalligrasheetsodf
@@ -1373,11 +1398,11 @@ Calligra core library.
 
 %files -n %libcalligrasheetsodf
 %defattr(-,root,root)
-%_kde_libdir/libcalligrasheetsodf.so.%{sheetsodf_major}*
+%_libdir/libcalligrasheetsodf.so.%{sheetsodf_major}*
 
 #--------------------------------------------------------------------
 
-%define calligrastageprivate_major 12
+%define calligrastageprivate_major %{defaultmajor}
 %define libcalligrastageprivate %mklibname calligrastageprivate %calligrastageprivate_major
 
 %package -n %libcalligrastageprivate
@@ -1389,11 +1414,11 @@ Calligra core library.
 
 %files -n %libcalligrastageprivate
 %defattr(-,root,root)
-%_kde_libdir/libcalligrastageprivate.so.%{calligrastageprivate_major}*
+%_libdir/libcalligrastageprivate.so.%{calligrastageprivate_major}*
 
 #--------------------------------------------------------------------
 
-%define  calligrakdchart_major 12
+%define  calligrakdchart_major %{defaultmajor}
 %define  libcalligrakdchart %mklibname calligrakdchart  %calligrakdchart_major
 
 %package -n %libcalligrakdchart
@@ -1405,11 +1430,11 @@ Calligra chart library.
 
 %files -n %libcalligrakdchart
 %defattr(-,root,root)
-%_kde_libdir/libcalligrakdchart.so.%{calligrakdchart_major}*
+%_libdir/libcalligrakdchart.so.%{calligrakdchart_major}*
 
 #--------------------------------------------------------------------
 
-%define libcalligrakdgantt_major 12
+%define libcalligrakdgantt_major %{defaultmajor}
 %define libcalligrakdgantt %mklibname calligrakdgantt %libcalligrakdgantt_major
 
 %package -n %libcalligrakdgantt
@@ -1420,7 +1445,7 @@ Group: System/Libraries
 Calligra Gantt library.
 
 %files -n %libcalligrakdgantt
-%_kde_libdir/libcalligrakdgantt.so.%{libcalligrakdgantt_major}*
+%_libdir/libcalligrakdgantt.so.%{libcalligrakdgantt_major}*
 
 
 #--------------------------------------------------------------------
@@ -1438,7 +1463,7 @@ Krita and karbon meta package
 
 #--------------------------------------------------------------------
 
-%define  libkritaui_major 12
+%define  libkritaui_major %{defaultmajor}
 %define  libkritaui %mklibname kritaui  %libkritaui_major
 
 %package -n %libkritaui
@@ -1450,11 +1475,11 @@ Calligra core library.
 
 %files -n %libkritaui
 %defattr(-,root,root)
-%_kde_libdir/libkritaui.so.%{libkritaui_major}*
+%_libdir/libkritaui.so.%{libkritaui_major}*
 
 #--------------------------------------------------------------------
 
-%define  libkritaimage_major 12
+%define  libkritaimage_major %{defaultmajor}
 %define  libkritaimage %mklibname kritaimage  %libkritaimage_major
 
 %package -n %libkritaimage
@@ -1466,11 +1491,11 @@ Calligra core library.
 
 %files -n %libkritaimage
 %defattr(-,root,root)
-%_kde_libdir/libkritaimage.so.%{libkritaimage_major}*
+%_libdir/libkritaimage.so.%{libkritaimage_major}*
 
 #--------------------------------------------------------------------
 
-%define  libkritalibbrush_major 12
+%define  libkritalibbrush_major %{defaultmajor}
 %define  libkritalibbrush %mklibname kritalibbrush  %libkritalibbrush_major
 
 %package -n %libkritalibbrush
@@ -1482,11 +1507,11 @@ Calligra core library.
 
 %files -n %libkritalibbrush
 %defattr(-,root,root)
-%_kde_libdir/libkritalibbrush.so.%{libkritalibbrush_major}*
+%_libdir/libkritalibbrush.so.%{libkritalibbrush_major}*
 
 #--------------------------------------------------------------------
 
-%define  libkritalibpaintop_major 12
+%define  libkritalibpaintop_major %{defaultmajor}
 %define  libkritalibpaintop %mklibname kritalibpaintop  %libkritalibpaintop_major
 
 %package -n %libkritalibpaintop
@@ -1498,11 +1523,11 @@ Calligra core library.
 
 %files -n %libkritalibpaintop
 %defattr(-,root,root)
-%_kde_libdir/libkritalibpaintop.so.%{libkritalibpaintop_major}*
+%_libdir/libkritalibpaintop.so.%{libkritalibpaintop_major}*
 
 #--------------------------------------------------------------------
 
-%define  libkoplugin_major 12
+%define  libkoplugin_major %{defaultmajor}
 %define  libkoplugin %mklibname koplugin  %libkoplugin_major
 
 %package -n %libkoplugin
@@ -1514,11 +1539,11 @@ Calligra core library.
 
 %files -n %libkoplugin
 %defattr(-,root,root)
-%_kde_libdir/libkoplugin.so.%{libkoplugin_major}*
+%_libdir/libkoplugin.so.%{libkoplugin_major}*
 
 #--------------------------------------------------------------------
 
-%define  libkowidgets_major 12
+%define  libkowidgets_major %{defaultmajor}
 %define  libkowidgets %mklibname kowidgets  %libkowidgets_major
 #
 %package -n %libkowidgets
@@ -1530,12 +1555,12 @@ Calligra core library.
 
 %files -n %libkowidgets
 %defattr(-,root,root)
-%_kde_libdir/libkowidgets.so.%{libkowidgets_major}*
+%_libdir/libkowidgets.so.%{libkowidgets_major}*
 
 #--------------------------------------------------------------------
 
 
-%define  karboncommon_major 12
+%define  karboncommon_major %{defaultmajor}
 %define  libkarboncommon %mklibname karboncommon  %karboncommon_major
 
 %package -n %libkarboncommon
@@ -1547,11 +1572,11 @@ Calligra core library.
 
 %files -n %libkarboncommon
 %defattr(-,root,root)
-%_kde_libdir/libkarboncommon.so.%{karboncommon_major}*
+%_libdir/libkarboncommon.so.%{karboncommon_major}*
 
 #--------------------------------------------------------------------
 
-%define  karbonui_major 12
+%define  karbonui_major %{defaultmajor}
 %define  libkarbonui %mklibname karbonui  %karbonui_major
 
 %package -n %libkarbonui
@@ -1563,29 +1588,29 @@ Calligra core library.
 
 %files -n %libkarbonui
 %defattr(-,root,root)
-%_kde_libdir/libkarbonui.so.%{karbonui_major}*
+%_libdir/libkarbonui.so.%{karbonui_major}*
 
 #--------------------------------------------------------------------
 
 
 
-%define libkformulalib_major 12
-%define libkformulalib %mklibname kformulalib %libkformulalib_major
+%define libkformula_major %{defaultmajor}
+%define libkformula %mklibname kformula %libkformula_major
 
-%package -n %libkformulalib
+%package -n %libkformula
 Summary: Calligra core library
 Group: System/Libraries
 
-%description -n %libkformulalib
+%description -n %libkformula
 Calligra core library.
 
-%files -n %libkformulalib
+%files -n %libkformula
 %defattr(-,root,root)
-%_kde_libdir/libkformulalib.so.%{libkformulalib_major}*
+%_libdir/libkformula.so.%{libkformula_major}*
 
 #--------------------------------------------------------------------
    
-%define libkexicore_major 12
+%define libkexicore_major %{defaultmajor}
 %define libkexicore %mklibname kexicore %libkexicore_major
    
 %package -n %libkexicore
@@ -1597,11 +1622,11 @@ Calligra core library.
 
 %files -n %libkexicore
 %defattr(-,root,root)
-%_kde_libdir/libkexicore.so.%{libkexicore_major}*
+%_libdir/libkexicore.so.%{libkexicore_major}*
 
 #--------------------------------------------------------------------
 
-%define libkexidatatable_major 12
+%define libkexidatatable_major %{defaultmajor}
 %define libkexidatatable %mklibname kexidatatable %libkexidatatable_major
 
 %package -n %libkexidatatable
@@ -1613,11 +1638,11 @@ Calligra core library.
 
 %files -n %libkexidatatable
 %defattr(-,root,root)
-%_kde_libdir/libkexidatatable.so.%{libkexidatatable_major}*
+%_libdir/libkexidatatable.so.%{libkexidatatable_major}*
 
 #--------------------------------------------------------------------
 
-%define libkexidb_major 12
+%define libkexidb_major %{defaultmajor}
 %define libkexidb %mklibname kexidb %libkexidb_major
 
 %package -n %libkexidb
@@ -1629,11 +1654,11 @@ Calligra core library.
 
 %files -n %libkexidb
 %defattr(-,root,root)
-%_kde_libdir/libkexidb.so.%{libkexidb_major}*
+%_libdir/libkexidb.so.%{libkexidb_major}*
 
 #--------------------------------------------------------------------
 
-%define libkexiextendedwidgets_major 12
+%define libkexiextendedwidgets_major %{defaultmajor}
 %define libkexiextendedwidgets %mklibname kexiextendedwidgets %libkexiextendedwidgets_major
 
 %package -n %libkexiextendedwidgets
@@ -1645,11 +1670,11 @@ Calligra core library.
 
 %files -n %libkexiextendedwidgets
 %defattr(-,root,root)
-%_kde_libdir/libkexiextendedwidgets.so.%{libkexiextendedwidgets_major}*
+%_libdir/libkexiextendedwidgets.so.%{libkexiextendedwidgets_major}*
 
 #--------------------------------------------------------------------
 
-%define libkexiformutils_major 12
+%define libkexiformutils_major %{defaultmajor}
 %define libkexiformutils %mklibname kexiformutils %libkexiformutils_major
 
 %package -n %libkexiformutils
@@ -1661,11 +1686,11 @@ Calligra core library.
 
 %files -n %libkexiformutils
 %defattr(-,root,root)
-%_kde_libdir/libkexiformutils.so.%{libkexiformutils_major}*
+%_libdir/libkexiformutils.so.%{libkexiformutils_major}*
 
 #--------------------------------------------------------------------
 
-%define libkeximain_major 12
+%define libkeximain_major %{defaultmajor}
 %define libkeximain %mklibname keximain %libkeximain_major
 
 %package -n %libkeximain
@@ -1677,11 +1702,11 @@ Calligra core library.
 
 %files -n %libkeximain
 %defattr(-,root,root)
-%_kde_libdir/libkeximain.so.%{libkeximain_major}*
+%_libdir/libkeximain.so.%{libkeximain_major}*
 
 #--------------------------------------------------------------------
 
-%define libkeximigrate_major 12
+%define libkeximigrate_major %{defaultmajor}
 %define libkeximigrate %mklibname keximigrate %libkeximigrate_major
 
 %package -n %libkeximigrate
@@ -1693,11 +1718,11 @@ Calligra core library.
 
 %files -n %libkeximigrate
 %defattr(-,root,root)
-%_kde_libdir/libkeximigrate.so.%{libkeximigrate_major}*
+%_libdir/libkeximigrate.so.%{libkeximigrate_major}*
 
 #--------------------------------------------------------------------
 
-%define libkexirelationsview_major 12
+%define libkexirelationsview_major %{defaultmajor}
 %define libkexirelationsview %mklibname kexirelationsview %libkexirelationsview_major
 
 %package -n %libkexirelationsview
@@ -1709,11 +1734,11 @@ Calligra core library.
 
 %files -n %libkexirelationsview
 %defattr(-,root,root)
-%_kde_libdir/libkexirelationsview.so.%{libkexirelationsview_major}*
+%_libdir/libkexirelationsview.so.%{libkexirelationsview_major}*
 
 #--------------------------------------------------------------------
 
-%define libkexiutils_major 12
+%define libkexiutils_major %{defaultmajor}
 %define libkexiutils %mklibname kexiutils %libkexiutils_major
    
 %package -n %libkexiutils
@@ -1725,11 +1750,11 @@ Calligra core library.
    
 %files -n %libkexiutils
 %defattr(-,root,root)
-%_kde_libdir/libkexiutils.so.%{libkexiutils_major}*
+%_libdir/libkexiutils.so.%{libkexiutils_major}*
 
 #--------------------------------------------------------------------
 
-%define libkexiguiutils_major 12
+%define libkexiguiutils_major %{defaultmajor}
 %define libkexiguiutils %mklibname kexiguiutils %libkexiguiutils_major
 
 %package -n %libkexiguiutils
@@ -1741,11 +1766,11 @@ Calligra core library.
 
 %files -n %libkexiguiutils
 %defattr(-,root,root)
-%_kde_libdir/libkexiguiutils.so.%{libkexiguiutils_major}*
+%_libdir/libkexiguiutils.so.%{libkexiguiutils_major}*
 
 #--------------------------------------------------------------------
 
-%define libkexidataviewcommon_major 12
+%define libkexidataviewcommon_major %{defaultmajor}
 %define libkexidataviewcommon %mklibname kexidataviewcommon %libkexidataviewcommon_major
 
 %package -n %libkexidataviewcommon
@@ -1757,7 +1782,7 @@ Calligra core library.
 
 %files -n %libkexidataviewcommon
 %defattr(-,root,root)
-%_kde_libdir/libkexidataviewcommon.so.%{libkexidataviewcommon_major}*
+%_libdir/libkexidataviewcommon.so.%{libkexidataviewcommon_major}*
 
 #-------------------------------------------------------------------- 
 
@@ -1773,27 +1798,11 @@ Calligra core library.
    
 %files -n %libkowv2
 %defattr(-,root,root)
-%_kde_libdir/libkowv2.so.%{libkowv2_major}*
+%_libdir/libkowv2.so.%{libkowv2_major}*
 
 #--------------------------------------------------------------------
 
-%define libmsooxml_major 12
-%define libmsooxml %mklibname msooxml %libmsooxml_major
-   
-%package -n %libmsooxml
-Summary: Calligra core library
-Group: System/Libraries
-
-%description -n %libmsooxml
-Calligra core library.
-   
-%files -n %libmsooxml
-%defattr(-,root,root)
-%_kde_libdir/libmsooxml.so.%{libmsooxml_major}*
-
-#--------------------------------------------------------------------
-
-%define libkoproperty_major 12
+%define libkoproperty_major %{defaultmajor}
 %define libkoproperty %mklibname koproperty %libkoproperty_major
    
 %package -n %libkoproperty
@@ -1805,11 +1814,11 @@ Calligra core library.
    
 %files -n %libkoproperty
 %defattr(-,root,root)
-%_kde_libdir/libkoproperty.so.%{libkoproperty_major}*
+%_libdir/libkoproperty.so.%{libkoproperty_major}*
 
 #--------------------------------------------------------------------
 
-%define libflowprivate_major 12
+%define libflowprivate_major %{defaultmajor}
 %define libflowprivate %mklibname flowprivate %libflowprivate_major
 
 %package -n %libflowprivate
@@ -1821,29 +1830,28 @@ Calligra core library.
 
 %files -n %libflowprivate
 %defattr(-,root,root)
-%_kde_libdir/libflowprivate.so.%{libflowprivate_major}*
+%_libdir/libflowprivate.so.%{libflowprivate_major}*
 
 #--------------------------------------------------------------------
 
-%define vectorimage_major 12
-%define libvectorimage %mklibname vectorimage %vectorimage_major
+%define kovectorimage_major %{defaultmajor}
+%define libkovectorimage %mklibname kovectorimage %kovectorimage_major
 
-%package -n %libvectorimage
+%package -n %libkovectorimage
 Summary: Calligra core library
 Group: System/Libraries
 
-%description -n %libvectorimage
+%description -n %libkovectorimage
 Calligra core library.
 
-%files -n %libvectorimage
-%_kde_libdir/libvectorimage.so.%{vectorimage_major}*
+%files -n %libkovectorimage
+%_libdir/libkovectorimage.so.%{kovectorimage_major}*
 
 #--------------------------------------------------------------------
 
 %package devel
 Group: Development/KDE and Qt
 Summary: Header files for developing calligra applications
-Requires: %libchartshapelib = %{EVRD}
 Requires: %libflake = %{EVRD}
 Requires: %libcalligrakdgantt = %{EVRD} 
 Requires: %libkarboncommon = %{EVRD}
@@ -1861,10 +1869,10 @@ Requires: %libkeximigrate = %{EVRD}
 Requires: %libkexirelationsview = %{EVRD}
 Requires: %libkexiutils = %{EVRD}
 Requires: %libkformdesigner = %{EVRD}
-Requires: %libkformulalib = %{EVRD}
+Requires: %libkformula = %{EVRD}
 Requires: %libkokross = %{EVRD}
 Requires: %libkomain = %{EVRD}
-Requires: %libkoodf = %{EVRD}
+Requires: %libkoodf2 = %{EVRD}
 Requires: %libkopageapp = %{EVRD}
 Requires: %libkoplugin = %{EVRD}
 Requires: %libkoproperty = %{EVRD}
@@ -1887,8 +1895,7 @@ Requires: %libcalligradb = %{EVRD}
 Requires: %libcalligrasheetscommon = %{EVRD}
 Requires: %libcalligrasheetsodf = %{EVRD}
 Requires: %libwordsprivate = %{EVRD}
-Requires: %libvectorimage = %{EVRD}
-Requires: %libmsooxml = %{EVRD}
+Requires: %libkovectorimage = %{EVRD}
 Requires: %libpigmentcms = %{EVRD}
 Requires: %libkundo2 = %{EVRD}
 Requires: %librtfreader = %{EVRD}
@@ -1913,62 +1920,62 @@ Header files needed for developing calligra applications.
 %defattr(-,root,root)
 %_kde_appsdir/cmake/*/*
 %_kde_includedir/*
-%_kde_libdir/libcalligradb.so
-%_kde_libdir/libchartshapelib.so
-%_kde_libdir/libbasicflakes.so
-%_kde_libdir/libflake.so
-%_kde_libdir/libkarboncommon.so
-%_kde_libdir/libkarbonui.so
-%_kde_libdir/libkordf.so
-%_kde_libdir/libkowidgetutils.so
-%_kde_libdir/libodftraverse.so
-%_kde_libdir/libcalligrakdchart.so
-%_kde_libdir/libcalligrakdgantt.so
-%_kde_libdir/libkexicore.so
-%_kde_libdir/libkexidatatable.so
-%_kde_libdir/libkexidataviewcommon.so
-%_kde_libdir/libkexidb.so
-%_kde_libdir/libkexiextendedwidgets.so
-%_kde_libdir/libkexiformutils.so
-%_kde_libdir/libkexiguiutils.so
-%_kde_libdir/libkeximain.so
-%_kde_libdir/libkeximigrate.so
-%_kde_libdir/libkexirelationsview.so
-%_kde_libdir/libkexiutils.so
-%_kde_libdir/libkformdesigner.so
-%_kde_libdir/libkformulalib.so
-%_kde_libdir/libkokross.so
-%_kde_libdir/libkomain.so
-%_kde_libdir/libkoodf.so
-%_kde_libdir/libkopageapp.so
-%_kde_libdir/libkoplugin.so
-%_kde_libdir/libkoproperty.so
-%_kde_libdir/libkoreport.so
-%_kde_libdir/libkotext.so
-%_kde_libdir/libkowidgets.so
-%_kde_libdir/libkowv2.so
-%_kde_libdir/libkplatokernel.so
-%_kde_libdir/libkplatomodels.so
-%_kde_libdir/libplanprivate.so
-%_kde_libdir/libkplatoui.so
-%_kde_libdir/libplanworkapp.so
-%_kde_libdir/libplanworkfactory.so
-%_kde_libdir/libcalligrastageprivate.so
-%_kde_libdir/libkritaimage.so
-%_kde_libdir/libkritalibbrush.so
-%_kde_libdir/libkritalibpaintop.so
-%_kde_libdir/libkritaui.so
-%_kde_libdir/libcalligrasheetscommon.so
-%_kde_libdir/libcalligrasheetsodf.so
-%_kde_libdir/libwordsprivate.so
-%_kde_libdir/libmsooxml.so
-%_kde_libdir/libpigmentcms.so
-%_kde_libdir/libflowprivate.so
-%_kde_libdir/libtextlayout.so
-%_kde_libdir/libkundo2.so
-%_kde_libdir/libRtfReader.so
-%_kde_libdir/librcps_plan.so
-%_kde_libdir/libvectorimage.so
+%_libdir/libkomsooxml.so
+%_libdir/libkoodf.so
+%_libdir/libcalligradb.so
+%_libdir/libbasicflakes.so
+%_libdir/libflake.so
+%_libdir/libkoodfreader.so
+%_libdir/libkotextlayout.so
+%_libdir/libkovectorimage.so
+%_libdir/libkarboncommon.so
+%_libdir/libkarbonui.so
+%_libdir/libkordf.so
+%_libdir/libkowidgetutils.so
+%_libdir/libcalligrakdchart.so
+%_libdir/libcalligrakdgantt.so
+%_libdir/libkexicore.so
+%_libdir/libkexidatatable.so
+%_libdir/libkexidataviewcommon.so
+%_libdir/libkexidb.so
+%_libdir/libkexiextendedwidgets.so
+%_libdir/libkexiformutils.so
+%_libdir/libkexiguiutils.so
+%_libdir/libkeximain.so
+%_libdir/libkeximigrate.so
+%_libdir/libkexirelationsview.so
+%_libdir/libkexiutils.so
+%_libdir/libkformdesigner.so
+%_libdir/libkformula.so
+%_libdir/libkokross.so
+%_libdir/libkomain.so
+%_libdir/libkoodf2.so
+%_libdir/libkopageapp.so
+%_libdir/libkoplugin.so
+%_libdir/libkoproperty.so
+%_libdir/libkoreport.so
+%_libdir/libkotext.so
+%_libdir/libkowidgets.so
+%_libdir/libkowv2.so
+%_libdir/libkplatokernel.so
+%_libdir/libkplatomodels.so
+%_libdir/libplanprivate.so
+%_libdir/libkplatoui.so
+%_libdir/libplanworkapp.so
+%_libdir/libplanworkfactory.so
+%_libdir/libcalligrastageprivate.so
+%_libdir/libkritaimage.so
+%_libdir/libkritalibbrush.so
+%_libdir/libkritalibpaintop.so
+%_libdir/libkritaui.so
+%_libdir/libcalligrasheetscommon.so
+%_libdir/libcalligrasheetsodf.so
+%_libdir/libwordsprivate.so
+%_libdir/libpigmentcms.so
+%_libdir/libflowprivate.so
+%_libdir/libkundo2.so
+%_libdir/libRtfReader.so
+%_libdir/librcps_plan.so
 
 #--------------------------------------------------------------------
 %if %_mobile
@@ -1981,11 +1988,11 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 
 %files mobile
 %defattr(0755,root,root,0755)
-%_kde_bindir/calligramobile
+%_bindir/calligramobile
 %defattr(0644,root,root,0755)
-%_kde_datadir/applications/hildon/calligramobile.desktop
-%_kde_datadir/calligramobile-templates/
-%_kde_datadir/dbus-1/services/com.nokia.CalligraMobile.service
+%_datadir/applications/hildon/calligramobile.desktop
+%_datadir/calligramobile-templates/
+%_datadir/dbus-1/services/com.nokia.CalligraMobile.service
 %_kde_iconsdir/hicolor/178x200/apps/calligramobile.png
 %_kde_iconsdir/hicolor/48x48/hildon/Document.png
 %_kde_iconsdir/hicolor/48x48/hildon/Presenter.png
@@ -2000,6 +2007,7 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 %patch1 -p1 -b .openjpeg~
 %patch2 -p0 -b .xbase312~
 %patch3 -p1 -b .staging~
+%patch4 -p1 -b .libpqxx~
 
 %build
 #sh initrepo.sh
