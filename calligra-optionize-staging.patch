@@ -1,0 +1,14 @@
+--- calligra-2.7.2/CMakeLists.txt.omv~	2013-09-12 09:06:09.889504839 +0200
++++ calligra-2.7.2/CMakeLists.txt	2013-09-12 09:07:25.846948967 +0200
+@@ -61,9 +61,9 @@ endif(NOT DEFINED RELEASE_BUILD)
+ message(STATUS "Release build: ${RELEASE_BUILD}")
+ 
+ if (RELEASE_BUILD)
+-    set(CALLIGRA_SHOULD_BUILD_STAGING FALSE)
++    option(CALLIGRA_SHOULD_BUILD_STAGING "Build staging bits" OFF)
+ else (RELEASE_BUILD)
+-    set(CALLIGRA_SHOULD_BUILD_STAGING TRUE)
++    option(CALLIGRA_SHOULD_BUILD_STAGING "Build staging bits" ON)
+ endif (RELEASE_BUILD)
+ 
+ 

@@ -10,7 +10,7 @@ URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
 Version: 2.7.2
 %if "%prerel" != ""
-Release: -c %prerel 1
+Release: 0.%prerel.1
 %else
 Release: 2
 %endif
@@ -18,6 +18,7 @@ Source0: http://master.kde.org/stable/%{name}-%{version}/%{name}-%{version}.tar.
 Source1: %{name}.rpmlintrc
 Patch1: calligra-2.4.0-find-openjpeg.patch
 Patch2: calligra-2.6.0-xbase-3.1.2.patch
+Patch3: calligra-optionize-staging.patch
 Group: Office
 License: GPLv2+ and LGPLv2+ and GFDL
 BuildRequires: kdepimlibs4-devel
@@ -153,6 +154,7 @@ Common files for Calligra
 %_kde_libdir/kde4/spellcheck.so
 %_kde_libdir/kde4/textshape.so
 %_kde_libdir/kde4/textvariables.so
+%_kde_libdir/kde4/threedshape.so
 %_kde_libdir/kde4/thesaurustool.so
 %_kde_libdir/kde4/vectorshape.so
 %_kde_libdir/kde4/videoshape.so
@@ -207,6 +209,7 @@ Common files for Calligra
 %_kde_services/pictureshape.desktop
 %_kde_services/pluginshape.desktop
 %_kde_services/spellcheck.desktop
+%_kde_services/threedshape.desktop
 %_kde_services/textshape.desktop
 %_kde_services/textvariables.desktop
 %_kde_services/thesaurustool.desktop
@@ -229,10 +232,11 @@ Common files for Calligra
 %_kde_datadir/mime/packages/calligra_svm.xml
 %_kde_services/basicflakesplugin.desktop
 %_kde_services/calligradocinfopropspage.desktop
-#%_kde_services/textdocumentinspection.desktop
 %_kde_servicetypes/calligra_filter.desktop
 %_kde_servicetypes/calligra_part.desktop
 %doc %_kde_docdir/HTML/en/calligra
+# This isn't built in release mode
+%optional %_kde_services/textdocumentinspection.desktop
 
 #--------------------------------------------------------------------
 
@@ -269,6 +273,7 @@ With it, you can create informative and attractive documents with ease.
 %_kde_libdir/kde4/rtfimport.so
 %_kde_libdir/kde4/wpsimport.so
 %_kde_libdir/kde4/wpdimport.so
+%_kde_libdir/kde4/calligragoogledocs.so
 %_kde_libdir/libkdeinit4_calligrawords.so
 %defattr(0644,root,root,0755)
 %_kde_applicationsdir/words.desktop
@@ -406,6 +411,7 @@ such as income and expenditure, employee working hours, etc.
 %_kde_libdir/kde4/opencalcexport.so
 %_kde_libdir/kde4/opencalcimport.so
 %_kde_libdir/kde4/qproimport.so
+%_kde_libdir/kde4/sheetspivottables.so
 %_kde_libdir/kde4/sheetssolver.so
 %_kde_libdir/kde4/spreadsheetshape.so
 %_kde_libdir/kde4/xlsximport.so
@@ -1993,18 +1999,19 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 %setup -q
 %patch1 -p1 -b .openjpeg~
 %patch2 -p0 -b .xbase312~
+%patch3 -p1 -b .staging~
 
 %build
 #sh initrepo.sh
 %if %_mobile
-%cmake_kde4 -DIHAVEPATCHEDQT:BOOL=TRUE
+%cmake_kde4 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON
 %else
-%cmake_kde4 -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE
+%cmake_kde4 -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON
 %endif
-make
+%make
 
 %if %{compile_apidox}
-make apidox
+%make apidox
 %endif
 
 %install
