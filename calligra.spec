@@ -12,17 +12,18 @@ Epoch: 16
 Name: calligra
 URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
-Version: 2.7.90
+Version: 2.8.0
 %if "%prerel" != ""
 Release: 0.%prerel.1
 %else
 Release: 1
 %endif
-Source0: http://master.kde.org/unstable/%{name}-%{version}/%{name}-%{version}.tar.xz
+Source0: http://master.kde.org/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1: %{name}.rpmlintrc
 Patch1: calligra-2.4.0-find-openjpeg.patch
 Patch2: calligra-2.6.0-xbase-3.1.2.patch
 Patch3: calligra-optionize-staging.patch
+Patch4: calligra-2.8.0-libpqxx-4.0.patch
 Group: Office
 License: GPLv2+ and LGPLv2+ and GFDL
 BuildRequires: kdepimlibs4-devel
@@ -69,8 +70,10 @@ BuildRequires: freetds-devel
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: marble-devel
 BuildRequires: pkgconfig(fftw3)
+BuildRequires: pkgconfig(libodfgen-0.0)
 BuildRequires: pkgconfig(libvisio-0.0)
 BuildRequires: pkgconfig(libwps-0.2)
+BuildRequires: pkgconfig(libetonyek-0.0)
 BuildRequires: pkgconfig(OpenEXR)
 BuildRequires: pkgconfig(libkactivities)
 BuildRequires: nepomuk-core-devel nepomuk-widgets-devel
@@ -256,6 +259,7 @@ With it, you can create informative and attractive documents with ease.
 %{service calligra_filter_odt2ascii}
 %{service calligra_filter_doc2odt}
 %{service calligra_filter_ascii2words}
+%{service calligra_filter_applixword2odt}
 %{service calligra_filter_docx2odt}
 %{service calligra_filter_odt2epub2}
 %{service calligra_filter_odt2html}
@@ -632,7 +636,6 @@ art.
 %files -n karbon
 %defattr(0755,root,root,0755)
 %_bindir/karbon
-%{service calligra_filter_eps2svgai}
 %{service calligra_filter_karbon1x2karbon}
 %{service calligra_filter_karbon2svg}
 %{service calligra_filter_karbon2wmf}
@@ -641,11 +644,13 @@ art.
 %_kde_services/calligra_filter_svgz2karbon.desktop
 %{service calligra_filter_wmf2svg}
 %{service calligra_filter_wpg2svg}
+%{service calligra_filter_wpg2odg}
 %{service calligra_filter_xfig2odg}
 %_libdir/kde4/calligra_filter_karbon2image.so
 %_kde_services/calligra_filter_karbon2jpg.desktop
 %_kde_services/calligra_filter_karbon2png.desktop
 %_kde_servicetypes/karbon_viewplugin.desktop
+%_kde_servicetypes/karbon_dock.desktop
 %_libdir/kde4/karbonfiltereffects.so
 %_libdir/kde4/karbon_flattenpathplugin.so
 %_libdir/kde4/karbon_whirlpinchplugin.so
@@ -713,6 +718,7 @@ Building sites, and many other options to help you make your diagrams.
 %_kde_services/flowdockersplugin.desktop
 %_kde_services/flowpart.desktop
 %_kde_services/flow_vsdx_thumbnail.desktop
+%_kde_services/flow_wpg_thumbnail.desktop
 %_kde_servicetypes/flow_dock.desktop
 %_kde_services/ServiceMenus/flow_print.desktop
 %_kde_iconsdir/hicolor/*/*/calligraflow*
@@ -744,6 +750,7 @@ are stored in the database, making it easy to share data and design.
 %{_libdir}/kde4/kformdesigner_kexidbwidgets.so
 %{_libdir}/kde4/kformdesigner_stdwidgets.so
 %{_libdir}/kde4/kformdesigner_webbrowser.so
+%{_libdir}/kde4/kexidb_pqxxsqldriver.so
 %{_libdir}/kde4/kexidb_mysqldriver.so
 %{_libdir}/kde4/kexidb_sqlite3driver.so
 %{_libdir}/kde4/kexidb_sqlite3_icu.so
@@ -758,6 +765,7 @@ are stored in the database, making it easy to share data and design.
 #%{_libdir}/kde4/keximigrate_kspread.so
 %{_libdir}/kde4/keximigrate_mdb.so
 %{_libdir}/kde4/keximigrate_mysql.so
+%{_libdir}/kde4/keximigrate_pqxx.so
 %{_libdir}/kde4/keximigrate_sybase.so
 %{_libdir}/kde4/keximigrate_txt.so
 %{_libdir}/kde4/keximigrate_spreadsheet.so
@@ -770,12 +778,14 @@ are stored in the database, making it easy to share data and design.
 %{_datadir}/config/kexirc
 %{_kde_services}/kexi
 %{_kde_services}/kexidb_mysqldriver.desktop
+%{_kde_services}/kexidb_pqxxsqldriver.desktop
 %{_kde_services}/kexidb_sqlite3driver.desktop
 %{_kde_services}/kexidb_sybasedriver.desktop
 %{_kde_services}/kexidb_xbasedriver.desktop
 #%{_kde_services}/keximigrate_kspread.desktop
 %{_kde_services}/keximigrate_mdb.desktop
 %{_kde_services}/keximigrate_mysql.desktop
+%{_kde_services}/keximigrate_pqxx.desktop
 %{_kde_services}/keximigrate_sybase.desktop
 %{_kde_services}/keximigrate_txt.desktop
 %{_kde_services}/keximigrate_spreadsheet.desktop
@@ -1997,6 +2007,7 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 %patch1 -p1 -b .openjpeg~
 %patch2 -p0 -b .xbase312~
 %patch3 -p1 -b .staging~
+%patch4 -p1 -b .libpqxx~
 
 %build
 #sh initrepo.sh
