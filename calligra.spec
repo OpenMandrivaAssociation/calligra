@@ -646,6 +646,7 @@ art.
 %{service calligra_filter_wpg2svg}
 %{service calligra_filter_wpg2odg}
 %{service calligra_filter_xfig2odg}
+%{service calligra_filter_eps2svgai}
 %_libdir/kde4/calligra_filter_karbon2image.so
 %_kde_services/calligra_filter_karbon2jpg.desktop
 %_kde_services/calligra_filter_karbon2png.desktop
