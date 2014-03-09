@@ -232,7 +232,6 @@ Common files for Calligra
 %{service calligra_semanticitem_contact}
 %{service calligra_semanticitem_event}
 %{service calligra_semanticitem_location}
-%_datadir/kde4/services/calligra_docker_textdocumentinspection.desktop
 
 #--------------------------------------------------------------------
 
