@@ -165,7 +165,7 @@ Common files for Calligra
 %_libdir/kde4/kolcmsengine.so
 %_libdir/kde4/kopabackgroundtool.so
 %_libdir/kde4/koreport_barcodeplugin.so
-%_libdir/kde4/koreport_mapsplugin.so
+%optional %_libdir/kde4/koreport_mapsplugin.so
 %_libdir/kde4/koreport_webplugin.so
 %_datadir/icons/*/*/*/insert-tableofcontents.*
 %defattr(0644,root,root,0755)
@@ -206,7 +206,7 @@ Common files for Calligra
 %_kde_services/kolcmsengine.desktop
 %_kde_services/kopabackgroundtool.desktop
 %_kde_services/koreport_barcodeplugin.desktop
-%_kde_services/koreport_mapsplugin.desktop
+%optional %_kde_services/koreport_mapsplugin.desktop
 %_kde_services/koreport_webplugin.desktop
 %_kde_servicetypes/calligra_application.desktop
 %_kde_servicetypes/flake.desktop
@@ -232,7 +232,7 @@ Common files for Calligra
 %{service calligra_semanticitem_contact}
 %{service calligra_semanticitem_event}
 %{service calligra_semanticitem_location}
-%_datadir/kde4/services/calligra_docker_textdocumentinspection.desktop
+%optional %_datadir/kde4/services/calligra_docker_textdocumentinspection.desktop
 
 #--------------------------------------------------------------------
 
@@ -318,7 +318,7 @@ Obsoletes:      %{_lib}kplatoworkprivat5
 Obsoletes:      koffice-kplato
 Obsoletes:      koffice2-kplato
 # For M$ Project import filter
-BuildRequires:	java-1.6.0-openjdk-devel
+BuildRequires:	java-1.7.0-openjdk-devel
 %rename		%{name}-plan
 
 
@@ -585,7 +585,7 @@ and textures for rendering.
 %_kde_applicationsdir/krita_ora.desktop
 %_kde_applicationsdir/krita_pdf.desktop
 %_kde_applicationsdir/krita_tiff.desktop
-%_kde_applicationsdir/krita_raw.desktop
+%optional %_kde_applicationsdir/krita_raw.desktop
 %_kde_applicationsdir/krita_exr.desktop
 %_kde_applicationsdir/krita_jp2.desktop
 %_kde_applicationsdir/krita_ppm.desktop
@@ -646,6 +646,8 @@ art.
 %{service calligra_filter_wpg2svg}
 %{service calligra_filter_wpg2odg}
 %{service calligra_filter_xfig2odg}
+%optional %{_libdir}/kde4/calligra_filter_eps2svgai.so
+%optional %{_datadir}/kde4/services/calligra_filter_eps2svgai.desktop
 %_libdir/kde4/calligra_filter_karbon2image.so
 %_kde_services/calligra_filter_karbon2jpg.desktop
 %_kde_services/calligra_filter_karbon2png.desktop
@@ -746,7 +748,7 @@ are stored in the database, making it easy to share data and design.
 %{_bindir}/kexi
 %{_bindir}/kexi_sqlite3_dump
 %{_libdir}/kde4/kformdesigner_containers.so
-%{_libdir}/kde4/kformdesigner_mapbrowser.so
+%optional %{_libdir}/kde4/kformdesigner_mapbrowser.so
 %{_libdir}/kde4/kformdesigner_kexidbwidgets.so
 %{_libdir}/kde4/kformdesigner_stdwidgets.so
 %{_libdir}/kde4/kformdesigner_webbrowser.so
