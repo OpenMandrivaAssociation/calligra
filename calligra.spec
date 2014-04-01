@@ -12,7 +12,7 @@ Epoch: 16
 Name: calligra
 URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
-Version: 2.8.0
+Version: 2.8.1
 %if "%prerel" != ""
 Release: 0.%prerel.1
 %else
@@ -283,6 +283,7 @@ With it, you can create informative and attractive documents with ease.
 %_kde_iconsdir/hicolor/*/*/calligrawords*
 %_kde_iconsdir/hicolor/*/*/calligraauthor*
 %_kde_iconsdir/hicolor/*/actions/tool_pagelayout.*
+%_datadir/applications/kde4/calligrawords_ascii.desktop
 
 #--------------------------------------------------------------------
 
