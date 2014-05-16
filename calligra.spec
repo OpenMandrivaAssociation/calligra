@@ -12,7 +12,7 @@ Epoch: 16
 Name: calligra
 URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
-Version: 2.8.2
+Version: 2.8.3
 %if "%prerel" != ""
 Release: 0.%prerel.1
 %else
