@@ -16,7 +16,7 @@ Version: 2.8.3
 %if "%prerel" != ""
 Release: 0.%prerel.1
 %else
-Release: 1
+Release: 2
 %endif
 Source0: http://master.kde.org/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1: %{name}.rpmlintrc
@@ -24,6 +24,7 @@ Patch1: calligra-2.4.0-find-openjpeg.patch
 Patch2: calligra-2.6.0-xbase-3.1.2.patch
 Patch3: calligra-optionize-staging.patch
 Patch4: calligra-2.8.0-libpqxx-4.0.patch
+Patch5:	calligra-2.8.3-Fix_no_file_formats_shown_in_save_dialogs.diff
 Group: Office
 License: GPLv2+ and LGPLv2+ and GFDL
 BuildRequires: kdepimlibs4-devel
@@ -2011,6 +2012,7 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 %patch2 -p0 -b .xbase312~
 %patch3 -p1 -b .staging~
 %patch4 -p1 -b .libpqxx~
+%patch5 -p1 -b .filetype~
 
 %build
 #sh initrepo.sh
