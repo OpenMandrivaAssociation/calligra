@@ -69,7 +69,7 @@ BuildRequires: getfem-devel
 BuildRequires: pkgconfig(libctemplate)
 BuildRequires: freetds-devel
 BuildRequires: pkgconfig(sqlite3)
-BuildRequires: marble-devel
+BuildRequires: marble-devel >= 4.13.2
 BuildRequires: pkgconfig(fftw3)
 BuildRequires: pkgconfig(libodfgen-0.0)
 BuildRequires: pkgconfig(libvisio-0.0)
