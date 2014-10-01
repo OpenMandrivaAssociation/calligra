@@ -1,3 +1,5 @@
-sources:
+removed_sources:
   calligra-2.8.2.tar.xz: 99ca67bf909c843c625852e09f751fce1c1eeb42
   calligra-2.8.3.tar.xz: 956cc2b42a7be7d59d686dfa646a0ddc119179ef
+sources:
+  calligra-2.8.6.tar.xz: f140df337e4e060c158f3b42bec00fe9bae19eca

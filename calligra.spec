@@ -12,11 +12,11 @@ Epoch: 16
 Name: calligra
 URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
-Version: 2.8.3
+Version: 2.8.6
 %if "%prerel" != ""
 Release: 0.%prerel.1
 %else
-Release: 3
+Release: 1
 %endif
 Source0: http://master.kde.org/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1: %{name}.rpmlintrc
@@ -24,6 +24,9 @@ Patch1: calligra-2.4.0-find-openjpeg.patch
 Patch2: calligra-2.6.0-xbase-3.1.2.patch
 Patch3: calligra-optionize-staging.patch
 Patch4: calligra-2.8.0-libpqxx-4.0.patch
+Patch5:	calligra-2.8.6-librevenge.patch
+Patch6:	calligra-eigen3.patch
+
 Group: Office
 License: GPLv2+ and LGPLv2+ and GFDL
 BuildRequires: kdepimlibs4-devel
@@ -39,9 +42,8 @@ BuildRequires: gmic-devel
 BuildRequires: pkgconfig(lcms2)
 BuildRequires: pkgconfig(qca2)
 BuildRequires: xbase-devel
-BuildRequires: pkgconfig(libwpd-0.9)
-BuildRequires: pkgconfig(libwpg-0.2)
-BuildRequires: pkgconfig(QtShiva) >= 0.9.2
+BuildRequires: pkgconfig(libwpd-0.10)
+BuildRequires: pkgconfig(libwpg-0.3)
 BuildRequires: pkgconfig(libexif)
 BuildRequires: pkgconfig(exiv2)
 BuildRequires: boost-devel
@@ -53,7 +55,7 @@ BuildRequires: pkgconfig(python)
 BuildRequires: readline-devel
 BuildRequires: pkgconfig(libpqxx)
 BuildRequires: postgresql-devel
-BuildRequires: pkgconfig(eigen2)
+BuildRequires: pkgconfig(eigen3)
 BuildRequires: pstoedit
 BuildRequires: mysql-devel
 BuildRequires: pkgconfig(qimageblitz)
@@ -62,7 +64,6 @@ BuildRequires: glpk-devel
 BuildRequires: pkgconfig(glut)
 BuildRequires: pkgconfig(glew)
 BuildRequires: pkgconfig(GraphicsMagick)
-BuildRequires: pkgconfig(OpenCTL)
 BuildRequires: wv2-devel >= 0.4.2
 BuildRequires: getfem-devel
 BuildRequires: pkgconfig(libctemplate)
@@ -70,10 +71,11 @@ BuildRequires: freetds-devel
 BuildRequires: pkgconfig(sqlite3)
 BuildRequires: marble-devel
 BuildRequires: pkgconfig(fftw3)
-BuildRequires: pkgconfig(libodfgen-0.0)
-BuildRequires: pkgconfig(libvisio-0.0)
-BuildRequires: pkgconfig(libwps-0.2)
-BuildRequires: pkgconfig(libetonyek-0.0)
+BuildRequires: pkgconfig(librevenge-0.0)
+BuildRequires: pkgconfig(libodfgen-0.1)
+BuildRequires: pkgconfig(libvisio-0.1)
+BuildRequires: pkgconfig(libwps-0.3)
+BuildRequires: pkgconfig(libetonyek-0.1)
 BuildRequires: pkgconfig(OpenEXR)
 BuildRequires: pkgconfig(libkactivities)
 BuildRequires: nepomuk-core-devel nepomuk-widgets-devel
@@ -2011,13 +2013,19 @@ Calligra Mobile is a mobile user interaction of Calligra Suite
 %patch2 -p0 -b .xbase312~
 %patch3 -p1 -b .staging~
 %patch4 -p1 -b .libpqxx~
+%patch5 -p1 -b .revenge
+%patch6 -p1 -b .eigen3
 
 %build
+# clang build causes issues with pigment
+# and libvc
+export CXX=g++
+export CC=gcc
 #sh initrepo.sh
 %if %_mobile
-%cmake_kde4 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON
+%cmake_kde4 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON -DPACKAGERS_BUILD=ON
 %else
-%cmake_kde4 -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON
+%cmake_kde4 -Wno-dev -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON -DPACKAGERS_BUILD=ON
 %endif
 %make
 
