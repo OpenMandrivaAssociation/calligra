@@ -207,9 +207,9 @@ Common files for Calligra
 %_kde_services/calligra_odg_thumbnail.desktop
 %_kde_services/kolcmsengine.desktop
 %_kde_services/kopabackgroundtool.desktop
-%_kde_services/koreport_barcodeplugin.desktop
-%optional %_kde_services/koreport_mapsplugin.desktop
-%_kde_services/koreport_webplugin.desktop
+%_kde_services/calligra/koreport_barcodeplugin.desktop
+%optional %_kde_services/calligra/koreport_mapsplugin.desktop
+%_kde_services/calligra/koreport_webplugin.desktop
 %_kde_servicetypes/calligra_application.desktop
 %_kde_servicetypes/flake.desktop
 %_kde_servicetypes/flakedevice.desktop
@@ -479,6 +479,7 @@ content elements are available to Stage.
 %_libdir/kde4/kpr_shapeanimation_example.so
 %{service calligra_filter_ppt2odp}
 %{service calligra_filter_pptx2odp}
+%{service calligra_filter_kpr2odp}
 %_libdir/kde4/calligrastageeventactions.so 
 %_libdir/kde4/calligrastagetoolanimation.so
 %_libdir/kde4/kprvariables.so
@@ -509,6 +510,7 @@ content elements are available to Stage.
 %_kde_services/stage_odp_thumbnail.desktop
 %_kde_services/stage_powerpoint_thumbnail.desktop
 %_kde_services/stage_pptx_thumbnail.desktop
+%_kde_services/stage_kpr_thumbnail.desktop
 #%_kde_services/threedshape.desktop
 %_kde_servicetypes/kpr_pageeffect.desktop
 %_kde_servicetypes/kpr_shapeanimation.desktop
@@ -781,22 +783,8 @@ are stored in the database, making it easy to share data and design.
 %defattr(0644,root,root,0755)
 %{_kde_appsdir}/kexi
 %{_datadir}/config/kexirc
-%{_kde_services}/kexi
-%{_kde_services}/kexidb_mysqldriver.desktop
-%{_kde_services}/kexidb_pqxxsqldriver.desktop
-%{_kde_services}/kexidb_sqlite3driver.desktop
-%{_kde_services}/kexidb_sybasedriver.desktop
-%{_kde_services}/kexidb_xbasedriver.desktop
-#%{_kde_services}/keximigrate_kspread.desktop
-%{_kde_services}/keximigrate_mdb.desktop
-%{_kde_services}/keximigrate_mysql.desktop
-%{_kde_services}/keximigrate_pqxx.desktop
-%{_kde_services}/keximigrate_sybase.desktop
-%{_kde_services}/keximigrate_txt.desktop
-%{_kde_services}/keximigrate_spreadsheet.desktop
-%{_kde_services}/keximigrate_xbase.desktop
-%{_kde_services}/kexirelationdesignshape.desktop
-%{_kde_services}/kformdesigner
+%{_kde_services}/calligra/kexi*.desktop
+%{_kde_services}/calligra/kformdesigner_*.desktop
 %{_kde_servicetypes}/widgetfactory.desktop
 %{_kde_servicetypes}/calligradb_driver.desktop
 %{_kde_servicetypes}/kexihandler.desktop
