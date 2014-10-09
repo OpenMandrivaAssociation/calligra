@@ -14,9 +14,9 @@ URL:     http://www.calligra-suite.org
 Summary: Set of office applications for KDE
 Version: 2.8.6
 %if "%prerel" != ""
-Release: 0.%prerel.1
+Release: 0.%prerel.2
 %else
-Release: 1
+Release: 2
 %endif
 Source0: http://master.kde.org/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1: %{name}.rpmlintrc
