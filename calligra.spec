@@ -64,7 +64,6 @@ BuildRequires: glpk-devel
 BuildRequires: pkgconfig(glut)
 BuildRequires: pkgconfig(glew)
 BuildRequires: pkgconfig(GraphicsMagick)
-BuildRequires: wv2-devel >= 0.4.2
 BuildRequires: getfem-devel
 BuildRequires: pkgconfig(libctemplate)
 BuildRequires: freetds-devel
