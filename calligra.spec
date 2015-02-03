@@ -12,11 +12,11 @@ Summary:	Set of office applications for KDE
 Epoch:		16
 Name:		calligra
 URL:		http://www.calligra-suite.org
-Version:	2.8.6
+Version:	2.8.7
 %if "%prerel" != ""
 Release:	0.%prerel.2
 %else
-Release:	6
+Release:	1
 %endif
 Source0:	http://master.kde.org/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
@@ -166,6 +166,7 @@ Common files for Calligra.
 %{_libdir}/kde4/kolcmsengine.so
 %{_libdir}/kde4/kopabackgroundtool.so
 %{_libdir}/kde4/koreport_barcodeplugin.so
+%{_libdir}/kde4/koreport_chartplugin.so
 %optional %{_libdir}/kde4/koreport_mapsplugin.so
 %{_libdir}/kde4/koreport_webplugin.so
 %{_datadir}/icons/*/*/*/insert-tableofcontents.*
@@ -207,6 +208,7 @@ Common files for Calligra.
 %_kde_services/kolcmsengine.desktop
 %_kde_services/kopabackgroundtool.desktop
 %_kde_services/calligra/koreport_barcodeplugin.desktop
+%_kde_services/calligra/koreport_chartplugin.desktop
 %optional %_kde_services/calligra/koreport_mapsplugin.desktop
 %_kde_services/calligra/koreport_webplugin.desktop
 %_kde_servicetypes/calligra_application.desktop
