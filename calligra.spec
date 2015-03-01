@@ -2,9 +2,11 @@
 %define _mobile 0
 %define prerel %nil
 %define _disable_ld_no_undefined 1
-%define defaultmajor 13
+%define defaultmajor 14
 
 %define service(s) %{_libdir}/kde4/%{1}.so \
+%{_datadir}/kde4/services/calligra/%{1}.desktop
+%define kservice(s) %{_libdir}/kde4/%{1}.so \
 %{_datadir}/kde4/services/%{1}.desktop
 
 Summary:	Set of office applications for KDE
@@ -12,9 +14,9 @@ Summary:	Set of office applications for KDE
 Epoch:		16
 Name:		calligra
 URL:		http://www.calligra-suite.org
-Version:	2.8.7
+Version:	2.9.0
 %if "%prerel" != ""
-Release:	0.%prerel.2
+Release:	0.%prerel.1
 %else
 Release:	1
 %endif
@@ -24,8 +26,6 @@ Patch1:		calligra-2.4.0-find-openjpeg.patch
 Patch2:		calligra-2.6.0-xbase-3.1.2.patch
 Patch3:		calligra-optionize-staging.patch
 Patch4:		calligra-2.8.0-libpqxx-4.0.patch
-Patch5:		calligra-2.8.6-librevenge.patch
-Patch6:		calligra-eigen3.patch
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 BuildRequires:	kdepimlibs4-devel
@@ -118,6 +118,10 @@ Calligra contains:
 %files
 
 #--------------------------------------------------------------------
+%libpackage koversion 14
+%libpackage kritacolor 14
+%libpackage kritasketchlib 14
+#--------------------------------------------------------------------
 
 %package core
 Group:		Office
@@ -170,12 +174,14 @@ Common files for Calligra.
 %optional %{_libdir}/kde4/koreport_mapsplugin.so
 %{_libdir}/kde4/koreport_webplugin.so
 %{_datadir}/icons/*/*/*/insert-tableofcontents.*
+%{_libdir}/calligra/imports/org/calligra/CalligraComponents
 %defattr(0644,root,root,0755)
-%_kde_applicationsdir/calligra.desktop
+%_kde_applicationsdir/calligra/calligra.desktop
 %{_kde_appsdir}/calligra
 %{_kde_appsdir}/koproperty
 %{_kde_appsdir}/musicshape
-%{_datadir}/color/icc/pigment/*.icm
+%{_datadir}/kde4/servicetypes/kopa_tool.desktop
+%{_datadir}/kde4/servicetypes/kpr_tool.desktop
 %_kde_iconsdir/*/*/actions/black.*
 %_kde_iconsdir/*/*/actions/curve-connector.*
 %_kde_iconsdir/*/*/actions/highlight.*
@@ -205,8 +211,8 @@ Common files for Calligra.
 %_kde_iconsdir/*/*/actions/x-shape-image.*
 %_kde_iconsdir/*/*/actions/x-shape-text.*
 %_kde_services/calligra_odg_thumbnail.desktop
-%_kde_services/kolcmsengine.desktop
-%_kde_services/kopabackgroundtool.desktop
+%_kde_services/calligra/kolcmsengine.desktop
+%_kde_services/calligra/kopabackgroundtool.desktop
 %_kde_services/calligra/koreport_barcodeplugin.desktop
 %_kde_services/calligra/koreport_chartplugin.desktop
 %optional %_kde_services/calligra/koreport_mapsplugin.desktop
@@ -226,7 +232,7 @@ Common files for Calligra.
 %_kde_servicetypes/calligra_deferred_plugin.desktop
 %{_datadir}/mime/packages/msooxml-all.xml
 %{_datadir}/mime/packages/calligra_svm.xml
-%_kde_services/calligradocinfopropspage.desktop
+%_kde_services/calligra/calligradocinfopropspage.desktop
 %_kde_servicetypes/calligra_filter.desktop
 %_kde_servicetypes/calligra_part.desktop
 %doc %_kde_docdir/HTML/en/calligra
@@ -235,7 +241,7 @@ Common files for Calligra.
 %{service calligra_semanticitem_contact}
 %{service calligra_semanticitem_event}
 %{service calligra_semanticitem_location}
-%optional %{_datadir}/kde4/services/calligra_docker_textdocumentinspection.desktop
+%optional %{_datadir}/kde4/services/calligra/calligra_docker_textdocumentinspection.desktop
 
 #--------------------------------------------------------------------
 
@@ -269,23 +275,28 @@ With it, you can create informative and attractive documents with ease.
 %{service calligra_filter_rtf2odt}
 %{service calligra_filter_wps2odt}
 %{service calligra_filter_wpd2odt}
+%{service calligra_filter_odt2docx}
+%{kservice calligra_filter_odt2wiki}
+%{_datadir}/kde4/services/words_*_thumbnail.desktop
+%{_datadir}/mime/packages/wiki-format.xml
 #%{_libdir}/kde4/krossmodulekword.so
 %{_libdir}/kde4/wordspart.so
 %{_libdir}/libkdeinit4_calligrawords.so
 %defattr(0644,root,root,0755)
-%_kde_applicationsdir/words.desktop
+%_kde_applicationsdir/calligra/words.desktop
 #%{_kde_appsdir}/kword
 %{_kde_appsdir}/words
 %_kde_configdir/wordsrc
-%_kde_services/ServiceMenus/words_print.desktop
-#%_kde_services/krossmodulekword.desktop
-%_kde_services/words*.desktop
+%_kde_services/ServiceMenus/calligra/words_print.desktop
+#%_kde_services/calligra/krossmodulekword.desktop
+%_kde_services/calligra/words*.desktop
 %{_datadir}/templates/.source/TextDocument.odt
 %{_datadir}/templates/TextDocument.desktop
 %_kde_iconsdir/hicolor/*/*/calligrawords*
 %_kde_iconsdir/hicolor/*/*/calligraauthor*
 %_kde_iconsdir/hicolor/*/actions/tool_pagelayout.*
-%{_datadir}/applications/kde4/calligrawords_ascii.desktop
+%{_datadir}/applications/kde4/calligra/calligrawords_ascii.desktop
+%{_datadir}/appdata/words.appdata.xml
 
 #--------------------------------------------------------------------
 
@@ -301,10 +312,10 @@ Write ebooks and textbooks.
 %{_bindir}/calligraauthor
 %{_libdir}/kde4/authorpart.so
 %{_libdir}/libkdeinit4_calligraauthor.so
-%{_kde_applicationsdir}/author.desktop
+%{_kde_applicationsdir}/calligra/author.desktop
 %{_kde_appsdir}/author
 %{_kde_configdir}/authorrc
-%{_kde_services}/authorpart.desktop
+%{_kde_services}/calligra/authorpart.desktop
 
 #--------------------------------------------------------------------
 
@@ -344,22 +355,22 @@ It is intended for managing moderately large projects with multiple resources.
 %{_libdir}/kde4/calligra_filter_mpxj2plan.so
 %{_libdir}/kde4/planconvert
 %defattr(0644,root,root,0755)
-%_kde_applicationsdir/plan.desktop
-%_kde_applicationsdir/planwork.desktop
+%_kde_applicationsdir/calligra/plan.desktop
+%_kde_applicationsdir/calligra/planwork.desktop
 %{_kde_appsdir}/plan
 %{_kde_appsdir}/planwork
 %{_datadir}/config/planrc
-%_kde_services/krossmoduleplan.desktop
-%_kde_services/plan_icalendar_export.desktop
-%_kde_services/planpart.desktop
-%_kde_services/planworkpart.desktop
-%_kde_services/plan_kplato_import.desktop
-%_kde_services/planrcpsscheduler.desktop
-%_kde_services/plantjscheduler.desktop
-%_kde_services/planscripting.desktop
-%_kde_services/calligra_filter_mpp2plan.desktop
-%_kde_services/calligra_filter_mpx2plan.desktop
-%_kde_services/calligra_filter_planner2plan.desktop
+%_kde_services/calligra/krossmoduleplan.desktop
+%_kde_services/calligra/plan_icalendar_export.desktop
+%_kde_services/calligra/planpart.desktop
+%_kde_services/calligra/planworkpart.desktop
+%_kde_services/calligra/plan_kplato_import.desktop
+%_kde_services/calligra/planrcpsscheduler.desktop
+%_kde_services/calligra/plantjscheduler.desktop
+%_kde_services/calligra/planscripting.desktop
+%_kde_services/calligra/calligra_filter_mpp2plan.desktop
+%_kde_services/calligra/calligra_filter_mpx2plan.desktop
+%_kde_services/calligra/calligra_filter_planner2plan.desktop
 %_kde_servicetypes/plan_schedulerplugin.desktop
 %_kde_servicetypes/plan_viewplugin.desktop
 %_kde_iconsdir/hicolor/*/*/calligraplan*
@@ -369,6 +380,7 @@ It is intended for managing moderately large projects with multiple resources.
 %{_datadir}/config.kcfg/planworksettings.kcfg
 %{_datadir}/config/planworkrc
 %{_datadir}/mime/packages/calligra_planner_mpp.xml
+%{_datadir}/appdata/plan.appdata.xml
 
 #--------------------------------------------------------------------
 
@@ -414,28 +426,27 @@ such as income and expenditure, employee working hours, etc.
 %{service calligra_shape_spreadsheet-deferred}
 %{service sheetspivottables}
 %{service sheetssolver}
-%_kde_services/sheetsscripting.desktop
+%_datadir/kde4/services/sheets_*_thumbnail.desktop
+%_kde_services/calligra/sheetsscripting.desktop
 %_kde_servicetypes/sheets_viewplugin.desktop
 %{_libdir}/kde4/kplatorcpsscheduler.so
 %{_libdir}/kde4/kspread*.so
 %{_libdir}/libkdeinit4_calligrasheets.so
 %defattr(0644,root,root,0755)
-%{_datadir}/applications/kde4/sheets.desktop
+%{_datadir}/applications/kde4/calligra/sheets.desktop
 %{_datadir}/config.kcfg/sheets.kcfg
-%_kde_services/sheetspart.desktop
-%_kde_services/sheets_excel_thumbnail.desktop
-%_kde_services/sheets_ods_thumbnail.desktop
-%_kde_services/sheets_xlsx_thumbnail.desktop
-%_kde_services/ServiceMenus/sheets_print.desktop
+%_kde_services/calligra/sheetspart.desktop
+%_kde_services/ServiceMenus/calligra/sheets_print.desktop
 %{_kde_appsdir}/sheets
 %{_datadir}/config/sheetsrc
 %{_datadir}/templates/SpreadSheet.desktop
-%_kde_services/kspread*.desktop
+%_kde_services/calligra/kspread*.desktop
 %{_datadir}/templates/.source/SpreadSheet.ods
-%_kde_services/krossmodulesheets.desktop
+%_kde_services/calligra/krossmodulesheets.desktop
 %_kde_servicetypes/sheets_plugin.desktop
 %_kde_iconsdir/hicolor/*/*/calligrasheets*
 %doc %_docdir/HTML/en/sheets
+%{_datadir}/appdata/sheets.appdata.xml
 #--------------------------------------------------------------------
 
 %package stage
@@ -474,45 +485,45 @@ content elements are available to Stage.
 %{_libdir}/kde4/kpr_pageeffect_spacerotation.so
 %{_libdir}/kde4/kpr_pageeffect_swapeffect.so
 %{_libdir}/kde4/kpr_shapeanimation_example.so
+%{_datadir}/mime/packages/x-iwork-keynote-sffkey.xml
+%{_datadir}/kde4/services/stage_*_thumbnail.desktop
 %{service calligra_filter_ppt2odp}
 %{service calligra_filter_pptx2odp}
 %{service calligra_filter_kpr2odp}
+%{service calligra_filter_key2odp}
 %{_libdir}/kde4/calligrastageeventactions.so 
 %{_libdir}/kde4/calligrastagetoolanimation.so
 %{_libdir}/kde4/kprvariables.so
 #%{_libdir}/kde4/threedshape.so
 %{_libdir}/libkdeinit4_calligrastage.so
 %defattr(0644,root,root,0755)
-%_kde_applicationsdir/stage.desktop
-%_kde_services/ServiceMenus/stage_print.desktop
+%_kde_applicationsdir/calligra/stage.desktop
+%_kde_services/ServiceMenus/calligra/stage_print.desktop
 %{_kde_appsdir}/stage
 %{_datadir}/templates/Presentation.desktop
 %{_datadir}/templates/.source/Presentation.odp
 %{_datadir}/config/stagerc
 %_kde_iconsdir/hicolor/*/apps/calligrastage.*
-%_kde_services/calligrastageeventactions.desktop
+%_kde_services/calligra/calligrastageeventactions.desktop
 %_kde_servicetypes/presentationeventaction.desktop
-%_kde_services/kpr_pageeffect_barwipe.desktop
-%_kde_services/kpr_pageeffect_clockwipe.desktop
-%_kde_services/kpr_pageeffect_edgewipe.desktop
-%_kde_services/kpr_pageeffect_iriswipe.desktop
-%_kde_services/kpr_pageeffect_matrixwipe.desktop
-%_kde_services/kpr_pageeffect_slidewipe.desktop
-%_kde_services/kpr_shapeanimation_example.desktop
-%_kde_services/kpr_pageeffect_fade.desktop
-%_kde_services/kpr_pageeffect_spacerotation.desktop
-%_kde_services/kpr_pageeffect_swapeffect.desktop
-%_kde_services/calligrastagetoolanimation.desktop
-%_kde_services/kprvariables.desktop
-%_kde_services/stage_odp_thumbnail.desktop
-%_kde_services/stage_powerpoint_thumbnail.desktop
-%_kde_services/stage_pptx_thumbnail.desktop
-%_kde_services/stage_kpr_thumbnail.desktop
-#%_kde_services/threedshape.desktop
+%_kde_services/calligra/kpr_pageeffect_barwipe.desktop
+%_kde_services/calligra/kpr_pageeffect_clockwipe.desktop
+%_kde_services/calligra/kpr_pageeffect_edgewipe.desktop
+%_kde_services/calligra/kpr_pageeffect_iriswipe.desktop
+%_kde_services/calligra/kpr_pageeffect_matrixwipe.desktop
+%_kde_services/calligra/kpr_pageeffect_slidewipe.desktop
+%_kde_services/calligra/kpr_shapeanimation_example.desktop
+%_kde_services/calligra/kpr_pageeffect_fade.desktop
+%_kde_services/calligra/kpr_pageeffect_spacerotation.desktop
+%_kde_services/calligra/kpr_pageeffect_swapeffect.desktop
+%_kde_services/calligra/calligrastagetoolanimation.desktop
+%_kde_services/calligra/kprvariables.desktop
+#%_kde_services/calligra/threedshape.desktop
 %_kde_servicetypes/kpr_pageeffect.desktop
 %_kde_servicetypes/kpr_shapeanimation.desktop
-%{_datadir}/kde4/services/stagepart.desktop
+%{_datadir}/kde4/services/calligra/stagepart.desktop
 %doc %_docdir/HTML/en/stage
+%{_datadir}/appdata/stage.appdata.xml
 
 #--------------------------------------------------------------------
 
@@ -537,7 +548,7 @@ Kchart is a chart and diagram drawing program.
 
 %package krita
 Summary:	Sketching and painting program
-Group:		Graphical desktop/KDE
+Group:		Graphics
 URL:		http://www.calligra-suite.org/krita/
 Requires:	%{name}-core = %{EVRD}
 Requires:	libkdcraw-common
@@ -561,39 +572,41 @@ and textures for rendering.
 %defattr(0755,root,root,0755)
 %{_bindir}/gmicparser
 %{_bindir}/krita
-%{_bindir}/kritagemini
-%{_bindir}/kritasketch
+%{_datadir}/applications/kde4/calligragemini.desktop
 %{_libdir}/kde4/*krita*
-%{_libdir}/libkdeinit4_krita.so
+%{_libdir}/kde4/plugins/imageformats/kimg_kra.so
+%{_libdir}/kde4/plugins/imageformats/kimg_ora.so
+%{_datadir}/kde4/services/qimageioplugins/kra.desktop
+%{_datadir}/kde4/services/qimageioplugins/ora.desktop
+%{_datadir}/applications/kde4/calligra/krita_heightmap.desktop
+%{_datadir}/applications/kde4/calligra/krita_tga.desktop
 %{_libdir}/calligra/imports/org/krita
-%{_libdir}/libkritasketchlib.so
 %{_datadir}/appdata/krita.appdata.xml
-%{_datadir}/applications/kde4/kritagemini.desktop
-%{_datadir}/applications/kde4/kritasketch.desktop
-%{_datadir}/apps/kritagemini
+%{_datadir}/applications/kde4/calligra/kritasketch.desktop
+%{_datadir}/apps/kritaanimation
 %{_datadir}/apps/kritasketch
-%{_datadir}/config/kritageminipanelsrc
-%{_datadir}/config/kritageminirc
+%{_datadir}/apps/color-schemes/KritaNeutral.colors
 %{_datadir}/config/kritasketchpanelsrc
 %{_datadir}/config/kritasketchrc
+%{_datadir}/kde4/services/krita_*_thumbnail.desktop
+%{_datadir}/color/icc/krita/CMakeLists.txt
 %defattr(0644,root,root,0755)
-%_kde_applicationsdir/krita.desktop
-%_kde_applicationsdir/krita_jpeg.desktop
-%_kde_applicationsdir/krita_png.desktop
-%_kde_applicationsdir/krita_bmp.desktop
-%_kde_applicationsdir/krita_odg.desktop
-%_kde_applicationsdir/krita_ora.desktop
-%_kde_applicationsdir/krita_pdf.desktop
-%_kde_applicationsdir/krita_tiff.desktop
-%optional %_kde_applicationsdir/krita_raw.desktop
-%_kde_applicationsdir/krita_exr.desktop
-%_kde_applicationsdir/krita_jp2.desktop
-%_kde_applicationsdir/krita_ppm.desktop
-%_kde_applicationsdir/krita_xcf.desktop
-%_kde_applicationsdir/krita_psd.desktop
-%_kde_applicationsdir/krita_flipbook.desktop
-%_kde_services/ServiceMenus/krita_print.desktop
-%_kde_services/*krita*.desktop
+%_kde_applicationsdir/calligra/krita.desktop
+%_kde_applicationsdir/calligra/krita_jpeg.desktop
+%_kde_applicationsdir/calligra/krita_png.desktop
+%_kde_applicationsdir/calligra/krita_bmp.desktop
+%_kde_applicationsdir/calligra/krita_odg.desktop
+%_kde_applicationsdir/calligra/krita_ora.desktop
+%_kde_applicationsdir/calligra/krita_pdf.desktop
+%_kde_applicationsdir/calligra/krita_tiff.desktop
+%optional %_kde_applicationsdir/calligra/krita_raw.desktop
+%_kde_applicationsdir/calligra/krita_exr.desktop
+%_kde_applicationsdir/calligra/krita_jp2.desktop
+%_kde_applicationsdir/calligra/krita_ppm.desktop
+%_kde_applicationsdir/calligra/krita_xcf.desktop
+%_kde_applicationsdir/calligra/krita_psd.desktop
+%_kde_services/ServiceMenus/calligra/krita_print.desktop
+%_kde_services/calligra/*krita*.desktop
 %_kde_servicetypes/*krita*.desktop
 %_kde_iconsdir/hicolor/*/apps/calligrakrita.*
 %{_kde_appsdir}/krita
@@ -604,14 +617,28 @@ and textures for rendering.
 %{_datadir}/color/icc/krita/README
 %{_datadir}/color/icc/krita/*.icm
 %{_datadir}/color/icc/krita/*.icc
-%{_kde_appsdir}/color-schemes/Krita50.colors
 %{_kde_appsdir}/color-schemes/KritaBlender.colors
 %{_kde_appsdir}/color-schemes/KritaBright.colors
-%{_kde_appsdir}/color-schemes/KritaBrighter.colors
 %{_kde_appsdir}/color-schemes/KritaDark.colors
-%{_kde_appsdir}/color-schemes/KritaDarker.colors
 %{_datadir}/mime/packages/krita_ora.xml
 %{_datadir}/mime/packages/krita.xml
+
+#--------------------------------------------------------------------
+%package gemini
+Summary:	Unified interface for Krita and Krita Sketch
+Group:		Graphics
+
+%description gemini
+Unified interface for Krita and Krita Sketch
+
+%files gemini
+%{_bindir}/calligragemini
+%{_bindir}/calligrageminithumbnailhelper
+%{_libdir}/calligra/imports/Calligra/Gemini
+%{_datadir}/apps/calligragemini
+%{_datadir}/apps/kritagemini
+%{_datadir}/icons/hicolor/*/apps/calligragemini.png
+%{_datadir}/icons/hicolor/*/apps/kritasketch.png
 
 #--------------------------------------------------------------------
 
@@ -641,16 +668,16 @@ art.
 %{service calligra_filter_karbon2wmf}
 %{service calligra_filter_pdf2svg}
 %{service calligra_filter_svg2karbon}
-%_kde_services/calligra_filter_svgz2karbon.desktop
+%_kde_services/calligra/calligra_filter_svgz2karbon.desktop
 %{service calligra_filter_wmf2svg}
 %{service calligra_filter_wpg2svg}
 %{service calligra_filter_wpg2odg}
 %{service calligra_filter_xfig2odg}
 %optional %{_libdir}/kde4/calligra_filter_eps2svgai.so
-%optional %{_datadir}/kde4/services/calligra_filter_eps2svgai.desktop
+%optional %{_datadir}/kde4/services/calligra/calligra_filter_eps2svgai.desktop
 %{_libdir}/kde4/calligra_filter_karbon2image.so
-%_kde_services/calligra_filter_karbon2jpg.desktop
-%_kde_services/calligra_filter_karbon2png.desktop
+%_kde_services/calligra/calligra_filter_karbon2jpg.desktop
+%_kde_services/calligra/calligra_filter_karbon2png.desktop
 %_kde_servicetypes/karbon_viewplugin.desktop
 %_kde_servicetypes/karbon_dock.desktop
 %{_libdir}/kde4/karbonfiltereffects.so
@@ -662,15 +689,17 @@ art.
 %{_libdir}/kde4/karbon_roundcornersplugin.so
 %{_libdir}/libkdeinit4_karbon.so
 %defattr(0644,root,root,0755)
-%_kde_applicationsdir/karbon.desktop
+%_kde_applicationsdir/calligra/karbon.desktop
 %_kde_iconsdir/*/*/apps/calligrakarbon.*
 %_kde_configdir/karbonrc
 %{_kde_appsdir}/karbon
 %{_datadir}/templates/Illustration.desktop
 %{_datadir}/templates/.source/Illustration.odg
-%_kde_services/ServiceMenus/karbon_print.desktop
-%_kde_services/karbon*.desktop
+%{_datadir}/kde4/services/karbon_*_thumbnail.desktop
+%_kde_services/ServiceMenus/calligra/karbon_print.desktop
+%_kde_services/calligra/karbon*.desktop
 %_kde_servicetypes/filtereffect.desktop
+%{_datadir}/appdata/karbon.appdata.xml
 
 #--------------------------------------------------------------------
 
@@ -685,7 +714,7 @@ Kformula is a formula editor for kde project.
 
 %files kformula
 %{_datadir}/apps/formulashape
-%{_kde_services}/kformulapart.desktop
+%{_kde_services}/calligra/kformulapart.desktop
 %{service calligra_shape_formular}
 
 #--------------------------------------------------------------------
@@ -711,16 +740,16 @@ Building sites, and many other options to help you make your diagrams.
 %{service calligra_filter_vsdx2odg}
 %{_libdir}/libkdeinit4_calligraflow.so
 %defattr(0644,root,root,0755)
-%{_datadir}/applications/kde4/flow.desktop
+%{_datadir}/applications/kde4/calligra/flow.desktop
 %{_datadir}/config/flowrc
 %{_datadir}/config/flow_stencils.knsrc
+%{_datadir}/appdata/flow.appdata.xml
+%{_datadir}/kde4/services/flow_*_thumbnail.desktop
 %{_kde_appsdir}/flow
-%_kde_services/flowdockersplugin.desktop
-%_kde_services/flowpart.desktop
-%_kde_services/flow_vsdx_thumbnail.desktop
-%_kde_services/flow_wpg_thumbnail.desktop
+%_kde_services/calligra/flowdockersplugin.desktop
+%_kde_services/calligra/flowpart.desktop
 %_kde_servicetypes/flow_dock.desktop
-%_kde_services/ServiceMenus/flow_print.desktop
+%_kde_services/ServiceMenus/calligra/flow_print.desktop
 %_kde_iconsdir/hicolor/*/*/calligraflow*
 #--------------------------------------------------------------------
 
@@ -782,9 +811,10 @@ are stored in the database, making it easy to share data and design.
 %{_kde_servicetypes}/calligradb_driver.desktop
 %{_kde_servicetypes}/kexihandler.desktop
 %{_kde_servicetypes}/keximigration_driver.desktop
-%{_kde_applicationsdir}/kexi.desktop
+%{_kde_applicationsdir}/calligra/kexi.desktop
 %_kde_iconsdir/hicolor/*/*/calligrakexi*
 %doc %_docdir/HTML/en/kexi
+%{_datadir}/appdata/kexi.appdata.xml
 
 #--------------------------------------------------------------------
 
@@ -802,9 +832,37 @@ ODP file renderer for Okular.
 %defattr(0755,root,root,0755)
 %{_libdir}/kde4/okularGenerator_odp.so
 %defattr(0644,root,root,0755)
-%_kde_applicationsdir/okularApplication_odp.desktop
+%_datadir/applications/kde4/okularApplication_odp.desktop
 %_kde_services/libokularGenerator_odp.desktop
 %_kde_services/okularOdp.desktop
+
+#--------------------------------------------------------------------
+
+%package okular-odt
+Summary:	ODT file renderer for Okular
+Group:		Graphical desktop/KDE
+Requires:	%{name}-core = %{EVRD}
+Requires:	okular
+
+%description okular-odt
+ODT file renderer for Okular.
+
+%files okular-odt
+%defattr(0755,root,root,0755)
+%{_libdir}/kde4/okularGenerator_odt.so
+%defattr(0644,root,root,0755)
+%_datadir/applications/kde4/okularApplication_odt.desktop
+%_kde_services/libokularGenerator_odt.desktop
+%_kde_services/okularOdt.desktop
+%_datadir/kde4/services/calligra/okularDoc_calligra.desktop
+%_datadir/kde4/services/calligra/okularDocx_calligra.desktop
+%_datadir/kde4/services/calligra/okularWpd_calligra.desktop
+%_kde_applicationsdir/calligra/okularApplication_doc_calligra.desktop
+%_kde_applicationsdir/calligra/okularApplication_docx_calligra.desktop
+%_kde_applicationsdir/calligra/okularApplication_wpd_calligra.desktop
+%_datadir/kde4/services/calligra/libokularGenerator_doc_calligra.desktop
+%_datadir/kde4/services/calligra/libokularGenerator_docx_calligra.desktop
+%_datadir/kde4/services/calligra/libokularGenerator_wpd_calligra.desktop
 
 #--------------------------------------------------------------------
 
@@ -903,12 +961,13 @@ and flowcharts.
 
 %files braindump
 %{_bindir}/braindump
-%_kde_applicationsdir/braindump.desktop
+%_kde_applicationsdir/calligra/braindump.desktop
 %{_kde_appsdir}/braindump
 %_kde_servicetypes/braindump_extensions.desktop
 %_kde_iconsdir/*/*/*/braindump.*
-%{_datadir}/kde4/services/braindump_*.desktop
+%{_datadir}/kde4/services/calligra/braindump_*.desktop
 %{_libdir}/kde4/braindump_shape_*.so
+%{_datadir}/appdata/braindump.appdata.xml
 
 #--------------------------------------------------------------------
 %if 1
@@ -926,7 +985,7 @@ Calligra's QML UI.
 %defattr(0755,root,root,0755)
 %{_bindir}/calligraactive
 %defattr(0644,root,root,0755)
-%{_datadir}/applications/calligraactive.desktop
+%{_datadir}/applications/kde4/calligra/calligraactive.desktop
 %{_datadir}/calligraactive
 %endif
 #--------------------------------------------------------------------
@@ -1915,7 +1974,11 @@ Header files needed for developing calligra applications.
 %{_libdir}/libkarboncommon.so
 %{_libdir}/libkarbonui.so
 %{_libdir}/libkordf.so
+%{_libdir}/libkoversion.so
 %{_libdir}/libkowidgetutils.so
+%{_libdir}/libkritacolor.so
+%{_libdir}/libkritacolord.so
+%{_libdir}/libkritasketchlib.so
 %{_libdir}/libcalligrakdchart.so
 %{_libdir}/libcalligrakdgantt.so
 %{_libdir}/libkexicore.so
@@ -1992,8 +2055,6 @@ Calligra Mobile is a mobile user interaction of Calligra Suite.
 %patch2 -p0 -b .xbase312~
 %patch3 -p1 -b .staging~
 %patch4 -p1 -b .libpqxx~
-%patch5 -p1 -b .revenge
-%patch6 -p1 -b .eigen3
 
 %build
 # clang build causes issues with pigment
