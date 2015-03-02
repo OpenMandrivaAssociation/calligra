@@ -547,6 +547,7 @@ Kchart is a chart and diagram drawing program.
 #--------------------------------------------------------------------
 
 %package krita
+%define __noautoreq 'devel.*'
 Summary:	Sketching and painting program
 Group:		Graphics
 URL:		http://www.calligra-suite.org/krita/
