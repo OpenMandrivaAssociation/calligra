@@ -18,7 +18,7 @@ Version:	2.9.0
 %if "%prerel" != ""
 Release:	0.%prerel.1
 %else
-Release:	1
+Release:	2
 %endif
 Source0:	http://master.kde.org/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
@@ -573,7 +573,6 @@ and textures for rendering.
 %defattr(0755,root,root,0755)
 %{_bindir}/gmicparser
 %{_bindir}/krita
-%{_datadir}/applications/kde4/calligragemini.desktop
 %{_libdir}/kde4/*krita*
 %{_libdir}/kde4/plugins/imageformats/kimg_kra.so
 %{_libdir}/kde4/plugins/imageformats/kimg_ora.so
@@ -630,12 +629,13 @@ Summary:	Unified interface for Krita and Krita Sketch
 Group:		Graphics
 
 %description gemini
-Unified interface for Krita and Krita Sketch
+Unified interface for Krita and Krita Sketch.
 
 %files gemini
 %{_bindir}/calligragemini
 %{_bindir}/calligrageminithumbnailhelper
 %{_libdir}/calligra/imports/Calligra/Gemini
+%{_datadir}/applications/kde4/calligragemini.desktop
 %{_datadir}/apps/calligragemini
 %{_datadir}/apps/kritagemini
 %{_datadir}/icons/hicolor/*/apps/calligragemini.png
