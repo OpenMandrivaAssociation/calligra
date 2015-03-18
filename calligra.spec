@@ -18,7 +18,7 @@ Version:	2.9.1
 %if "%prerel" != ""
 Release:	0.%prerel.1
 %else
-Release:	1
+Release:	2
 %endif
 Source0:	http://master.kde.org/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
@@ -628,7 +628,7 @@ Summary:	Unified interface for Krita and Krita Sketch
 Group:		Graphics
 
 %description gemini
-Unified interface for Krita and Krita Sketch
+Unified interface for Krita and Krita Sketch.
 
 %files gemini
 %{_bindir}/calligragemini
