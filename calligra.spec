@@ -18,7 +18,7 @@ Version:	2.9.1
 %if "%prerel" != ""
 Release:	0.%prerel.1
 %else
-Release:	2
+Release:	3
 %endif
 Source0:	http://master.kde.org/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
@@ -546,7 +546,7 @@ Kchart is a chart and diagram drawing program.
 #--------------------------------------------------------------------
 
 %package krita
-%define __noautoreq 'devel.*'
+%define __noautoreq 'devel.*|calligra-devel'
 Summary:	Sketching and painting program
 Group:		Graphics
 URL:		http://www.calligra-suite.org/krita/
