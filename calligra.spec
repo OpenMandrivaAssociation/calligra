@@ -18,7 +18,7 @@ Version:	2.9.2
 %if "%prerel" != ""
 Release:	0.%prerel.1
 %else
-Release:	1
+Release:	2
 %endif
 Source0:	ftp://ftp.kde.org/pub/kde/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
