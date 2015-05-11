@@ -119,7 +119,8 @@ Calligra contains:
 #--------------------------------------------------------------------
 %libpackage koversion 14
 %libpackage kritacolor 14
-%libpackage kritasketchlib 14
+%libpackage libglobal 14
+%libpackage libkispsd 14
 #--------------------------------------------------------------------
 
 %package core
@@ -423,7 +424,6 @@ such as income and expenditure, employee working hours, etc.
 %{service calligra_filter_dbase2kspread}
 %{service calligra_shape_spreadsheet}
 %{service calligra_shape_spreadsheet-deferred}
-%{service sheetspivottables}
 %{service sheetssolver}
 %_datadir/kde4/services/sheets_*_thumbnail.desktop
 %_kde_services/calligra/sheetsscripting.desktop
@@ -581,12 +581,9 @@ and textures for rendering.
 %{_datadir}/applications/kde4/krita_tga.desktop
 %{_libdir}/calligra/imports/org/krita
 %{_datadir}/appdata/krita.appdata.xml
-%{_datadir}/applications/kde4/kritasketch.desktop
 %{_datadir}/apps/kritaanimation
 %{_datadir}/apps/kritasketch
 %{_datadir}/apps/color-schemes/KritaNeutral.colors
-%{_datadir}/config/kritasketchpanelsrc
-%{_datadir}/config/kritasketchrc
 %{_datadir}/kde4/services/krita_*_thumbnail.desktop
 %{_datadir}/color/icc/krita/CMakeLists.txt
 %defattr(0644,root,root,0755)
@@ -638,6 +635,7 @@ Unified interface for Krita and Krita Sketch.
 %{_datadir}/apps/calligragemini
 %{_datadir}/apps/kritagemini
 %{_datadir}/icons/hicolor/*/apps/calligragemini.png
+%{_datadir}/icons/hicolor/*/apps/kritagemini.png
 %{_datadir}/icons/hicolor/*/apps/kritasketch.png
 
 #--------------------------------------------------------------------
@@ -668,7 +666,6 @@ art.
 %{service calligra_filter_karbon2wmf}
 %{service calligra_filter_pdf2svg}
 %{service calligra_filter_svg2karbon}
-%_kde_services/calligra/calligra_filter_svgz2karbon.desktop
 %{service calligra_filter_wmf2svg}
 %{service calligra_filter_wpg2svg}
 %{service calligra_filter_wpg2odg}
@@ -676,8 +673,7 @@ art.
 %optional %{_libdir}/kde4/calligra_filter_eps2svgai.so
 %optional %{_datadir}/kde4/services/calligra/calligra_filter_eps2svgai.desktop
 %{_libdir}/kde4/calligra_filter_karbon2image.so
-%_kde_services/calligra/calligra_filter_karbon2jpg.desktop
-%_kde_services/calligra/calligra_filter_karbon2png.desktop
+%_kde_services/calligra/calligra_filter_karbon2image.desktop
 %_kde_servicetypes/karbon_viewplugin.desktop
 %_kde_servicetypes/karbon_dock.desktop
 %{_libdir}/kde4/karbonfiltereffects.so
@@ -1968,6 +1964,8 @@ Header files needed for developing calligra applications.
 %{_libdir}/libcalligradb.so
 %{_libdir}/libbasicflakes.so
 %{_libdir}/libflake.so
+%{_libdir}/liblibglobal.so
+%{_libdir}/liblibkispsd.so
 %{_libdir}/libkoodfreader.so
 %{_libdir}/libkotextlayout.so
 %{_libdir}/libkovectorimage.so
@@ -1978,7 +1976,6 @@ Header files needed for developing calligra applications.
 %{_libdir}/libkowidgetutils.so
 %{_libdir}/libkritacolor.so
 %{_libdir}/libkritacolord.so
-%{_libdir}/libkritasketchlib.so
 %{_libdir}/libcalligrakdchart.so
 %{_libdir}/libcalligrakdgantt.so
 %{_libdir}/libkexicore.so
