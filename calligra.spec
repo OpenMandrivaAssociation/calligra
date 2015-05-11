@@ -14,7 +14,7 @@ Summary:	Set of office applications for KDE
 Epoch:		16
 Name:		calligra
 URL:		http://www.calligra-suite.org
-Version:	2.9.2
+Version:	2.9.4
 %if "%prerel" != ""
 Release:	0.%prerel.1
 %else
