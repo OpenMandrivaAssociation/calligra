@@ -1,14 +1,14 @@
---- calligra-2.8.0/CMakeLists.txt.staging~	2014-03-06 13:38:27.059248823 +0100
-+++ calligra-2.8.0/CMakeLists.txt	2014-03-06 13:40:12.945861359 +0100
-@@ -74,9 +74,9 @@ endif(NOT DEFINED RELEASE_BUILD)
- message(STATUS "Release build: ${RELEASE_BUILD}")
+--- calligra-2.9.1/CMakeLists.txt.staging~	2015-03-17 00:31:07.201603139 +0100
++++ calligra-2.9.1/CMakeLists.txt	2015-03-17 00:32:01.278769370 +0100
+@@ -129,9 +129,9 @@ if(NOT PRODUCTSET)
+ endif()
  
  if (RELEASE_BUILD)
 -    set(CALLIGRA_SHOULD_BUILD_STAGING FALSE)
-+	option(CALLIGRA_SHOULD_BUILD_STAGING "Build staging bits" OFF)
- else (RELEASE_BUILD)
++    option(CALLIGRA_SHOULD_BUILD_STAGING "Build staging bits" FALSE)
+ else ()
 -    set(CALLIGRA_SHOULD_BUILD_STAGING TRUE)
-+	option(CALLIGRA_SHOULD_BUILD_STAGING "Build staging bits" ON)
- endif (RELEASE_BUILD)
++    option(CALLIGRA_SHOULD_BUILD_STAGING "Build staging bits" TRUE)
+ endif ()
  
- if (WIN32)
+ # finally choose products/features to build
