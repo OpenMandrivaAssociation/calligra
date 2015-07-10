@@ -14,11 +14,11 @@ Summary:	Set of office applications for KDE
 Epoch:		16
 Name:		calligra
 URL:		http://www.calligra-suite.org
-Version:	2.9.4
+Version:	2.9.6
 %if "%prerel" != ""
 Release:	0.%prerel.1
 %else
-Release:	4
+Release:	1
 %endif
 Source0:	ftp://ftp.kde.org/pub/kde/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
