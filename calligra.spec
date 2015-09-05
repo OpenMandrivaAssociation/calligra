@@ -3,6 +3,7 @@
 %define prerel %nil
 %define _disable_ld_no_undefined 1
 %define defaultmajor 14
+%define _disable_lto 1
 
 %define service(s) %{_libdir}/kde4/%{1}.so \
 %{_datadir}/kde4/services/calligra/%{1}.desktop
@@ -14,17 +15,18 @@ Summary:	Set of office applications for KDE
 Epoch:		16
 Name:		calligra
 URL:		http://www.calligra-suite.org
-Version:	2.9.6
+Version:	2.9.7
 %if "%prerel" != ""
 Release:	0.%prerel.1
 %else
-Release:	2
+Release:	1
 %endif
 Source0:	ftp://ftp.kde.org/pub/kde/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
 Patch2:		calligra-2.6.0-xbase-3.1.2.patch
 Patch3:		calligra-optionize-staging.patch
 Patch4:		calligra-2.8.0-libpqxx-4.0.patch
+Patch5:		0001-adapt-to-libwps-0.4.patch
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 BuildRequires:	kdepimlibs4-devel
@@ -71,7 +73,7 @@ BuildRequires:	pkgconfig(fftw3)
 BuildRequires:	pkgconfig(librevenge-0.0)
 BuildRequires:	pkgconfig(libodfgen-0.1)
 BuildRequires:	pkgconfig(libvisio-0.1)
-BuildRequires:	pkgconfig(libwps-0.3)
+BuildRequires:	pkgconfig(libwps-0.4)
 BuildRequires:	pkgconfig(libetonyek-0.1)
 BuildRequires:	pkgconfig(OpenEXR)
 BuildRequires:	pkgconfig(libkactivities)
@@ -119,8 +121,8 @@ Calligra contains:
 #--------------------------------------------------------------------
 %libpackage koversion 14
 %libpackage kritacolor 14
-%libpackage libglobal 14
-%libpackage libkispsd 14
+%libpackage kritaglobal 14
+%libpackage kritapsd 14
 #--------------------------------------------------------------------
 
 %package core
@@ -332,7 +334,7 @@ Obsoletes:	%{_lib}kplatoworkprivat5
 Obsoletes:	koffice-kplato
 Obsoletes:	koffice2-kplato
 # For M$ Project import filter
-BuildRequires:	java-1.7.0-openjdk-devel
+BuildRequires:	java-1.8.0-openjdk-devel
 %rename		plan
 
 %description plan
@@ -795,7 +797,6 @@ are stored in the database, making it easy to share data and design.
 %{_libdir}/kde4/keximigrate_txt.so
 %{_libdir}/kde4/keximigrate_spreadsheet.so
 %{_libdir}/kde4/keximigrate_xbase.so
-%{_libdir}/kde4/kexirelationdesignshape.so
 %{_libdir}/kde4/krossmodulekexidb.so
 %{_libdir}/kde4/kexihandler_report.so
 %defattr(0644,root,root,0755)
@@ -850,15 +851,15 @@ ODT file renderer for Okular.
 %_datadir/applications/kde4/okularApplication_odt.desktop
 %_kde_services/libokularGenerator_odt.desktop
 %_kde_services/okularOdt.desktop
-%_datadir/kde4/services/calligra/okularDoc_calligra.desktop
-%_datadir/kde4/services/calligra/okularDocx_calligra.desktop
-%_datadir/kde4/services/calligra/okularWpd_calligra.desktop
+%_datadir/kde4/services/okularDoc_calligra.desktop
+%_datadir/kde4/services/okularDocx_calligra.desktop
+%_datadir/kde4/services/okularWpd_calligra.desktop
 %_kde_applicationsdir/okularApplication_doc_calligra.desktop
 %_kde_applicationsdir/okularApplication_docx_calligra.desktop
 %_kde_applicationsdir/okularApplication_wpd_calligra.desktop
-%_datadir/kde4/services/calligra/libokularGenerator_doc_calligra.desktop
-%_datadir/kde4/services/calligra/libokularGenerator_docx_calligra.desktop
-%_datadir/kde4/services/calligra/libokularGenerator_wpd_calligra.desktop
+%_datadir/kde4/services/libokularGenerator_doc_calligra.desktop
+%_datadir/kde4/services/libokularGenerator_docx_calligra.desktop
+%_datadir/kde4/services/libokularGenerator_wpd_calligra.desktop
 
 #--------------------------------------------------------------------
 
@@ -1964,8 +1965,8 @@ Header files needed for developing calligra applications.
 %{_libdir}/libcalligradb.so
 %{_libdir}/libbasicflakes.so
 %{_libdir}/libflake.so
-%{_libdir}/liblibglobal.so
-%{_libdir}/liblibkispsd.so
+%{_libdir}/libkritaglobal.so
+%{_libdir}/libkritapsd.so
 %{_libdir}/libkoodfreader.so
 %{_libdir}/libkotextlayout.so
 %{_libdir}/libkovectorimage.so
@@ -2051,6 +2052,7 @@ Calligra Mobile is a mobile user interaction of Calligra Suite.
 %patch2 -p0 -b .xbase312~
 %patch3 -p1 -b .staging~
 %patch4 -p1 -b .libpqxx~
+%patch5 -p1 -b .wps04
 
 %build
 # clang build causes issues with pigment
