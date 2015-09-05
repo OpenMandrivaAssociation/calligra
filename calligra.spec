@@ -350,7 +350,7 @@ It is intended for managing moderately large projects with multiple resources.
 %{_libdir}/kde4/krossmoduleplan.so
 %{_libdir}/kde4/planpart.so
 %{_libdir}/kde4/planworkpart.so
-%{_libdir}/kde4/planicalexport.so
+#{_libdir}/kde4/planicalexport.so
 %{_libdir}/kde4/plankplatoimport.so
 %{_libdir}/kde4/plantjscheduler.so
 # Doesn't fit the regular service naming scheme, can't use %%service
@@ -363,7 +363,7 @@ It is intended for managing moderately large projects with multiple resources.
 %{_kde_appsdir}/planwork
 %{_datadir}/config/planrc
 %_kde_services/calligra/krossmoduleplan.desktop
-%_kde_services/calligra/plan_icalendar_export.desktop
+#_kde_services/calligra/plan_icalendar_export.desktop
 %_kde_services/calligra/planpart.desktop
 %_kde_services/calligra/planworkpart.desktop
 %_kde_services/calligra/plan_kplato_import.desktop
