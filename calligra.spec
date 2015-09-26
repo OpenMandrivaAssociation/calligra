@@ -29,7 +29,7 @@ Source1:	%{name}.rpmlintrc
 Patch2:		calligra-2.6.0-xbase-3.1.2.patch
 Patch3:		calligra-optionize-staging.patch
 Patch4:		calligra-2.8.0-libpqxx-4.0.patch
-Patch5:		0001-adapt-to-libwps-0.4.patch
+#Patch5:		0001-adapt-to-libwps-0.4.patch
 BuildRequires:	pstoedit
 BuildRequires:	boost-devel
 BuildRequires:	freetds-devel
@@ -71,7 +71,7 @@ BuildRequires:	pkgconfig(librevenge-0.0)
 BuildRequires:	pkgconfig(libvisio-0.1)
 BuildRequires:	pkgconfig(libwpd-0.10)
 BuildRequires:	pkgconfig(libwpg-0.3)
-BuildRequires:	pkgconfig(libwps-0.4)
+BuildRequires:	pkgconfig(libwps-0.3)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(poppler-qt4)
 BuildRequires:	pkgconfig(python)
