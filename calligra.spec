@@ -385,7 +385,7 @@ Summary:	Project management application for Calligra
 Group:		Graphical desktop/KDE
 Requires:	%{name}-core = %{EVRD}
 # For M$ Project import filter
-BuildRequires:	java-1.8.0-openjdk-devel
+BuildRequires:	java-devel-openjdk
 %rename		plan
 
 %description plan
