@@ -177,7 +177,7 @@ Calligra contains:
 
 # MD This lib is missing a soname, but it is req'd by libkritacolor
 # and causing the devel pkg to be install by default.
-%define %mklibname kritacolord
+%define libkritacolord %mklibname kritacolord
 
 %package -n %{libkritacolord}
 Summary:	Calligra library
