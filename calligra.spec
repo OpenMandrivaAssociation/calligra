@@ -324,7 +324,6 @@ Summary:	Word processor for calligra
 Group:		Graphical desktop/KDE
 Requires:	%{name}-core = %{EVRD}
 Requires:	wordnet
-Provides:	%{name}-apps
 
 %description    words
 Words is an intuitive word processor application with desktop publishing
@@ -390,8 +389,6 @@ Write ebooks and textbooks.
 Summary:	Project management application for Calligra
 Group:		Graphical desktop/KDE
 Requires:	%{name}-core = %{EVRD}
-Provides:	%{name}-apps
-Provides:	kplato2
 # For M$ Project import filter
 BuildRequires:	java-1.8.0-openjdk-devel
 %rename		plan
@@ -447,10 +444,6 @@ It is intended for managing moderately large projects with multiple resources.
 Summary:	SpreadSheet for calligra
 Group:		Graphical desktop/KDE
 Requires:	%{name}-core = %{EVRD}
-Provides:	%{name}-apps
-Obsoletes:	koffice-kspread
-Obsoletes:	koffice2-kspread
-Obsoletes:	kspread
 # Sheets used to be called tables in early betas
 %rename		tables
 %rename		sheets
@@ -512,7 +505,6 @@ Summary:	Presentation for calligra-suite
 Group:		Graphical desktop/KDE
 Requires:	%{name}-core = %{EVRD}
 Requires:	xdg-utils
-Provides:	%{name}-apps
 %rename	stage
 
 %description stage
@@ -582,8 +574,6 @@ content elements are available to Stage.
 Summary:	Chart and diagram drawing
 Group:		Graphical desktop/KDE
 Requires:	%{name}-core = %{EVRD}
-Provides:	%{name}-apps
-Provides:	kchart2
 %rename		kchart
 
 %description kchart
@@ -600,7 +590,6 @@ Summary:	Sketching and painting program
 Group:		Graphics
 Requires:	%{name}-core = %{EVRD}
 Requires:	libkdcraw-common
-Provides:	%{name}-apps
 %rename		krita
 
 %description krita
@@ -685,7 +674,6 @@ Unified interface for Krita and Krita Sketch.
 Summary:	Scalable drawing for calligra
 Group:		Graphical desktop/KDE
 Requires:	%{name}-core = %{EVRD}
-Provides:	%{name}-apps
 %rename		karbon
 
 %description karbon
@@ -790,7 +778,6 @@ Building sites, and many other options to help you make your diagrams.
 Summary:	An integrated environment for managing data
 Group:		Graphical desktop/KDE
 Requires:	%{name}-core = %{EVRD}
-Provides:	%{name}-apps
 %rename		kexi
 
 %description kexi
