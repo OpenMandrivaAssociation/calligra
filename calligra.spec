@@ -23,8 +23,8 @@ Release:	2
 %endif
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
-Url:		http://www.calligra-suite.org
-Source0:	ftp://ftp.kde.org/pub/kde/%(if [ `echo %version |cut -d. -f3` -ge 50 ]; then echo -n un; fi)stable/%{name}-%{version}/%{name}-%{version}.tar.xz
+Url:		http://www.calligra.org
+Source0:	http://download.kde.org/stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
 Patch2:		calligra-2.6.0-xbase-3.1.2.patch
 Patch3:		calligra-optionize-staging.patch
