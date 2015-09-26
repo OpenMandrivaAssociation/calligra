@@ -203,13 +203,9 @@ Common files for Calligra.
 %{_bindir}/cstester
 %{_bindir}/cstrunner
 %{_bindir}/visualimagecompare
-%{_libdir}/kde4/calligradocinfopropspage.so
+%{_libdir}/calligra/imports/org/calligra/CalligraComponents
 %{_libdir}/kde4/calligraimagethumbnail.so
 %{_libdir}/kde4/calligrathumbnail.so
-%{_libdir}/kde4/kolcmsengine.so
-%{_libdir}/kde4/kopabackgroundtool.so
-%{_libdir}/kde4/koreport_barcodeplugin.so
-%{_libdir}/kde4/koreport_chartplugin.so
 %{service calligra_docker_defaults}
 %{service calligra_shape_artistictext}
 %{service calligra_shape_music}
@@ -227,9 +223,13 @@ Common files for Calligra.
 %{service calligra_textinlineobject_variables}
 %{service calligra_tool_basicflakes}
 %{service calligra_tool_defaults}
-%optional %{_libdir}/kde4/koreport_mapsplugin.so
-%{_libdir}/kde4/koreport_webplugin.so
-%{_libdir}/calligra/imports/org/calligra/CalligraComponents
+%{service calligradocinfopropspage}
+%{service kolcmsengine}
+%{service kopabackgroundtool}
+%{service koreport_barcodeplugin}
+%{service koreport_chartplugin}
+%optional %{service koreport_mapsplugin}
+%{service koreport_webplugin}
 %defattr(0644,root,root,0755)
 %doc %{_kde_docdir}/HTML/en/calligra
 %optional %{_datadir}/kde4/services/calligra/calligra_docker_textdocumentinspection.desktop
@@ -270,13 +270,6 @@ Common files for Calligra.
 %{_kde_iconsdir}/*/*/actions/x-shape-formula.*
 %{_kde_iconsdir}/*/*/actions/x-shape-image.*
 %{_kde_iconsdir}/*/*/actions/x-shape-text.*
-%{_kde_services}/calligra/calligradocinfopropspage.desktop
-%{_kde_services}/calligra/kolcmsengine.desktop
-%{_kde_services}/calligra/kopabackgroundtool.desktop
-%{_kde_services}/calligra/koreport_barcodeplugin.desktop
-%{_kde_services}/calligra/koreport_chartplugin.desktop
-%optional %{_kde_services}/calligra/koreport_mapsplugin.desktop
-%{_kde_services}/calligra/koreport_webplugin.desktop
 %{_kde_services}/calligra_odg_thumbnail.desktop
 %{_kde_servicetypes}/calligra_application.desktop
 %{_kde_servicetypes}/calligra_deferred_plugin.desktop
@@ -371,12 +364,11 @@ Write ebooks and textbooks.
 
 %files author
 %{_bindir}/calligraauthor
-%{_libdir}/kde4/authorpart.so
 %{_libdir}/libkdeinit4_calligraauthor.so
 %{_kde_applicationsdir}/author.desktop
 %{_kde_appsdir}/author
 %{_kde_configdir}/authorrc
-%{_kde_services}/calligra/authorpart.desktop
+%{service authorpart}
 
 #--------------------------------------------------------------------
 
@@ -398,15 +390,14 @@ It is intended for managing moderately large projects with multiple resources.
 %{_bindir}/calligraplanwork
 %{_libdir}/libkdeinit4_calligraplan.so
 %{_libdir}/libkdeinit4_calligraplanwork.so
-%{_libdir}/kde4/krossmoduleplan.so
 %{_libdir}/kde4/planicalexport.so
-%{_libdir}/kde4/planpart.so
-%{_libdir}/kde4/planworkpart.so
 %{_libdir}/kde4/plankplatoimport.so
-%{_libdir}/kde4/plantjscheduler.so
-# Doesn't fit the regular service naming scheme, can't use %service
 %{_libdir}/kde4/calligra_filter_mpxj2plan.so
 %{_libdir}/kde4/planconvert
+%{service krossmoduleplan}
+%{service planpart}
+%{service plantjscheduler}
+%{service planworkpart}
 %defattr(0644,root,root,0755)
 %{_kde_servicetypes}/plan_schedulerplugin.desktop
 %{_kde_servicetypes}/plan_viewplugin.desktop
@@ -426,14 +417,10 @@ It is intended for managing moderately large projects with multiple resources.
 %{_kde_services}/calligra/calligra_filter_mpp2plan.desktop
 %{_kde_services}/calligra/calligra_filter_mpx2plan.desktop
 %{_kde_services}/calligra/calligra_filter_planner2plan.desktop
-%{_kde_services}/calligra/krossmoduleplan.desktop
 %{_kde_services}/calligra/plan_icalendar_export.desktop
 %{_kde_services}/calligra/plan_kplato_import.desktop
-%{_kde_services}/calligra/planpart.desktop
 %{_kde_services}/calligra/planrcpsscheduler.desktop
 %{_kde_services}/calligra/planscripting.desktop
-%{_kde_services}/calligra/plantjscheduler.desktop
-%{_kde_services}/calligra/planworkpart.desktop
 
 #--------------------------------------------------------------------
 
@@ -459,7 +446,6 @@ such as income and expenditure, employee working hours, etc.
 %{_kde_servicetypes}/sheets_viewplugin.desktop
 %{_libdir}/kde4/calligrasheetspart.so
 %{_libdir}/kde4/kplatorcpsscheduler.so
-%{_libdir}/kde4/krossmodulesheets.so
 %{_libdir}/kde4/kspread*.so
 %{_libdir}/libkdeinit4_calligrasheets.so
 %{service calligra_filter_applixspread2kspread}
@@ -478,6 +464,7 @@ such as income and expenditure, employee working hours, etc.
 %{service calligra_filter_xlsx2ods}
 %{service calligra_shape_spreadsheet-deferred}
 %{service calligra_shape_spreadsheet}
+%{service krossmodulesheets}
 %{service sheetssolver}
 %defattr(0644,root,root,0755)
 %doc %{_docdir}/HTML/en/sheets
@@ -490,7 +477,6 @@ such as income and expenditure, employee working hours, etc.
 %{_kde_appsdir}/sheets
 %{_kde_iconsdir}/hicolor/*/*/calligrasheets*
 %{_kde_services}/ServiceMenus/calligra/sheets_print.desktop
-%{_kde_services}/calligra/krossmodulesheets.desktop
 %{_kde_services}/calligra/kspread*.desktop
 %{_kde_services}/calligra/sheetspart.desktop
 %{_kde_servicetypes}/sheets_plugin.desktop
@@ -518,25 +504,25 @@ content elements are available to Stage.
 %{_bindir}/calligrastage
 %{_datadir}/kde4/services/stage_*_thumbnail.desktop
 %{_datadir}/mime/packages/x-iwork-keynote-sffkey.xml
-%{_libdir}/kde4/calligrastageeventactions.so 
 %{_libdir}/kde4/calligrastagepart.so
-%{_libdir}/kde4/calligrastagetoolanimation.so
-%{_libdir}/kde4/kpr_pageeffect_barwipe.so
-%{_libdir}/kde4/kpr_pageeffect_clockwipe.so
-%{_libdir}/kde4/kpr_pageeffect_edgewipe.so
-%{_libdir}/kde4/kpr_pageeffect_fade.so
-%{_libdir}/kde4/kpr_pageeffect_iriswipe.so
-%{_libdir}/kde4/kpr_pageeffect_matrixwipe.so
-%{_libdir}/kde4/kpr_pageeffect_slidewipe.so
-%{_libdir}/kde4/kpr_pageeffect_spacerotation.so
-%{_libdir}/kde4/kpr_pageeffect_swapeffect.so
-%{_libdir}/kde4/kpr_shapeanimation_example.so
-%{_libdir}/kde4/kprvariables.so
 %{_libdir}/libkdeinit4_calligrastage.so
 %{service calligra_filter_key2odp}
 %{service calligra_filter_kpr2odp}
 %{service calligra_filter_ppt2odp}
 %{service calligra_filter_pptx2odp}
+%{service calligrastageeventactions}
+%{service calligrastagetoolanimation}
+%{service kpr_pageeffect_barwipe}
+%{service kpr_pageeffect_clockwipe}
+%{service kpr_pageeffect_edgewipe}
+%{service kpr_pageeffect_fade}
+%{service kpr_pageeffect_iriswipe}
+%{service kpr_pageeffect_matrixwipe}
+%{service kpr_pageeffect_slidewipe}
+%{service kpr_pageeffect_spacerotation}
+%{service kpr_pageeffect_swapeffect}
+%{service kpr_shapeanimation_example}
+%{service kprvariables}
 %defattr(0644,root,root,0755)
 %doc %{_docdir}/HTML/en/stage
 %{_datadir}/appdata/stage.appdata.xml
@@ -548,19 +534,6 @@ content elements are available to Stage.
 %{_kde_appsdir}/stage
 %{_kde_iconsdir}/hicolor/*/apps/calligrastage.*
 %{_kde_services}/ServiceMenus/calligra/stage_print.desktop
-%{_kde_services}/calligra/calligrastageeventactions.desktop
-%{_kde_services}/calligra/calligrastagetoolanimation.desktop
-%{_kde_services}/calligra/kpr_pageeffect_barwipe.desktop
-%{_kde_services}/calligra/kpr_pageeffect_clockwipe.desktop
-%{_kde_services}/calligra/kpr_pageeffect_edgewipe.desktop
-%{_kde_services}/calligra/kpr_pageeffect_fade.desktop
-%{_kde_services}/calligra/kpr_pageeffect_iriswipe.desktop
-%{_kde_services}/calligra/kpr_pageeffect_matrixwipe.desktop
-%{_kde_services}/calligra/kpr_pageeffect_slidewipe.desktop
-%{_kde_services}/calligra/kpr_pageeffect_spacerotation.desktop
-%{_kde_services}/calligra/kpr_pageeffect_swapeffect.desktop
-%{_kde_services}/calligra/kpr_shapeanimation_example.desktop
-%{_kde_services}/calligra/kprvariables.desktop
 %{_kde_servicetypes}/kpr_pageeffect.desktop
 %{_kde_servicetypes}/kpr_shapeanimation.desktop
 %{_kde_servicetypes}/presentationeventaction.desktop
@@ -683,12 +656,8 @@ art.
 %files karbon
 %defattr(0755,root,root,0755)
 %{_bindir}/karbon
-%optional %{_datadir}/kde4/services/calligra/calligra_filter_eps2svgai.desktop
-%{_kde_services}/calligra/calligra_filter_karbon2image.desktop
 %{_kde_servicetypes}/karbon_dock.desktop
 %{_kde_servicetypes}/karbon_viewplugin.desktop
-%optional %{_libdir}/kde4/calligra_filter_eps2svgai.so
-%{_libdir}/kde4/calligra_filter_karbon2image.so
 %{_libdir}/kde4/karbon_flattenpathplugin.so
 %{_libdir}/kde4/karbon_refinepathplugin.so
 %{_libdir}/kde4/karbon_roundcornersplugin.so
@@ -697,7 +666,9 @@ art.
 %{_libdir}/kde4/karbonpart.so
 %{_libdir}/kde4/karbontools.so
 %{_libdir}/libkdeinit4_karbon.so
+%optional %{service calligra_filter_eps2svgai}
 %{service calligra_filter_karbon1x2karbon}
+%{service calligra_filter_karbon2image}
 %{service calligra_filter_karbon2svg}
 %{service calligra_filter_karbon2wmf}
 %{service calligra_filter_pdf2svg}
