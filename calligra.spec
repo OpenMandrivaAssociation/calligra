@@ -399,11 +399,12 @@ It is intended for managing moderately large projects with multiple resources.
 %{_libdir}/libkdeinit4_calligraplan.so
 %{_libdir}/libkdeinit4_calligraplanwork.so
 %{_libdir}/kde4/krossmoduleplan.so
+%{_libdir}/kde4/planicalexport.so
 %{_libdir}/kde4/planpart.so
 %{_libdir}/kde4/planworkpart.so
 %{_libdir}/kde4/plankplatoimport.so
 %{_libdir}/kde4/plantjscheduler.so
-# Doesn't fit the regular service naming scheme, can't use %%service
+# Doesn't fit the regular service naming scheme, can't use %service
 %{_libdir}/kde4/calligra_filter_mpxj2plan.so
 %{_libdir}/kde4/planconvert
 %defattr(0644,root,root,0755)
@@ -426,6 +427,7 @@ It is intended for managing moderately large projects with multiple resources.
 %{_kde_services}/calligra/calligra_filter_mpx2plan.desktop
 %{_kde_services}/calligra/calligra_filter_planner2plan.desktop
 %{_kde_services}/calligra/krossmoduleplan.desktop
+%{_kde_services}/calligra/plan_icalendar_export.desktop
 %{_kde_services}/calligra/plan_kplato_import.desktop
 %{_kde_services}/calligra/planpart.desktop
 %{_kde_services}/calligra/planrcpsscheduler.desktop
@@ -813,7 +815,7 @@ are stored in the database, making it easy to share data and design.
 %{_libdir}/kde4/kformdesigner_webbrowser.so
 %{_libdir}/kde4/krossmodulekexidb.so
 %defattr(0644,root,root,0755)
-%doc %%{_docdir}/HTML/en/kexi
+%doc %{_docdir}/HTML/en/kexi
 %{_kde_servicetypes}/calligradb_driver.desktop
 %{_kde_servicetypes}/kexihandler.desktop
 %{_kde_servicetypes}/keximigration_driver.desktop
@@ -907,7 +909,7 @@ images, charts, drawings. You can also organize your ideas into diagrams
 and flowcharts.
 
 %files braindump
-%%{_kde_servicetypes}/braindump_extensions.desktop
+%{_kde_servicetypes}/braindump_extensions.desktop
 %{_bindir}/braindump
 %{_datadir}/appdata/braindump.appdata.xml
 %{_datadir}/kde4/services/calligra/braindump_*.desktop
