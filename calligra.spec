@@ -121,12 +121,14 @@ The %{1} library, a part of %{name}.\
 %{nil}
 
 # libpackages
-%define calligralibs RtfReader basicflakes braindumpcore calligradb calligrakdchart calligrakdgantt calligrasheetscommon calligrasheetsodf calligrastageprivate flake flowprivate karboncommon karbonui kexicore kexidatatable kexidataviewcommon kexidb kexiextendedwidgets kexiformutils kexiguiutils keximain keximigrate kexirelationsview kexiutils kformdesigner kformula kokross komain komsooxml koodf koodf2 koodfreader kopageapp koplugin koproperty kordf koreport kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kplatokernel kplatomodels kplatoui kritacolor kritaglobal kritaimage kritalibbrush kritalibpaintop kritapsd kritaui kundo2 pigmentcms planprivate planworkapp planworkfactory rcps_plan wordsprivate 
+%define calligralibs RtfReader basicflakes calligradb calligrakdchart calligrakdgantt calligrasheetscommon calligrasheetsodf calligrastageprivate flake flowprivate karboncommon karbonui kexicore kexidatatable kexidataviewcommon kexidb kexiextendedwidgets kexiformutils kexiguiutils keximain keximigrate kexirelationsview kexiutils kformdesigner kformula kokross komain komsooxml koodf koodf2 koodfreader kopageapp koplugin koproperty kordf koreport kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kplatokernel kplatomodels kplatoui kritacolor kritaglobal kritaimage kritalibbrush kritalibpaintop kritapsd kritaui kundo2 pigmentcms planprivate planworkapp planworkfactory rcps_plan wordsprivate 
 %{expand:%(for lib in %{calligralibs}; do cat <<EOF
 %%libpackage $lib %{major}
 EOF
 done)}
 %libpackage kowv2 9
+# MD there is no devel library for braindumpcore
+%libpackage braindumpcore %{major}
 #--------------------------------------------------------------------
 
 # MD This lib is missing a soname, but it is req'd by libkritacolor
