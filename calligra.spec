@@ -106,68 +106,27 @@ Calligra contains:
 %files
 
 #--------------------------------------------------------------------
+### MD the libpackage macro is missing a few bits.
+### this fixes a couple until a better solution is found
+%define libpackage()\
+%{expand:%%define nib %(echo %{1} | sed 's,[0-9]$,&_,' )}\
+%{expand:%%define lib%{1} %%mklibname %{nib} %{2}}\
+%%package -n %{expand:%{lib%{1}}}\
+Summary: The %{1} library, a part of %{name}\
+Group: System/Libraries\
+%%description -n %{expand:%{lib%{1}}}\
+The %{1} library, a part of %{name}.\
+%%files -n %{expand:%{lib%{1}}}\
+%{_libdir}/lib%{1}.so.%{2}*\
+%{nil}
+
 # libpackages
-%libpackage RtfReader %{major}
-%libpackage basicflakes %{major}
-%libpackage braindumpcore %{major}
-%libpackage calligradb %{major}
-%libpackage calligrakdchart %{major}
-%libpackage calligrakdgantt %{major}
-%libpackage calligrasheetscommon %{major}
-%libpackage calligrasheetsodf %{major}
-%libpackage calligrastageprivate %{major}
-%libpackage flake %{major}
-%libpackage flowprivate %{major}
-%libpackage karboncommon %{major}
-%libpackage karbonui %{major}
-%libpackage kexicore %{major}
-%libpackage kexidatatable %{major}
-%libpackage kexidataviewcommon %{major}
-%libpackage kexidb %{major}
-%libpackage kexiextendedwidgets %{major}
-%libpackage kexiformutils %{major}
-%libpackage kexiguiutils %{major}
-%libpackage keximain %{major}
-%libpackage keximigrate %{major}
-%libpackage kexirelationsview %{major}
-%libpackage kexiutils %{major}
-%libpackage kformdesigner %{major}
-%libpackage kformula %{major}
-%libpackage kokross %{major}
-%libpackage komain %{major}
-%libpackage komsooxml %{major}
-%libpackage koodf %{major}
-%libpackage koodf2 %{major}
-%libpackage koodfreader %{major}
-%libpackage kopageapp %{major}
-%libpackage koplugin %{major}
-%libpackage koproperty %{major}
-%libpackage kordf %{major}
-%libpackage koreport %{major}
-%libpackage kotext %{major}
-%libpackage kotextlayout %{major}
-%libpackage kovectorimage %{major}
-%libpackage koversion %{major}
-%libpackage kowidgets %{major}
-%libpackage kowidgetutils %{major}
+%define calligralibs RtfReader basicflakes braindumpcore calligradb calligrakdchart calligrakdgantt calligrasheetscommon calligrasheetsodf calligrastageprivate flake flowprivate karboncommon karbonui kexicore kexidatatable kexidataviewcommon kexidb kexiextendedwidgets kexiformutils kexiguiutils keximain keximigrate kexirelationsview kexiutils kformdesigner kformula kokross komain komsooxml koodf koodf2 koodfreader kopageapp koplugin koproperty kordf koreport kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kplatokernel kplatomodels kplatoui kritacolor kritaglobal kritaimage kritalibbrush kritalibpaintop kritapsd kritaui kundo2 pigmentcms planprivate planworkapp planworkfactory rcps_plan wordsprivate 
+%{expand:%(for lib in %{calligralibs}; do cat <<EOF
+%%libpackage $lib %{major}
+EOF
+done)}
 %libpackage kowv2 9
-%libpackage kplatokernel %{major}
-%libpackage kplatomodels %{major}
-%libpackage kplatoui %{major}
-%libpackage kritacolor %{major}
-%libpackage kritaglobal %{major}
-%libpackage kritaimage %{major}
-%libpackage kritalibbrush %{major}
-%libpackage kritalibpaintop %{major}
-%libpackage kritapsd %{major}
-%libpackage kritaui %{major}
-%libpackage kundo2 %{major}
-%libpackage pigmentcms %{major}
-%libpackage planprivate %{major}
-%libpackage planworkapp %{major}
-%libpackage planworkfactory %{major}
-%libpackage rcps_plan %{major}
-%libpackage wordsprivate %{major}
 #--------------------------------------------------------------------
 
 # MD This lib is missing a soname, but it is req'd by libkritacolor
@@ -891,6 +850,30 @@ and flowcharts.
 
 #--------------------------------------------------------------------
 
+%if %_mobile
+%package mobile
+Summary:	mobile user interaction of Calligra Suite
+Group:		Graphical desktop/KDE
+
+%description mobile
+Calligra Mobile is a mobile user interaction of Calligra Suite.
+
+%files mobile
+%defattr(0755,root,root,0755)
+%{_bindir}/calligramobile
+%defattr(0644,root,root,0755)
+%{_datadir}/applications/hildon/calligramobile.desktop
+%{_datadir}/calligramobile-templates/
+%{_datadir}/dbus-1/services/com.nokia.CalligraMobile.service
+%{_kde_iconsdir}/hicolor/178x200/apps/calligramobile.png
+%{_kde_iconsdir}/hicolor/48x48/hildon/Document.png
+%{_kde_iconsdir}/hicolor/48x48/hildon/Presenter.png
+%{_kde_iconsdir}/hicolor/48x48/hildon/SpreadSheet.png
+%{_kde_iconsdir}/hicolor/64x64/apps/calligramobile.png
+%endif
+
+#--------------------------------------------------------------------
+
 %if 1
 %package active
 Summary:	A document viewer for touch based tablets
@@ -916,54 +899,11 @@ Calligra's QML UI.
 Group:		Development/KDE and Qt
 Summary:	Header files for developing calligra applications
 Requires:	%{name}-core = %{EVRD}
-Requires:	%{libcalligradb} = %{EVRD}
-Requires:	%{libcalligrakdchart} = %{EVRD}
-Requires:	%{libcalligrakdgantt} = %{EVRD} 
-Requires:	%{libcalligrasheetscommon} = %{EVRD}
-Requires:	%{libcalligrasheetsodf} = %{EVRD}
-Requires:	%{libcalligrastageprivate} = %{EVRD}
-Requires:	%{libflake} = %{EVRD}
-Requires:	%{libkarboncommon} = %{EVRD}
-Requires:	%{libkarbonui} = %{EVRD}
-Requires:	%{libkexicore} = %{EVRD}
-Requires:	%{libkexidatatable} = %{EVRD}
-Requires:	%{libkexidataviewcommon} = %{EVRD}
-Requires:	%{libkexidb} = %{EVRD}
-Requires:	%{libkexiextendedwidgets} = %{EVRD}
-Requires:	%{libkexiformutils} = %{EVRD}
-Requires:	%{libkexiguiutils} = %{EVRD}
-Requires:	%{libkeximain} = %{EVRD}
-Requires:	%{libkeximigrate} = %{EVRD}
-Requires:	%{libkexirelationsview} = %{EVRD}
-Requires:	%{libkexiutils} = %{EVRD}
-Requires:	%{libkformdesigner} = %{EVRD}
-Requires:	%{libkformula} = %{EVRD}
-Requires:	%{libkokross} = %{EVRD}
-Requires:	%{libkomain} = %{EVRD}
-Requires:	%{libkoodf2} = %{EVRD}
-Requires:	%{libkopageapp} = %{EVRD}
-Requires:	%{libkoplugin} = %{EVRD}
-Requires:	%{libkoproperty} = %{EVRD}
-Requires:	%{libkoreport} = %{EVRD}
-Requires:	%{libkotext} = %{EVRD}
-Requires:	%{libkovectorimage} = %{EVRD}
-Requires:	%{libkowidgets} = %{EVRD}
+%{expand:%(for lib in %{calligralibs}; do cat <<EOF
+Requires:	%{lib$lib} = %{EVRD}
+EOF
+done)}
 Requires:	%{libkowv2} = %{EVRD}
-Requires:	%{libkplatokernel} = %{EVRD}
-Requires:	%{libkplatomodels} = %{EVRD}
-Requires:	%{libkplatoui} = %{EVRD}
-Requires:	%{libkritaimage} = %{EVRD}
-Requires:	%{libkritalibbrush} = %{EVRD}
-Requires:	%{libkritalibpaintop} = %{EVRD}
-Requires:	%{libkritaui} = %{EVRD}
-Requires:	%{libkundo2} = %{EVRD}
-Requires:	%{libpigmentcms} = %{EVRD}
-Requires:	%{libplanprivate} = %{EVRD}
-Requires:	%{libplanworkapp} = %{EVRD}
-Requires:	%{libplanworkfactory} = %{EVRD}
-Requires:	%{librcps_plan} = %{EVRD}
-Requires:	%{librtfreader} = %{EVRD}
-Requires:	%{libwordsprivate} = %{EVRD}
 
 %description devel
 Header files needed for developing calligra applications.
@@ -971,90 +911,11 @@ Header files needed for developing calligra applications.
 %files devel
 %{_kde_appsdir}/cmake/*/*
 %{_kde_includedir}/*
-%{_libdir}/libRtfReader.so
-%{_libdir}/libbasicflakes.so
-%{_libdir}/libcalligradb.so
-%{_libdir}/libcalligrakdchart.so
-%{_libdir}/libcalligrakdgantt.so
-%{_libdir}/libcalligrasheetscommon.so
-%{_libdir}/libcalligrasheetsodf.so
-%{_libdir}/libcalligrastageprivate.so
-%{_libdir}/libflake.so
-%{_libdir}/libflowprivate.so
-%{_libdir}/libkarboncommon.so
-%{_libdir}/libkarbonui.so
-%{_libdir}/libkexicore.so
-%{_libdir}/libkexidatatable.so
-%{_libdir}/libkexidataviewcommon.so
-%{_libdir}/libkexidb.so
-%{_libdir}/libkexiextendedwidgets.so
-%{_libdir}/libkexiformutils.so
-%{_libdir}/libkexiguiutils.so
-%{_libdir}/libkeximain.so
-%{_libdir}/libkeximigrate.so
-%{_libdir}/libkexirelationsview.so
-%{_libdir}/libkexiutils.so
-%{_libdir}/libkformdesigner.so
-%{_libdir}/libkformula.so
-%{_libdir}/libkokross.so
-%{_libdir}/libkomain.so
-%{_libdir}/libkomsooxml.so
-%{_libdir}/libkoodf.so
-%{_libdir}/libkoodf2.so
-%{_libdir}/libkoodfreader.so
-%{_libdir}/libkopageapp.so
-%{_libdir}/libkoplugin.so
-%{_libdir}/libkoproperty.so
-%{_libdir}/libkordf.so
-%{_libdir}/libkoreport.so
-%{_libdir}/libkotext.so
-%{_libdir}/libkotextlayout.so
-%{_libdir}/libkovectorimage.so
-%{_libdir}/libkoversion.so
-%{_libdir}/libkowidgets.so
-%{_libdir}/libkowidgetutils.so
+%{expand:%(for lib in %{calligralibs}; do cat <<EOF
+%{_libdir}/lib${lib}.so
+EOF
+done)}
 %{_libdir}/libkowv2.so
-%{_libdir}/libkplatokernel.so
-%{_libdir}/libkplatomodels.so
-%{_libdir}/libkplatoui.so
-%{_libdir}/libkritacolor.so
-%{_libdir}/libkritaglobal.so
-%{_libdir}/libkritaimage.so
-%{_libdir}/libkritalibbrush.so
-%{_libdir}/libkritalibpaintop.so
-%{_libdir}/libkritapsd.so
-%{_libdir}/libkritaui.so
-%{_libdir}/libkundo2.so
-%{_libdir}/libpigmentcms.so
-%{_libdir}/libplanprivate.so
-%{_libdir}/libplanworkapp.so
-%{_libdir}/libplanworkfactory.so
-%{_libdir}/librcps_plan.so
-%{_libdir}/libwordsprivate.so
-
-#--------------------------------------------------------------------
-
-%if %_mobile
-%package mobile
-Summary:	mobile user interaction of Calligra Suite
-Group:		Graphical desktop/KDE
-
-%description mobile
-Calligra Mobile is a mobile user interaction of Calligra Suite.
-
-%files mobile
-%defattr(0755,root,root,0755)
-%{_bindir}/calligramobile
-%defattr(0644,root,root,0755)
-%{_datadir}/applications/hildon/calligramobile.desktop
-%{_datadir}/calligramobile-templates/
-%{_datadir}/dbus-1/services/com.nokia.CalligraMobile.service
-%{_kde_iconsdir}/hicolor/178x200/apps/calligramobile.png
-%{_kde_iconsdir}/hicolor/48x48/hildon/Document.png
-%{_kde_iconsdir}/hicolor/48x48/hildon/Presenter.png
-%{_kde_iconsdir}/hicolor/48x48/hildon/SpreadSheet.png
-%{_kde_iconsdir}/hicolor/64x64/apps/calligramobile.png
-%endif
 
 #--------------------------------------------------------------------
 
