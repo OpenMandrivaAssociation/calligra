@@ -1,5 +1,5 @@
---- kexi/migration/xbase/xbasemigrate.cpp.orig	2013-02-14 09:17:23.592745008 +0000
-+++ kexi/migration/xbase/xbasemigrate.cpp	2013-02-14 09:17:35.050744333 +0000
+--- ./kexi/migration/xbase/xbasemigrate.cpp.orig	2013-02-14 09:17:23.592745008 +0000
++++ ./kexi/migration/xbase/xbasemigrate.cpp	2013-02-14 09:17:35.050744333 +0000
 @@ -253,18 +253,11 @@
            blobFieldLength = tableDbf->GetMemoFieldLen(j);
            memoBuffer = new char[blobFieldLength];
