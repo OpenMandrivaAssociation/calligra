@@ -110,7 +110,7 @@ Calligra contains:
 ### this fixes a couple until a better solution is found
 %define libpackage()\
 %{expand:%%define nib %(echo %{1} | sed 's,[0-9]$,&_,' )}\
-%{expand:%%define lib%{1} %%mklibname %{nib} %{2}}\
+%{expand:%%global lib%{1} %%mklibname %{nib} %{2}}\
 %%package -n %{expand:%{lib%{1}}}\
 Summary: The %{1} library, a part of %{name}\
 Group: System/Libraries\
