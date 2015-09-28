@@ -684,10 +684,10 @@ Building sites, and many other options to help you make your diagrams.
 %files flow
 %defattr(0755,root,root,0755)
 %{_bindir}/calligraflow
-%{_libdir}/kde4/flowdockersplugin.so
-%{_libdir}/kde4/flowpart.so
 %{_libdir}/libkdeinit4_calligraflow.so
 %{service calligra_filter_vsdx2odg}
+%{service flowdockersplugin}
+%{service flowpart}
 %defattr(0644,root,root,0755)
 %{_datadir}/appdata/flow.appdata.xml
 %{_datadir}/applications/kde4/flow.desktop
@@ -697,8 +697,6 @@ Building sites, and many other options to help you make your diagrams.
 %{_kde_appsdir}/flow
 %{_kde_iconsdir}/hicolor/*/*/calligraflow*
 %{_kde_services}/ServiceMenus/calligra/flow_print.desktop
-%{_kde_services}/calligra/flowdockersplugin.desktop
-%{_kde_services}/calligra/flowpart.desktop
 %{_kde_servicetypes}/flow_dock.desktop
 
 #--------------------------------------------------------------------
