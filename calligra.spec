@@ -134,7 +134,7 @@ done)}
 
 #--------------------------------------------------------------------
 
-%define libplanworkfactory %mklibname planworkfactory
+%define libplanworkfactory %mklibname planworkfactory %{major}
 
 %package -n %{libplanworkfactory}
 Summary:        Calligra library
@@ -922,6 +922,7 @@ Requires:	%{lib$lib} = %{EVRD}
 EOF
 done)}
 Requires:	%{libkowv2} = %{EVRD}
+Requires:	%{libplanworkfactory} = %{EVRD}
 
 %description devel
 Header files needed for developing calligra applications.
@@ -934,6 +935,7 @@ Header files needed for developing calligra applications.
 EOF
 done)}
 %{_libdir}/libkowv2.so
+%{_libdir}/libplanworkfactory.so
 
 #--------------------------------------------------------------------
 
