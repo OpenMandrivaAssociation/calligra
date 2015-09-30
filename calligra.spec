@@ -138,7 +138,7 @@ done)}
 %package -n %{libkritacolord}
 Summary:	Calligra library
 Group:		System/Libraries
-Conflicts:	%{name}-devel < 16:2.9.7-2
+Conflicts:	%{name}-devel < 16:2.9.7-0.1
 
 %description -n %{libkritacolord}
 Calligra library.
