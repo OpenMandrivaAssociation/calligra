@@ -7,6 +7,8 @@
 
 %define service(s) %{_libdir}/kde4/%{1}.so \
 %{_datadir}/kde4/services/calligra/%{1}.desktop
+%define optional_service(s) %optional %{_libdir}/kde4/%{1}.so \
+%optional %{_datadir}/kde4/services/calligra/%{1}.desktop
 %define kservice(s) %{_libdir}/kde4/%{1}.so \
 %{_datadir}/kde4/services/%{1}.desktop
 
@@ -189,7 +191,7 @@ Common files for Calligra.
 %{service kopabackgroundtool}
 %{service koreport_barcodeplugin}
 %{service koreport_chartplugin}
-%optional %{service koreport_mapsplugin}
+%{optional_service koreport_mapsplugin}
 %{service koreport_webplugin}
 %defattr(0644,root,root,0755)
 %doc %{_kde_docdir}/HTML/en/calligra
@@ -627,7 +629,7 @@ art.
 %{_libdir}/kde4/karbonpart.so
 %{_libdir}/kde4/karbontools.so
 %{_libdir}/libkdeinit4_karbon.so
-%optional %{service calligra_filter_eps2svgai}
+%{optional_service calligra_filter_eps2svgai}
 %{service calligra_filter_karbon1x2karbon}
 %{service calligra_filter_karbon2image}
 %{service calligra_filter_karbon2svg}
