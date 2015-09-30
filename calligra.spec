@@ -17,7 +17,7 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	2.9.7
-Release:	2
+Release:	3
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
@@ -123,7 +123,7 @@ The %{1} library, a part of %{name}.\
 %{nil}
 
 # libpackages
-%define calligralibs RtfReader basicflakes calligradb calligrakdchart calligrakdgantt calligrasheetscommon calligrasheetsodf calligrastageprivate flake flowprivate karboncommon karbonui kexicore kexidatatable kexidataviewcommon kexidb kexiextendedwidgets kexiformutils kexiguiutils keximain keximigrate kexirelationsview kexiutils kformdesigner kformula kokross komain komsooxml koodf koodf2 koodfreader kopageapp koplugin koproperty kordf koreport kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kplatokernel kplatomodels kplatoui kritacolor kritaglobal kritaimage kritalibbrush kritalibpaintop kritapsd kritaui kundo2 pigmentcms planprivate planworkapp planworkfactory rcps_plan wordsprivate 
+%define calligralibs RtfReader basicflakes calligradb calligrakdchart calligrakdgantt calligrasheetscommon calligrasheetsodf calligrastageprivate flake flowprivate karboncommon karbonui kexicore kexidatatable kexidataviewcommon kexidb kexiextendedwidgets kexiformutils kexiguiutils keximain keximigrate kexirelationsview kexiutils kformdesigner kformula kokross komain komsooxml koodf koodf2 koodfreader kopageapp koplugin koproperty kordf koreport kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kplatokernel kplatomodels kplatoui kritacolor kritaglobal kritaimage kritalibbrush kritalibpaintop kritapsd kritaui kundo2 pigmentcms planprivate planworkapp rcps_plan wordsprivate 
 %{expand:%(for lib in %{calligralibs}; do cat <<EOF
 %%libpackage $lib %{major}
 EOF
@@ -131,6 +131,22 @@ done)}
 %libpackage kowv2 9
 # MD there is no devel library for braindumpcore
 %libpackage braindumpcore %{major}
+
+#--------------------------------------------------------------------
+
+%define libplanworkfactory %mklibname planworkfactory
+
+%package -n %{libplanworkfactory}
+Summary:        Calligra library
+Group:          System/Libraries
+Obsoletes:	%{_lib}platoworkfactory14
+
+%description -n %{libplanworkfactory}
+Calligra library.
+
+%files -n %{libplanworkfactory}
+%{_libdir}/libplanworkfactory.so.%{major}*
+
 #--------------------------------------------------------------------
 
 # MD This lib is missing a soname, but it is req'd by libkritacolor
