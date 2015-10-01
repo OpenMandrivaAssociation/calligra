@@ -15,7 +15,7 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	2.9.7
-Release:	0.2
+Release:	0.3
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
@@ -137,7 +137,7 @@ done)}
 %package -n %{libplanworkfactory}
 Summary:        Calligra library
 Group:          System/Libraries
-Obsoletes:	%{_lib}platoworkfactory14
+%rename	%{_lib}kplatoworkfactory14
 
 %description -n %{libplanworkfactory}
 Calligra library.
