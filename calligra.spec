@@ -15,7 +15,7 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	2.9.7
-Release:	0.4
+Release:	0.5
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
@@ -121,7 +121,7 @@ The %{1} library, a part of %{name}.\
 %{nil}
 
 # libpackages
-%define calligralibs basicflakes calligradb calligrakdchart calligrakdgantt calligrasheetscommon calligrasheetsodf calligrastageprivate flake flowprivate karboncommon karbonui kexicore kexidatatable kexidataviewcommon kexidb kexiextendedwidgets kexiformutils kexiguiutils keximain keximigrate kexirelationsview kexiutils kformdesigner kformula kokross komain komsooxml koodf koodf2 koodfreader kopageapp koplugin koproperty kordf koreport kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kplatokernel kplatomodels kplatoui kritacolor kritaglobal kritaimage kritalibbrush kritalibpaintop kritapsd kritaui kundo2 pigmentcms planprivate planworkapp rcps_plan wordsprivate
+%define calligralibs basicflakes calligradb calligrakdchart calligrakdgantt calligrasheetscommon calligrasheetsodf calligrastageprivate flake flowprivate karboncommon karbonui kexicore kexidatatable kexidataviewcommon kexidb kexiextendedwidgets kexiformutils kexiguiutils keximain keximigrate kexirelationsview kexiutils kformdesigner kformula kokross komain komsooxml koodf koodfreader kopageapp koplugin koproperty kordf koreport kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kplatokernel kplatomodels kplatoui kritacolor kritaglobal kritaimage kritalibbrush kritalibpaintop kritapsd kritaui kundo2 pigmentcms planprivate planworkapp rcps_plan wordsprivate
 %{expand:%(for lib in %{calligralibs}; do cat <<EOF
 %%libpackage $lib %{major}
 EOF
@@ -129,6 +129,21 @@ done)}
 %libpackage kowv2 9
 # MD there is no devel library for braindumpcore
 %libpackage braindumpcore %{major}
+
+#--------------------------------------------------------------------
+
+%define libkoodf2 %mklibname koodf2 %{major}
+
+%package -n %{libkoodf2}
+Summary:        Calligra library
+Group:          System/Libraries
+%rename %{_lib}koodf214
+
+%description -n %{libkoodf2}
+Calligra library.
+
+%files -n %{libkoodf2}
+%{_libdir}/libkoodf2.so.%{major}*
 
 #--------------------------------------------------------------------
 
@@ -937,6 +952,7 @@ done)}
 Requires:	%{libkowv2} = %{EVRD}
 Requires:	%{libplanworkfactory} = %{EVRD}
 Requires:	%{libRtfReader} = %{EVRD}
+Requires:	%{libkoodf2} = %{EVRD}
 
 %description devel
 Header files needed for developing calligra applications.
@@ -951,6 +967,7 @@ done)}
 %{_libdir}/libkowv2.so
 %{_libdir}/libplanworkfactory.so
 %{_libdir}/libRtfReader.so
+%{_libdir}/libkoodf2.so
 
 #--------------------------------------------------------------------
 
