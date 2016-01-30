@@ -17,7 +17,7 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	2.9.10
-Release:	1
+Release:	2
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
