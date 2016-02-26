@@ -1,7 +1,8 @@
 removed_sources:
+  calligra-2.9.10.tar.xz: 50d3763664db671bbc642299638d1f455d2a82f0
   calligra-2.9.6.tar.xz: 49f6a63622cd6e6d777b0a94839d1a7073c965b7
   calligra-2.9.7.tar.xz: aed9f9f3cf1abaa23ee948a6ba59ce22d98a0d4c
   calligra-2.9.8.tar.xz: b9beb49ad56acb3d86930ced845e3e2efead4871
   calligra-2.9.9.tar.xz: 0e657ab80e4fe78591d8460bd2cf3cfc3506e432
 sources:
-  calligra-2.9.10.tar.xz: 50d3763664db671bbc642299638d1f455d2a82f0
+  calligra-2.9.11.tar.xz: 0923a1fc1148652008405d11dbe19487ec84c596
