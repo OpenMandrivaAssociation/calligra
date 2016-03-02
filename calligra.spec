@@ -622,7 +622,7 @@ and textures for rendering.
 %{_kde_appsdir}/kritaplugins
 %{_kde_configdir}/krita*.knsrc
 %{_kde_configdir}/kritarc
-%{_kde_iconsdir}/hicolor/*/apps/calligrakrita.*
+%{_kde_iconsdir}/hicolor/*/apps/calligrakrita*.*
 %{_kde_services}/ServiceMenus/calligra/krita_print.desktop
 %{_kde_services}/calligra/*krita*.desktop
 %{_kde_servicetypes}/*krita*.desktop
@@ -844,12 +844,18 @@ ODT file renderer for Okular.
 %{_datadir}/applications/kde4/okularApplication_odt.desktop
 %{_datadir}/kde4/services/libokularGenerator_doc_calligra.desktop
 %{_datadir}/kde4/services/libokularGenerator_docx_calligra.desktop
+%{_datadir}/kde4/services/libokularGenerator_powerpoint_calligra.desktop
+%{_datadir}/kde4/services/libokularGenerator_pptx_calligra.desktop
 %{_datadir}/kde4/services/libokularGenerator_wpd_calligra.desktop
 %{_datadir}/kde4/services/okularDoc_calligra.desktop
 %{_datadir}/kde4/services/okularDocx_calligra.desktop
+%{_datadir}/kde4/services/okularPowerpoint_calligra.desktop
+%{_datadir}/kde4/services/okularPptx_calligra.desktop
 %{_datadir}/kde4/services/okularWpd_calligra.desktop
 %{_kde_applicationsdir}/okularApplication_doc_calligra.desktop
 %{_kde_applicationsdir}/okularApplication_docx_calligra.desktop
+%{_kde_applicationsdir}/okularApplication_powerpoint_calligra.desktop
+%{_kde_applicationsdir}/okularApplication_pptx_calligra.desktop
 %{_kde_applicationsdir}/okularApplication_wpd_calligra.desktop
 %{_kde_services}/libokularGenerator_odt.desktop
 %{_kde_services}/okularOdt.desktop
