@@ -43,7 +43,8 @@ BuildRequires:	okular-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
 BuildRequires:	tiff-devel
-BuildRequires:	vc-devel
+# crisb - not compatible with 1.x
+BuildConflicts:	vc-devel
 BuildRequires:	xbase-devel
 BuildRequires:	pkgconfig(GraphicsMagick)
 BuildRequires:	pkgconfig(OpenColorIO)
