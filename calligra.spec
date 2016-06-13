@@ -1,4 +1,6 @@
 %bcond_with krita
+# (tpg) okular is now KF5 and calligra does not handle it
+%bcond_with okular
 
 %define compile_apidox 0
 %define _mobile 0
@@ -41,7 +43,9 @@ BuildRequires:	marble-devel
 BuildRequires:	mysql-devel
 BuildRequires:	nepomuk-core-devel
 BuildRequires:	nepomuk-widgets-devel
+%if %{with okular}
 BuildRequires:	okular-devel
+%endif
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
 BuildRequires:	tiff-devel
@@ -92,11 +96,17 @@ Suggests:	%{name}-kformula
 Suggests:	%{name}-krita
 %else
 Suggests:	krita
+Obsoletes:	%{name}-krita <= %{EVRD}
 %endif
 Suggests:	%{name}-plan
 Suggests:	%{name}-sheets
 Suggests:	%{name}-stage
 Suggests:	%{name}-words
+
+%if !%{with okular}
+Obsoletes:	%{name}-okular-odp <= %{EVRD}
+Obsoletes:	%{name}-okular-odt <= %{EVRD}
+%endif
 
 %description
 Office applications for the K Desktop Environment.
@@ -826,6 +836,7 @@ are stored in the database, making it easy to share data and design.
 
 #--------------------------------------------------------------------
 
+%if %{with okular}
 %package okular-odp
 Summary:	ODP file renderer for Okular
 Group:		Graphical desktop/KDE
@@ -877,6 +888,7 @@ ODT file renderer for Okular.
 %{_kde_applicationsdir}/okularApplication_wpd_calligra.desktop
 %{_kde_services}/libokularGenerator_odt.desktop
 %{_kde_services}/okularOdt.desktop
+%endif
 
 #--------------------------------------------------------------------
 
