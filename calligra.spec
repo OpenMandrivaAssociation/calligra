@@ -1,3 +1,7 @@
+%bcond_with krita
+# (tpg) okular is now KF5 and calligra does not handle it
+%bcond_with okular
+
 %define compile_apidox 0
 %define _mobile 0
 %define _disable_ld_no_undefined 1
@@ -17,7 +21,7 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	2.9.11
-Release:	2
+Release:	3
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
@@ -39,7 +43,9 @@ BuildRequires:	marble-devel
 BuildRequires:	mysql-devel
 BuildRequires:	nepomuk-core-devel
 BuildRequires:	nepomuk-widgets-devel
+%if %{with okular}
 BuildRequires:	okular-devel
+%endif
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
 BuildRequires:	tiff-devel
@@ -86,11 +92,21 @@ Suggests:	%{name}-karbon
 Suggests:	%{name}-kchart
 Suggests:	%{name}-kexi
 Suggests:	%{name}-kformula
+%if %{with krita}
 Suggests:	%{name}-krita
+%else
+Suggests:	krita
+Obsoletes:	%{name}-krita <= %{EVRD}
+%endif
 Suggests:	%{name}-plan
 Suggests:	%{name}-sheets
 Suggests:	%{name}-stage
 Suggests:	%{name}-words
+
+%if !%{with okular}
+Obsoletes:	%{name}-okular-odp <= %{EVRD}
+Obsoletes:	%{name}-okular-odt <= %{EVRD}
+%endif
 
 %description
 Office applications for the K Desktop Environment.
@@ -102,7 +118,9 @@ Calligra contains:
    * Flow: diagram generator
    * Some filters (Excel 97, Winword 97/2000, etc.)
    * karbon: the scalable vector drawing application for KDE.
+%if %{with krita}
    * krita: painting and image editing application.
+%endif
    * plan: a project management.
    * kexi: an integrated data management application.
 
@@ -124,7 +142,12 @@ The %{1} library, a part of %{name}.\
 %{nil}
 
 # libpackages
-%define calligralibs basicflakes calligradb calligrakdchart calligrakdgantt calligrasheetscommon calligrasheetsodf calligrastageprivate flake flowprivate karboncommon karbonui kexicore kexidatatable kexidataviewcommon kexidb kexiextendedwidgets kexiformutils kexiguiutils keximain keximigrate kexirelationsview kexiutils kformdesigner kformula kokross komain komsooxml koodf koodfreader kopageapp koplugin koproperty kordf koreport kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kplatokernel kplatomodels kplatoui kritacolor kritaglobal kritaimage kritalibbrush kritalibpaintop kritapsd kritaui kundo2 pigmentcms planprivate planworkapp rcps_plan wordsprivate
+%if %{with krita}
+%define kritalibs kritacolor kritaglobal kritaimage kritalibbrush kritalibpaintop kritapsd kritaui
+%else
+%define kritalibs %{nil}
+%endif
+%define calligralibs basicflakes calligradb calligrakdchart calligrakdgantt calligrasheetscommon calligrasheetsodf calligrastageprivate flake flowprivate karboncommon karbonui kexicore kexidatatable kexidataviewcommon kexidb kexiextendedwidgets kexiformutils kexiguiutils keximain keximigrate kexirelationsview kexiutils kformdesigner kformula kokross komain komsooxml koodf koodfreader kopageapp koplugin koproperty kordf koreport kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kplatokernel kplatomodels kplatoui kundo2 pigmentcms planprivate planworkapp rcps_plan wordsprivate %{kritalibs}
 %{expand:%(for lib in %{calligralibs}; do cat <<EOF
 %%libpackage $lib %{major}
 EOF
@@ -180,6 +203,7 @@ Calligra library.
 
 #--------------------------------------------------------------------
 
+%if %{with krita}
 # MD This lib is missing a soname, but it is req'd by libkritacolor
 # and causing the devel pkg to be install by default.
 %define libkritacolord %mklibname kritacolord
@@ -194,6 +218,7 @@ Calligra library.
 
 %files -n %{libkritacolord}
 %{_libdir}/libkritacolord.so
+%endif
 
 #--------------------------------------------------------------------
 
@@ -564,6 +589,7 @@ Kchart is a chart and diagram drawing program.
 
 #--------------------------------------------------------------------
 
+%if %{with krita}
 %package krita
 %define __noautoreq 'devel.*|calligra-devel'
 Summary:	Sketching and painting program
@@ -647,6 +673,7 @@ Unified interface for Krita and Krita Sketch.
 %{_iconsdir}/hicolor/*/apps/kritagemini.png
 %{_iconsdir}/hicolor/*/apps/kritasketch.png
 %{_libdir}/calligra/imports/Calligra/Gemini
+%endif
 
 #--------------------------------------------------------------------
 
@@ -809,6 +836,7 @@ are stored in the database, making it easy to share data and design.
 
 #--------------------------------------------------------------------
 
+%if %{with okular}
 %package okular-odp
 Summary:	ODP file renderer for Okular
 Group:		Graphical desktop/KDE
@@ -860,6 +888,7 @@ ODT file renderer for Okular.
 %{_kde_applicationsdir}/okularApplication_wpd_calligra.desktop
 %{_kde_services}/libokularGenerator_odt.desktop
 %{_kde_services}/okularOdt.desktop
+%endif
 
 #--------------------------------------------------------------------
 
@@ -991,9 +1020,19 @@ export CXX=g++
 export CC=gcc
 #sh initrepo.sh
 %if %_mobile
-%cmake_kde4 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON -DPACKAGERS_BUILD=ON
+%cmake_kde4 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON \
+%if ! %{with krita}
+	-DBUILD_krita=OFF \
+	-DBUILD_gemini=OFF \
+%endif
+	-DPACKAGERS_BUILD=ON
 %else
-%cmake_kde4 -Wno-dev -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON -DPACKAGERS_BUILD=ON
+%cmake_kde4 -Wno-dev -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON \
+%if ! %{with krita}
+	-DBUILD_krita=OFF \
+	-DBUILD_gemini=OFF \
+%endif
+	-DPACKAGERS_BUILD=ON
 %endif
 %make
 
