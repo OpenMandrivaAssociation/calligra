@@ -45,8 +45,7 @@ BuildRequires:	okular-devel
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
 BuildRequires:	tiff-devel
-# crisb - not compatible with 1.x
-BuildConflicts:	vc-devel
+BuildRequires:	vc-devel
 BuildRequires:	xbase-devel
 BuildRequires:	pkgconfig(GraphicsMagick)
 BuildRequires:	pkgconfig(OpenColorIO)
@@ -72,7 +71,7 @@ BuildRequires:	pkgconfig(libwps-0.4)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(poppler-qt5)
 BuildRequires:	pkgconfig(python)
-BuildRequires:	pkgconfig(qca2)
+BuildRequires:	pkgconfig(qca2-qt5)
 BuildRequires:	pkgconfig(qimageblitz)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	cmake(KF5Activities)
@@ -106,6 +105,7 @@ BuildRequires:	cmake(KF5KDELibs4Support)
 BuildRequires:	cmake(KF5KHtml)
 BuildRequires:	cmake(KF5KIO)
 BuildRequires:	cmake(KF5Kross)
+BuildRequires:	cmake(KF5KrossUi)
 BuildRequires:	cmake(KF5Notifications)
 BuildRequires:	cmake(KF5NotifyConfig)
 BuildRequires:	cmake(KF5Parts)
@@ -145,6 +145,10 @@ Obsoletes:	%{name}-okular-odp <= %{EVRD}
 Obsoletes:	%{name}-okular-odt <= %{EVRD}
 %endif
 
+# Those were in KDE4 versions of calligra...
+%define obsoletelibs calligradb calligrakdchart calligrakdgantt flowprivate kformdesigner kformula kokross koproperty kordf koreport kplatokernel kplatomodels kplatoui planprivate planworkapp rcps_plan braindumpcore planworkfactory
+%{expand:%(for lib in %{obsoletelibs}; do echo Obsoletes: %%mklibname $lib 14; echo; done)}
+
 %description
 Office applications for the K Desktop Environment.
 
@@ -172,10 +176,6 @@ The %{1} library, a part of %{name}.\
 %%files -n %{expand:%{lib%{1}}}\
 %{_libdir}/lib%{1}.so.%{2}*\
 %{nil}
-
-# Those were in KDE4 versions of calligra...
-%define obsoletelibs calligradb calligrakdchart calligrakdgantt flowprivate kformdesigner kformula kokross koproperty kordf koreport kplatokernel kplatomodels kplatoui planprivate planworkapp rcps_plan braindumpcore planworkfactory
-%{expand:%(for lib in %{obsoletelibs}; do echo Obsoletes: %mklibname $lib 14; done)}
 
 # libpackages
 %define calligralibs basicflakes calligrasheetscommon calligrasheetsodf calligrastageprivate flake karboncommon karbonui komain komsooxml koodf koodfreader kopageapp koplugin kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kundo2 pigmentcms wordsprivate koformula kookularGenerator_odp kookularGenerator_odt kostore
@@ -654,4 +654,73 @@ for i in $list ; do
 done;
 %endif
 
-%find_lang calligra
+%find_lang calligra \
+KarbonFilterEffects \
+KarbonTools \
+braindump \
+calligra-defaulttools \
+calligra-dockers \
+calligra-opener \
+calligra_semanticitem_contact \
+calligra_semanticitem_event \
+calligra_semanticitem_location \
+calligra_shape_artistictext \
+calligra_shape_chart \
+calligra_shape_comment \
+calligra_shape_formula \
+calligra_shape_music \
+calligra_shape_paths \
+calligra_shape_picture \
+calligra_shape_plugin \
+calligra_shape_spreadsheet \
+calligra_shape_template \
+calligra_shape_text \
+calligra_shape_threed \
+calligra_shape_vector \
+calligra_shape_video \
+calligra_textediting_autocorrect \
+calligra_textediting_changecase \
+calligra_textediting_spellcheck \
+calligra_textediting_thesaurus \
+calligra_textinlineobject_variables \
+calligrafilters \
+calligraplan \
+calligraplan_scheduler_rcps \
+calligraplan_scheduler_tj \
+calligraplanlibs \
+calligraplanwork \
+calligrasheets \
+calligrasheets_calendar \
+calligrasheets_solver \
+calligrastage \
+calligrawords \
+desktop_calligra_calligra \
+desktop_calligra_kexi \
+desktop_calligra_krita \
+flow \
+json_calligra_calligra \
+json_calligra_kexi \
+karbon \
+kexi \
+kexiforms_mapwidgetplugin \
+kexiforms_webbrowserwidgetplugin \
+keximigrate_mdb \
+keximigrate_spreadsheet \
+kocolorspaces \
+koconverter \
+krita \
+krossmoduleplan \
+krossmodulesheets \
+krossmodulewords \
+okularGenerator_odp \
+okularGenerator_odt \
+org.kde.braindump.appdata \
+org.kde.calligraflow.appdata \
+org.kde.calligraplan.appdata \
+org.kde.calligrasheets.appdata \
+org.kde.calligrastage.appdata \
+org.kde.calligrawords.appdata \
+org.kde.karbon.appdata \
+org.kde.kexi.appdata \
+org.kde.krita.appdata \
+calligra.lang
