@@ -11,12 +11,12 @@ Summary:	Set of office applications for KDE
 Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
-Version:	3.0.0
+Version:	3.0.1
 Release:	1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
-Source0:	http://download.kde.org/stable/%{name}-%{version}/%{name}-%{version}.tar.gz
+Source0:	http://download.kde.org/stable/%{name}-%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
 #Patch3:		calligra-optionize-staging.patch
 #Patch4:		calligra-2.8.0-libpqxx-4.0.patch
