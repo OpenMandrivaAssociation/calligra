@@ -21,13 +21,22 @@ Source1:	%{name}.rpmlintrc
 #Patch3:		calligra-optionize-staging.patch
 #Patch4:		calligra-2.8.0-libpqxx-4.0.patch
 #Patch5:		0001-adapt-to-libwps-0.4.patch
-BuildRequires:	cmake(Qt5Core)
-BuildRequires:	cmake(Qt5Gui)
-BuildRequires:	cmake(Qt5Widgets)
-BuildRequires:	cmake(Qt5Sql)
-BuildRequires:	cmake(Qt5Network)
+BuildRequires:	pkgconfig(Qt5Core)
+BuildRequires:	pkgconfig(Qt5Gui)
+BuildRequires:	pkgconfig(Qt5Network)
+BuildRequires:	pkgconfig(Qt5PrintSupport)
+BuildRequires:	pkgconfig(Qt5Svg)
+BuildRequires:	pkgconfig(Qt5Test)
+BuildRequires:	pkgconfig(Qt5Widgets)
+BuildRequires:	pkgconfig(Qt5Xml)
+BuildRequires:	pkgconfig(Qt5DBus)
+BuildRequires:	pkgconfig(Qt5Declarative)
+BuildRequires:	pkgconfig(Qt5OpenGL)
+BuildRequires:	pkgconfig(Qt5Quick)
+BuildRequires:	pkgconfig(Qt5Sql)
+BuildRequires:	pkgconfig(Qt5WebKit)
+BuildRequires:	pkgconfig(Qt5WebKitWidgets)
 BuildRequires:	cmake(ECM)
-BuildRequires:	ninja
 BuildRequires:	pstoedit
 BuildRequires:	boost-devel
 BuildRequires:	freetds-devel
@@ -37,8 +46,6 @@ BuildRequires:	gmic-devel
 BuildRequires:	jbig-devel
 BuildRequires:	marble-devel
 BuildRequires:	mysql-devel
-BuildRequires:	nepomuk-core-devel
-BuildRequires:	nepomuk-widgets-devel
 %if %{with okular}
 BuildRequires:	okular-devel
 %endif
