@@ -45,7 +45,7 @@ BuildRequires:	glpk-devel
 BuildRequires:	gmic-devel
 BuildRequires:	jbig-devel
 BuildRequires:	marble-devel
-BuildRequires:	mysql-devel
+BuildRequires:	mariadb-devel
 %if %{with okular}
 BuildRequires:	okular-devel
 %endif
@@ -68,7 +68,7 @@ BuildRequires:	pkgconfig(libctemplate)
 BuildRequires:	pkgconfig(libetonyek-0.1)
 BuildRequires:	pkgconfig(libexif)
 BuildRequires:	pkgconfig(libodfgen-0.1)
-BuildRequires:	pkgconfig(libopenjpeg2)
+#BuildRequires:	pkgconfig(libopenjpeg2)
 BuildRequires:	pkgconfig(libpqxx)
 BuildRequires:	pkgconfig(librevenge-0.0)
 BuildRequires:	pkgconfig(libvisio-0.1)
