@@ -68,7 +68,6 @@ BuildRequires:	pkgconfig(libctemplate)
 BuildRequires:	pkgconfig(libetonyek-0.1)
 BuildRequires:	pkgconfig(libexif)
 BuildRequires:	pkgconfig(libodfgen-0.1)
-#BuildRequires:	pkgconfig(libopenjpeg2)
 BuildRequires:	pkgconfig(libpqxx)
 BuildRequires:	pkgconfig(librevenge-0.0)
 BuildRequires:	pkgconfig(libvisio-0.1)
@@ -81,6 +80,7 @@ BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(qca2-qt5)
 BuildRequires:	pkgconfig(qimageblitz)
 BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	pkgconfig(shared-mime-info)
 BuildRequires:	cmake(KF5Activities)
 BuildRequires:	cmake(KF5AkonadiContact)
 BuildRequires:	cmake(KF5Akonadi)
@@ -128,6 +128,9 @@ BuildRequires:	cmake(KF5WidgetsAddons)
 BuildRequires:	cmake(KF5WindowSystem)
 BuildRequires:	cmake(KF5XmlGui)
 BuildRequires:	cmake(KF5KDGantt2)
+BuildRequires:	cmake(KGantt)
+BuildRequires:	cmake(KPropertyWidgets)
+BuildRequires:	cmake(OpenJPEG)
 %if %compile_apidox
 BuildRequires:	doxygen
 BuildRequires:	graphviz
@@ -304,7 +307,10 @@ Common files for Calligra.
 %{_libdir}/qt5/plugins/calligraimagethumbnail.so
 %{_libdir}/qt5/plugins/calligrathumbnail.so
 %{_libdir}/qt5/qml/org/kde/calligra
-%{_datadir}/applications/calligra.desktop
+%dir %dir %{_libdir}/qt5/qml/org/calligra
+%dir %{_libdir}/qt5/qml/org/calligra/CalligraComponents
+%{_libdir}/qt5/qml/org/calligra/CalligraComponents/*.so
+%{_libdir}/qt5/qml/org/calligra/CalligraComponents/qmldir
 %{_datadir}/applications/calligra_filter_odt2docx.desktop
 %dir %{_datadir}/calligra
 %{_datadir}/calligra/autocorrect
@@ -323,7 +329,6 @@ Common files for Calligra.
 %{_datadir}/kservices5/calligradocinfopropspage.desktop
 %{_datadir}/kservices5/calligra_odg_thumbnail.desktop
 %{_datadir}/kservices5/ServiceMenus/calligra/words_print.desktop
-%doc %{_docdir}/HTML/en/calligra
 
 #--------------------------------------------------------------------
 
@@ -385,7 +390,6 @@ such as income and expenditure, employee working hours, etc.
 %{_datadir}/icons/*/*/*/calligrasheets.*
 %{_libdir}/libkdeinit5_calligrasheets.so
 %{_datadir}/applications/org.kde.calligrasheets.desktop
-%doc %{_docdir}/HTML/en/calligrasheets
 
 #--------------------------------------------------------------------
 
