@@ -131,6 +131,7 @@ BuildRequires:	cmake(KF5KDGantt2)
 BuildRequires:	cmake(KGantt)
 BuildRequires:	cmake(KPropertyWidgets)
 BuildRequires:	cmake(OpenJPEG)
+BuildRequires:	cmake(KReport)
 %if %compile_apidox
 BuildRequires:	doxygen
 BuildRequires:	graphviz
