@@ -139,7 +139,6 @@ BuildRequires:	graphviz
 # No longer included in 3.x, but might come back at some point
 Obsoletes:	%{name}-semanticitem < %{EVRD}
 Obsoletes:	%{name}-author < %{EVRD}
-Obsoletes:	%{name}-plan < %{EVRD}
 Obsoletes:	%{name}-braindump < %{EVRD}
 Obsoletes:	%{name}-kchart < %{EVRD}
 Obsoletes:	%{name}-kformula < %{EVRD}
@@ -150,6 +149,7 @@ Suggests:	%{name}-karbon
 Suggests:	%{name}-sheets
 Suggests:	%{name}-stage
 Suggests:	%{name}-words
+Suggests:	%{name}-plan
 
 %if !%{with okular}
 Obsoletes:	%{name}-okular-odp <= %{EVRD}
@@ -170,6 +170,7 @@ Calligra contains:
    * Flow: diagram generator
    * Some filters (Excel 97, Winword 97/2000, etc.)
    * karbon: the scalable vector drawing application for KDE.
+   * plan: a project management.
 
 %files
 
@@ -189,7 +190,7 @@ The %{1} library, a part of %{name}.\
 %{nil}
 
 # libpackages
-%define calligralibs basicflakes calligrasheetscommon calligrasheetsodf calligrastageprivate flake karboncommon karbonui komain komsooxml koodf koodfreader kopageapp koplugin kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kundo2 pigmentcms wordsprivate koformula kookularGenerator_odp kookularGenerator_odt kostore
+%define calligralibs basicflakes calligrasheetscommon calligrasheetsodf calligrastageprivate flake karboncommon karbonui komain komsooxml koodf koodfreader kopageapp koplugin kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kundo2 pigmentcms wordsprivate koformula kookularGenerator_odp kookularGenerator_odt kostore planprivate planworkfactory kplatokernel kplatomodels kplatoui
 %{expand:%(for lib in %{calligralibs}; do cat <<EOF
 %%libpackage $lib %{major}
 EOF
@@ -359,6 +360,48 @@ With it, you can create informative and attractive documents with ease.
 %{_libdir}/libkdeinit5_calligrawords.so
 %{_datadir}/applications/org.kde.calligrawords.desktop
 %{_datadir}/icons/*/*/*/calligrawords.*
+
+#--------------------------------------------------------------------
+
+%package plan
+Summary:	Project management application for Calligra
+Group:		Graphical desktop/KDE
+Requires:	%{name}-core = %{EVRD}
+# For M$ Project import filter
+BuildRequires:	java-devel-openjdk
+%rename		plan
+
+%description plan
+Plan is a project management application.
+It is intended for managing moderately large projects with multiple resources.
+
+%files plan
+%{_sysconfdir}/xdg/calligraplanrc
+%{_sysconfdir}/xdg/calligraplanworkrc
+%{_bindir}/calligraplan
+%{_bindir}/calligraplanwork
+%{_libdir}/libkdeinit5_calligraplan.so
+%{_libdir}/libkdeinit5_calligraplanwork.so	
+%{_libdir}/qt5/plugins/calligra/formatfilters/planicalexport.so
+%{_libdir}/qt5/plugins/calligra/formatfilters/plankplatoimport.so
+%{_libdir}/qt5/plugins/calligra/parts/calligraplanpart.so
+%{_libdir}/qt5/plugins/calligraplan/schedulers/libplantjscheduler.so
+%{_libdir}/qt5/plugins/calligraplanworkpart.so
+%{_libdir}/qt5/plugins/kreport/planreport_textplugin.so
+%{_datadir}/applications/org.kde.calligraplan.desktop
+%{_datadir}/applications/org.kde.calligraplanwork.desktop
+%dir %{_datadir}/calligraplan
+%{_datadir}/calligraplan/*
+%dir %{_datadir}/calligraplanwork
+%{_datadir}/calligraplanwork/*
+%{_datadir}/config.kcfg/calligraplansettings.kcfg
+%{_datadir}/config.kcfg/calligraplanworksettings.kcfg
+%{_iconsdir}/hicolor/*/apps/calligraplan.*[g,z]
+%{_iconsdir}/hicolor/*/apps/calligraplanwork.*[g,z]
+%{_iconsdir}/hicolor/*/mimetypes/application-x-vnd.kde.kplato.*[g,z]
+%{_iconsdir}/hicolor/*/mimetypes/application-x-vnd.kde.kplato.work.*[g,z]
+%{_datadir}/kxmlgui5/calligraplan/calligraplan*.rc
+%{_datadir}/metainfo/org.kde.calligraplan.appdata.xml
 
 #--------------------------------------------------------------------
 
