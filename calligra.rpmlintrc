@@ -5,4 +5,8 @@ addFilter("E: executable-in-library-package")
 addFilter("E: invalid-soname")
 # Not an actual problem, the packager tag is added by the build system anyway
 addFilter("E: no-packager-tag")
-
+addFilter("E: incorrect-locale-subdir")
+addFilter("E: invalid-lc-messages-dir")
+addFilter("E: library-not-linked-against-libc")
+addFilter("E: no-binary")
+addFilter("E: no-dependency-on")
