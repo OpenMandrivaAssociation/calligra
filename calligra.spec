@@ -398,9 +398,11 @@ It is intended for managing moderately large projects with multiple resources.
 %{_datadir}/config.kcfg/calligraplanworksettings.kcfg
 %{_iconsdir}/hicolor/*/apps/calligraplan.*[g,z]
 %{_iconsdir}/hicolor/*/apps/calligraplanwork.*[g,z]
-%{_iconsdir}/hicolor/*/mimetypes/application-x-vnd.kde.kplato.*[g,z]
-%{_iconsdir}/hicolor/*/mimetypes/application-x-vnd.kde.kplato.work.*[g,z]
-%{_datadir}/kxmlgui5/calligraplan/calligraplan*.rc
+%{_iconsdir}/hicolor/*/mimetypes/application-x-vnd.kde.kplato.png
+%{_iconsdir}/hicolor/*/mimetypes/application-x-vnd.kde.kplato.work.svgz
+%{_iconsdir}/hicolor/*/mimetypes/application-x-vnd.kde.plan.png
+%{_iconsdir}/hicolor/*/mimetypes/application-x-vnd.kde.plan.svgz
+%{_datadir}/kxmlgui5/calligraplan*/calligraplan*.rc
 %{_datadir}/metainfo/org.kde.calligraplan.appdata.xml
 
 #--------------------------------------------------------------------
