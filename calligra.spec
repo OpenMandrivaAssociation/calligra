@@ -12,7 +12,7 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	3.0.1
-Release:	1
+Release:	2
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
@@ -381,7 +381,7 @@ It is intended for managing moderately large projects with multiple resources.
 %{_bindir}/calligraplan
 %{_bindir}/calligraplanwork
 %{_libdir}/libkdeinit5_calligraplan.so
-%{_libdir}/libkdeinit5_calligraplanwork.so	
+%{_libdir}/libkdeinit5_calligraplanwork.so
 %{_libdir}/qt5/plugins/calligra/formatfilters/planicalexport.so
 %{_libdir}/qt5/plugins/calligra/formatfilters/plankplatoimport.so
 %{_libdir}/qt5/plugins/calligra/parts/calligraplanpart.so
@@ -704,8 +704,8 @@ echo $list;
 for i in $list ; do
 	cd $i;
 		if grep '^include .*Doxyfile.am' Makefile.am; then
-			echo "installing apidox from $i" ;	
-			make install-apidox DESTDIR=%{buildroot}/ ; 
+			echo "installing apidox from $i" ;
+			make install-apidox DESTDIR=%{buildroot}/ ;
 		fi
 	cd ../;
 done;
