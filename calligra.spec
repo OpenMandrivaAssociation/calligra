@@ -7,16 +7,18 @@
 
 %define major 15
 
+%define stable %([ `echo %{version} |cut -d. -f3` -ge 70 ] && echo -n un; echo -n stable)
+
 Summary:	Set of office applications for KDE
 Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
-Version:	3.0.1
+Version:	3.0.90
 Release:	1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
-Source0:	http://download.kde.org/stable/%{name}-%{version}/%{name}-%{version}.tar.xz
+Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
 #Patch3:		calligra-optionize-staging.patch
 #Patch4:		calligra-2.8.0-libpqxx-4.0.patch
@@ -190,7 +192,7 @@ The %{1} library, a part of %{name}.\
 %{nil}
 
 # libpackages
-%define calligralibs basicflakes calligrasheetscommon calligrasheetsodf calligrastageprivate flake karboncommon karbonui komain komsooxml koodf koodfreader kopageapp koplugin kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kundo2 pigmentcms wordsprivate koformula kookularGenerator_odp kookularGenerator_odt kostore planprivate planworkfactory kplatokernel kplatomodels kplatoui
+%define calligralibs basicflakes calligrasheetscommon calligrasheetsodf calligrastageprivate flake karboncommon karbonui komain komsooxml koodf koodfreader kopageapp koplugin kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kundo2 pigmentcms wordsprivate koformula kookularGenerator_odp kookularGenerator_odt kostore
 %{expand:%(for lib in %{calligralibs}; do cat <<EOF
 %%libpackage $lib %{major}
 EOF
@@ -309,11 +311,6 @@ Common files for Calligra.
 %{_libdir}/qt5/plugins/calligraimagethumbnail.so
 %{_libdir}/qt5/plugins/calligrathumbnail.so
 %{_libdir}/qt5/qml/org/kde/calligra
-%dir %dir %{_libdir}/qt5/qml/org/calligra
-%dir %{_libdir}/qt5/qml/org/calligra/CalligraComponents
-%{_libdir}/qt5/qml/org/calligra/CalligraComponents/*.so
-%{_libdir}/qt5/qml/org/calligra/CalligraComponents/qmldir
-%{_datadir}/applications/calligra_filter_odt2docx.desktop
 %dir %{_datadir}/calligra
 %{_datadir}/calligra/autocorrect
 %{_datadir}/calligra/calligra_shell.rc
@@ -331,6 +328,38 @@ Common files for Calligra.
 %{_datadir}/kservices5/calligradocinfopropspage.desktop
 %{_datadir}/kservices5/calligra_odg_thumbnail.desktop
 %{_datadir}/kservices5/ServiceMenus/calligra/words_print.desktop
+
+#--------------------------------------------------------------------
+%package gemini
+Summary:	Mobile version of the Calligra office suite
+Group:		Graphical desktop/KDE
+Requires:	%{name}-core = %{EVRD}
+
+%libpackage gemini 15
+
+%description gemini
+Mobile version of the Calligra office suite
+
+%files gemini
+%{_bindir}/calligragemini*
+%{_libdir}/qt5/qml/Calligra/Gemini
+%{_datadir}/applications/calligragemini.desktop
+%{_datadir}/calligragemini
+%{_datadir}/icons/*/*/*/calligragemini.*
+
+#--------------------------------------------------------------------
+%package -n okular-rtf
+Summary:	RTF viewer plugin for Okular
+Group:		Graphical desktop/KDE
+Requires:	%{name}-core = %{EVRD}
+
+%description -n okular-rtf
+RTF viewer plugin for Okular
+
+%files -n okular-rtf
+%{_datadir}/kservices5/okularRtf_calligra.desktop
+%{_datadir}/applications/okularApplication_rtf_calligra.desktop
+%{_libdir}/qt5/plugins/okular/generators/okularGenerator_rtf_calligra.so
 
 #--------------------------------------------------------------------
 
@@ -360,50 +389,6 @@ With it, you can create informative and attractive documents with ease.
 %{_libdir}/libkdeinit5_calligrawords.so
 %{_datadir}/applications/org.kde.calligrawords.desktop
 %{_datadir}/icons/*/*/*/calligrawords.*
-
-#--------------------------------------------------------------------
-
-%package plan
-Summary:	Project management application for Calligra
-Group:		Graphical desktop/KDE
-Requires:	%{name}-core = %{EVRD}
-# For M$ Project import filter
-BuildRequires:	java-devel-openjdk
-%rename		plan
-
-%description plan
-Plan is a project management application.
-It is intended for managing moderately large projects with multiple resources.
-
-%files plan
-%{_sysconfdir}/xdg/calligraplanrc
-%{_sysconfdir}/xdg/calligraplanworkrc
-%{_bindir}/calligraplan
-%{_bindir}/calligraplanwork
-%{_libdir}/libkdeinit5_calligraplan.so
-%{_libdir}/libkdeinit5_calligraplanwork.so	
-%{_libdir}/qt5/plugins/calligra/formatfilters/planicalexport.so
-%{_libdir}/qt5/plugins/calligra/formatfilters/plankplatoimport.so
-%{_libdir}/qt5/plugins/calligra/parts/calligraplanpart.so
-%{_libdir}/qt5/plugins/calligraplan/schedulers/libplantjscheduler.so
-%{_libdir}/qt5/plugins/calligraplanworkpart.so
-%{_libdir}/qt5/plugins/kreport/planreport_textplugin.so
-%{_datadir}/applications/org.kde.calligraplan.desktop
-%{_datadir}/applications/org.kde.calligraplanwork.desktop
-%dir %{_datadir}/calligraplan
-%{_datadir}/calligraplan/*
-%dir %{_datadir}/calligraplanwork
-%{_datadir}/calligraplanwork/*
-%{_datadir}/config.kcfg/calligraplansettings.kcfg
-%{_datadir}/config.kcfg/calligraplanworksettings.kcfg
-%{_iconsdir}/hicolor/*/apps/calligraplan.*[g,z]
-%{_iconsdir}/hicolor/*/apps/calligraplanwork.*[g,z]
-%{_iconsdir}/hicolor/*/mimetypes/application-x-vnd.kde.kplato*.png
-%{_iconsdir}/hicolor/*/mimetypes/application-x-vnd.kde.kplato*.svgz
-%{_iconsdir}/hicolor/*/mimetypes/application-x-vnd.kde.plan*.png
-%{_iconsdir}/hicolor/*/mimetypes/application-x-vnd.kde.plan*.svgz
-%{_datadir}/kxmlgui5/calligraplan*/calligraplan*.rc
-%{_datadir}/metainfo/org.kde.calligraplan.appdata.xml
 
 #--------------------------------------------------------------------
 
@@ -665,6 +650,7 @@ Header files needed for developing calligra applications.
 %{_libdir}/lib${lib}.so
 EOF
 done)}
+%{_libdir}/libgemini.so
 %{_libdir}/libkowv2.so
 %{_libdir}/libRtfReader.so
 %{_libdir}/libkoodf2.so
