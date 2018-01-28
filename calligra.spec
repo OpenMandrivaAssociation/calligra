@@ -5,7 +5,7 @@
 %define _disable_ld_no_undefined 1
 %define _disable_lto 1
 
-%define major 15
+%define major 16
 
 %define stable %([ `echo %{version} |cut -d. -f3` -ge 70 ] && echo -n un; echo -n stable)
 
@@ -13,12 +13,12 @@ Summary:	Set of office applications for KDE
 Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
-Version:	3.0.90
+Version:	3.1.0
 Release:	1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
-Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
+Source0:	http://download.kde.org/%{stable}/%{name}/%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
 #Patch3:		calligra-optionize-staging.patch
 #Patch4:		calligra-2.8.0-libpqxx-4.0.patch
@@ -335,7 +335,7 @@ Summary:	Mobile version of the Calligra office suite
 Group:		Graphical desktop/KDE
 Requires:	%{name}-core = %{EVRD}
 
-%libpackage gemini 15
+%libpackage gemini %{major}
 
 %description gemini
 Mobile version of the Calligra office suite
@@ -343,9 +343,10 @@ Mobile version of the Calligra office suite
 %files gemini
 %{_bindir}/calligragemini*
 %{_libdir}/qt5/qml/Calligra/Gemini
-%{_datadir}/applications/calligragemini.desktop
+%{_datadir}/applications/org.kde.calligragemini.desktop
 %{_datadir}/calligragemini
 %{_datadir}/icons/*/*/*/calligragemini.*
+%{_datadir}/metainfo/org.kde.calligragemini.appdata.xml
 
 #--------------------------------------------------------------------
 %package -n okular-rtf
