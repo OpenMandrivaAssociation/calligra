@@ -235,7 +235,6 @@ Calligra library.
 Group:		Office
 Summary:	Set of office applications for KDE
 Obsoletes:	koffice-core < 15:2.4
-Requires:	kdebase4-runtime
 
 %description core
 Common files for Calligra.
