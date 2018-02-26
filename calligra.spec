@@ -132,7 +132,6 @@ BuildRequires:	cmake(KGantt)
 BuildRequires:	cmake(KPropertyWidgets)
 BuildRequires:	cmake(OpenJPEG)
 BuildRequires:	cmake(KReport)
-BuildRequires:	spnav-devel
 %if %compile_apidox
 BuildRequires:	doxygen
 BuildRequires:	graphviz
@@ -249,7 +248,6 @@ Common files for Calligra.
 %{_datadir}/mime/packages/msooxml-all.xml
 %{_libdir}/qt5/plugins/calligra/colorspaces
 %{_libdir}/qt5/plugins/calligra/deferred
-%{_libdir}/qt5/plugins/calligra/devices
 %{_libdir}/qt5/plugins/calligra/dockers
 %dir %{_libdir}/qt5/plugins/calligra/formatfilters
 %{_libdir}/qt5/plugins/calligra/formatfilters/calligra_filter_applixspread2kspread.so
