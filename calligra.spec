@@ -80,7 +80,6 @@ BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(poppler-qt5)
 BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(qca2-qt5)
-BuildRequires:	pkgconfig(qimageblitz)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(shared-mime-info)
 BuildRequires:	cmake(KF5Activities)
@@ -129,11 +128,11 @@ BuildRequires:	cmake(KF5Wallet)
 BuildRequires:	cmake(KF5WidgetsAddons)
 BuildRequires:	cmake(KF5WindowSystem)
 BuildRequires:	cmake(KF5XmlGui)
-BuildRequires:	cmake(KF5KDGantt2)
 BuildRequires:	cmake(KGantt)
 BuildRequires:	cmake(KPropertyWidgets)
 BuildRequires:	cmake(OpenJPEG)
 BuildRequires:	cmake(KReport)
+BuildRequires:	spnav-devel
 %if %compile_apidox
 BuildRequires:	doxygen
 BuildRequires:	graphviz
@@ -250,6 +249,7 @@ Common files for Calligra.
 %{_datadir}/mime/packages/msooxml-all.xml
 %{_libdir}/qt5/plugins/calligra/colorspaces
 %{_libdir}/qt5/plugins/calligra/deferred
+%{_libdir}/qt5/plugins/calligra/devices
 %{_libdir}/qt5/plugins/calligra/dockers
 %dir %{_libdir}/qt5/plugins/calligra/formatfilters
 %{_libdir}/qt5/plugins/calligra/formatfilters/calligra_filter_applixspread2kspread.so
@@ -697,73 +697,73 @@ for i in $list ; do
 done;
 %endif
 
-#%find_lang calligra \
-#KarbonFilterEffects \
-#KarbonTools \
-#braindump \
-#calligra-defaulttools \
-#calligra-dockers \
-#calligra-opener \
-#calligra_semanticitem_contact \
-#calligra_semanticitem_event \
-#calligra_semanticitem_location \
-#calligra_shape_artistictext \
-#calligra_shape_chart \
-#calligra_shape_comment \
-#calligra_shape_formula \
-#calligra_shape_music \
-#calligra_shape_paths \
-#calligra_shape_picture \
-#calligra_shape_plugin \
-#calligra_shape_spreadsheet \
-#calligra_shape_template \
-#calligra_shape_text \
-#calligra_shape_threed \
-#calligra_shape_vector \
-#calligra_shape_video \
-#calligra_textediting_autocorrect \
-#calligra_textediting_changecase \
-#calligra_textediting_spellcheck \
-#calligra_textediting_thesaurus \
-#calligra_textinlineobject_variables \
-#calligrafilters \
-#calligraplan \
-#calligraplan_scheduler_rcps \
-#calligraplan_scheduler_tj \
-#calligraplanlibs \
-#calligraplanwork \
-#calligrasheets \
-#calligrasheets_calendar \
-#calligrasheets_solver \
-#calligrastage \
-#calligrawords \
-#desktop_calligra_calligra \
-#desktop_calligra_kexi \
-#desktop_calligra_krita \
-#flow \
-#json_calligra_calligra \
-#json_calligra_kexi \
-#karbon \
-#kexi \
-#kexiforms_mapwidgetplugin \
-#kexiforms_webbrowserwidgetplugin \
-#keximigrate_mdb \
-#keximigrate_spreadsheet \
-#kocolorspaces \
-#koconverter \
-#krita \
-#krossmoduleplan \
-#krossmodulesheets \
-#krossmodulewords \
-#okularGenerator_odp \
-#okularGenerator_odt \
-#org.kde.braindump.appdata \
-#org.kde.calligraflow.appdata \
-#org.kde.calligraplan.appdata \
-#org.kde.calligrasheets.appdata \
-#org.kde.calligrastage.appdata \
-#org.kde.calligrawords.appdata \
-#org.kde.karbon.appdata \
-#org.kde.kexi.appdata \
-#org.kde.krita.appdata \
-#calligra.lang
+%find_lang calligra \
+KarbonFilterEffects \
+KarbonTools \
+braindump \
+calligra-defaulttools \
+calligra-dockers \
+calligra-opener \
+calligra_semanticitem_contact \
+calligra_semanticitem_event \
+calligra_semanticitem_location \
+calligra_shape_artistictext \
+calligra_shape_chart \
+calligra_shape_comment \
+calligra_shape_formula \
+calligra_shape_music \
+calligra_shape_paths \
+calligra_shape_picture \
+calligra_shape_plugin \
+calligra_shape_spreadsheet \
+calligra_shape_template \
+calligra_shape_text \
+calligra_shape_threed \
+calligra_shape_vector \
+calligra_shape_video \
+calligra_textediting_autocorrect \
+calligra_textediting_changecase \
+calligra_textediting_spellcheck \
+calligra_textediting_thesaurus \
+calligra_textinlineobject_variables \
+calligrafilters \
+calligraplan \
+calligraplan_scheduler_rcps \
+calligraplan_scheduler_tj \
+calligraplanlibs \
+calligraplanwork \
+calligrasheets \
+calligrasheets_calendar \
+calligrasheets_solver \
+calligrastage \
+calligrawords \
+desktop_calligra_calligra \
+desktop_calligra_kexi \
+desktop_calligra_krita \
+flow \
+json_calligra_calligra \
+json_calligra_kexi \
+karbon \
+kexi \
+kexiforms_mapwidgetplugin \
+kexiforms_webbrowserwidgetplugin \
+keximigrate_mdb \
+keximigrate_spreadsheet \
+kocolorspaces \
+koconverter \
+krita \
+krossmoduleplan \
+krossmodulesheets \
+krossmodulewords \
+okularGenerator_odp \
+okularGenerator_odt \
+org.kde.braindump.appdata \
+org.kde.calligraflow.appdata \
+org.kde.calligraplan.appdata \
+org.kde.calligrasheets.appdata \
+org.kde.calligrastage.appdata \
+org.kde.calligrawords.appdata \
+org.kde.karbon.appdata \
+org.kde.kexi.appdata \
+org.kde.krita.appdata \
+calligra.lang
