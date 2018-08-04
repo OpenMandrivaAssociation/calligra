@@ -40,6 +40,7 @@ BuildRequires:	pkgconfig(Qt5Quick)
 BuildRequires:	pkgconfig(Qt5Sql)
 BuildRequires:	pkgconfig(Qt5WebKit)
 BuildRequires:	pkgconfig(Qt5WebKitWidgets)
+BuildRequires:	pkgconfig(Qt5X11Extras)
 BuildRequires:	cmake(ECM)
 BuildRequires:	pstoedit
 BuildRequires:	boost-devel
