@@ -14,15 +14,17 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	3.1.0
-Release:	4
+Release:	5
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
 Source0:	http://download.kde.org/%{stable}/%{name}/%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
-#Patch3:		calligra-optionize-staging.patch
-#Patch4:		calligra-2.8.0-libpqxx-4.0.patch
-#Patch5:		0001-adapt-to-libwps-0.4.patch
+
+## upstream patches
+Patch20:        0020-Fix-build-with-Qt-5.11-missing-headers.patch
+Patch22:        0022-Fix-compilation-with-Qt-5.11-missing-include.patch
+
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
 BuildRequires:	pkgconfig(Qt5Network)
@@ -130,8 +132,8 @@ BuildRequires:	cmake(KF5WindowSystem)
 BuildRequires:	cmake(KF5XmlGui)
 BuildRequires:	cmake(KGantt)
 BuildRequires:	cmake(KPropertyWidgets)
-BuildRequires:	cmake(OpenJPEG)
 BuildRequires:	cmake(KReport)
+BuildRequires:	cmake(KF5Holidays)
 %if %compile_apidox
 BuildRequires:	doxygen
 BuildRequires:	graphviz
