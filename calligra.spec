@@ -86,6 +86,8 @@ BuildRequires:	pkgconfig(python)
 BuildRequires:	pkgconfig(qca2-qt5)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(shared-mime-info)
+BuildRequires:	pkgconfig(libgit2)
+BuildRequires:	cmake(Phonon4Qt5)
 BuildRequires:	cmake(KF5Activities)
 BuildRequires:	cmake(KF5AkonadiContact)
 BuildRequires:	cmake(KF5Akonadi)
@@ -431,6 +433,7 @@ Summary:	Presentation for calligra-suite
 Group:		Graphical desktop/KDE
 Requires:	%{name}-core = %{EVRD}
 Requires:	xdg-utils
+Requires:	pstoedit
 %rename	stage
 
 %description stage
@@ -458,6 +461,7 @@ content elements are available to Stage.
 Summary:	Scalable drawing for calligra
 Group:		Graphical desktop/KDE
 Requires:	%{name}-core = %{EVRD}
+Requires:	pstoedit
 %rename		karbon
 
 %description karbon
