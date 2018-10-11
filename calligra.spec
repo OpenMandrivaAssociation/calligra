@@ -14,13 +14,14 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	3.1.0
-Release:	7
+Release:	8
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
 Source0:	http://download.kde.org/%{stable}/%{name}/%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
 
+Patch0:		calligra-3.1.0-poppler-69.patch
 ## upstream patches
 Patch20:        0020-Fix-build-with-Qt-5.11-missing-headers.patch
 Patch22:        0022-Fix-compilation-with-Qt-5.11-missing-include.patch
@@ -664,8 +665,7 @@ done)}
 #--------------------------------------------------------------------
 
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 
 %build
 # clang build causes issues with pigment

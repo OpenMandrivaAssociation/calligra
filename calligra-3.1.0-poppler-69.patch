@@ -1,0 +1,13 @@
+diff -up calligra-3.1.0/filters/karbon/pdf/PdfImport.cpp.omv~ calligra-3.1.0/filters/karbon/pdf/PdfImport.cpp
+--- calligra-3.1.0/filters/karbon/pdf/PdfImport.cpp.omv~	2018-10-11 12:54:09.536606919 +0200
++++ calligra-3.1.0/filters/karbon/pdf/PdfImport.cpp	2018-10-11 12:54:13.547629775 +0200
+@@ -102,9 +102,6 @@ KoFilter::ConversionStatus PdfImport::co
+     delete globalParams;
+     globalParams = 0;
+ 
+-    // check for memory leaks
+-    Object::memCheck(stderr);
+-
+     return KoFilter::OK;
+ }
+ 
