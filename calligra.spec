@@ -21,7 +21,6 @@ Url:		http://www.calligra.org
 Source0:	http://download.kde.org/%{stable}/%{name}/%{version}/%{name}-%{version}.tar.xz
 Source1:	%{name}.rpmlintrc
 
-Patch0:		calligra-3.1.0-poppler-69.patch
 ## upstream patches
 Patch20:        0020-Fix-build-with-Qt-5.11-missing-headers.patch
 Patch22:        0022-Fix-compilation-with-Qt-5.11-missing-include.patch
