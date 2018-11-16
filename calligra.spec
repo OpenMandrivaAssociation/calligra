@@ -25,7 +25,7 @@ Source1:	%{name}.rpmlintrc
 Patch20:        0020-Fix-build-with-Qt-5.11-missing-headers.patch
 Patch22:        0022-Fix-compilation-with-Qt-5.11-missing-include.patch
 Patch23:        https://github.com/KDE/calligra/commit/a615718222f8ad3bba4b88fad640382e517f7dd9.patch
-Patch24:        https://github.com/KDE/calligra/commit/fb6bbaf64c60418150d0e65e83938503b6aa588a.patch
+Patch24:	calligra-poppler-0.71.patch
 
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
