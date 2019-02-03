@@ -14,7 +14,7 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	3.1.0
-Release:	11
+Release:	12
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
@@ -26,6 +26,7 @@ Patch20:        0020-Fix-build-with-Qt-5.11-missing-headers.patch
 Patch22:        0022-Fix-compilation-with-Qt-5.11-missing-include.patch
 Patch23:        https://github.com/KDE/calligra/commit/a615718222f8ad3bba4b88fad640382e517f7dd9.patch
 Patch24:	calligra-poppler-0.71.patch
+Patch25:	calligra-3.1.0-poppler-0.72.patch
 
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
@@ -684,14 +685,14 @@ export CC=gcc
 %ninja -w dupbuild=warn
 
 %if %{compile_apidox}
-%ninja apidox
+%ninja apidox -w dupbuild=warn
 %endif
 
 %install
-%ninja_install -C build
+%ninja_install -w dupbuild=warn -C build
 
 %if %compile_apidox
-ninja install-apidox DESTDIR=%{buildroot}/
+ninja install-apidox -w dupbuild=warn DESTDIR=%{buildroot}/
 list=`ls -d */ -1`;
 echo $list;
 for i in $list ; do
