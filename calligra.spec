@@ -681,7 +681,7 @@ export CC=gcc
 %cmake_kde5 -Wno-dev -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON \
 	-DPACKAGERS_BUILD=ON
 %endif
-%ninja
+%ninja -w dupbuild=warn
 
 %if %{compile_apidox}
 %ninja apidox
