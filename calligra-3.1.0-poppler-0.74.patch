@@ -1,0 +1,21 @@
+diff -up calligra-3.1.0/filters/karbon/pdf/SvgOutputDev.cpp.omv~ calligra-3.1.0/filters/karbon/pdf/SvgOutputDev.cpp
+--- calligra-3.1.0/filters/karbon/pdf/SvgOutputDev.cpp.omv~	2019-02-12 14:50:27.787482871 +0100
++++ calligra-3.1.0/filters/karbon/pdf/SvgOutputDev.cpp	2019-02-12 14:50:35.827655285 +0100
+@@ -488,7 +488,7 @@ void SvgOutputDev::drawImage(GfxState *s
+     if (maskColors) {
+         for (int y = 0; y < height; y++) {
+             dest = (unsigned int *)(buffer + y * 4 * width);
+-            Guchar * pix = imgStr->getLine();
++            unsigned char * pix = imgStr->getLine();
+             colorMap->getRGBLine(pix, dest, width);
+ 
+             for (int x = 0; x < width; x++) {
+@@ -507,7 +507,7 @@ void SvgOutputDev::drawImage(GfxState *s
+     } else {
+         for (int y = 0; y < height; y++) {
+             dest = (unsigned int *)(buffer + y * 4 * width);
+-            Guchar * pix = imgStr->getLine();
++            unsigned char * pix = imgStr->getLine();
+             colorMap->getRGBLine(pix, dest, width);
+         }
+ 
