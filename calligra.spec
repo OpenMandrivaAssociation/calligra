@@ -14,7 +14,7 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	3.1.0
-Release:	13
+Release:	14
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
@@ -28,6 +28,7 @@ Patch23:        https://github.com/KDE/calligra/commit/a615718222f8ad3bba4b88fad
 Patch24:	calligra-poppler-0.71.patch
 Patch25:	calligra-3.1.0-poppler-0.72.patch
 Patch26:	calligra-3.1.0-poppler-0.74.patch
+Patch27:	calligra-3.1.0-compile.patch
 
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
@@ -671,10 +672,6 @@ done)}
 %autosetup -p1
 
 %build
-# clang build causes issues with pigment
-# and libvc
-export CXX=g++
-export CC=gcc
 #sh initrepo.sh
 %if %_mobile
 %cmake_kde5 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON \
