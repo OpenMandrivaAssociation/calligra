@@ -1,3 +1,5 @@
+%global optflags %{optflags} -Wno-register
+
 %bcond_without okular
 
 %define compile_apidox 0
@@ -29,6 +31,7 @@ Patch24:	calligra-poppler-0.71.patch
 Patch25:	calligra-3.1.0-poppler-0.72.patch
 Patch26:	calligra-3.1.0-poppler-0.74.patch
 Patch27:	calligra-3.1.0-compile.patch
+Patch28:	calligra-poppler-84.patch
 
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
@@ -62,6 +65,7 @@ BuildRequires:	okular-devel
 %endif
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
+BuildRequires:	spnav-devel
 BuildRequires:	tiff-devel
 BuildRequires:	vc-devel
 BuildRequires:	xbase-devel
@@ -259,6 +263,7 @@ Common files for Calligra.
 %{_datadir}/mime/packages/msooxml-all.xml
 %{_libdir}/qt5/plugins/calligra/colorspaces
 %{_libdir}/qt5/plugins/calligra/deferred
+%{_libdir}/qt5/plugins/calligra/devices
 %{_libdir}/qt5/plugins/calligra/dockers
 %dir %{_libdir}/qt5/plugins/calligra/formatfilters
 %{_libdir}/qt5/plugins/calligra/formatfilters/calligra_filter_applixspread2kspread.so
@@ -673,6 +678,7 @@ done)}
 
 %build
 #sh initrepo.sh
+export CXXFLAGS="%{optflags} -std=gnu++17"
 %if %_mobile
 %cmake_kde5 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON \
 	-DPACKAGERS_BUILD=ON
