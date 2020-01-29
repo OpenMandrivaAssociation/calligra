@@ -65,7 +65,8 @@ BuildRequires:	okular-devel
 %endif
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
-BuildRequires:	spnav-devel
+# We could do this, but it's in contrib
+#BuildRequires:	spnav-devel
 BuildRequires:	tiff-devel
 BuildRequires:	vc-devel
 BuildRequires:	xbase-devel
@@ -263,7 +264,8 @@ Common files for Calligra.
 %{_datadir}/mime/packages/msooxml-all.xml
 %{_libdir}/qt5/plugins/calligra/colorspaces
 %{_libdir}/qt5/plugins/calligra/deferred
-%{_libdir}/qt5/plugins/calligra/devices
+# Gets built if spnav-devel is there
+%optional %{_libdir}/qt5/plugins/calligra/devices
 %{_libdir}/qt5/plugins/calligra/dockers
 %dir %{_libdir}/qt5/plugins/calligra/formatfilters
 %{_libdir}/qt5/plugins/calligra/formatfilters/calligra_filter_applixspread2kspread.so
