@@ -441,6 +441,7 @@ such as income and expenditure, employee working hours, etc.
 %{_datadir}/icons/*/*/*/calligrasheets.*
 %{_libdir}/libkdeinit5_calligrasheets.so
 %{_datadir}/applications/org.kde.calligrasheets.desktop
+%{_libdir}/qt5/plugins/calligra/formatfilters/calligra_filter_sheets2xls.so
 %doc %lang(ca) %{_docdir}/HTML/ca/sheets
 %doc %lang(de) %{_docdir}/HTML/de/sheets
 %doc %lang(es) %{_docdir}/HTML/es/sheets
@@ -718,7 +719,7 @@ export CXXFLAGS="%{optflags} -std=gnu++17"
 %cmake_kde5 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON \
 	-DPACKAGERS_BUILD=ON -G "Unix Makefiles"
 %else
-%cmake_kde5 -Wno-dev -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON \
+%cmake_kde5 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON -DGHNS:BOOL=ON -DINSTALL_XLS_EXPORT_FILTER:BOOL=ON  \
 	-DPACKAGERS_BUILD=ON -G "Unix Makefiles"
 %endif
 %make_build
