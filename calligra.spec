@@ -15,23 +15,18 @@ Summary:	Set of office applications for KDE
 Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
-Version:	3.1.0
-Release:	17
+Version:	3.1.90
+Release:	1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
+%if "%{stable}" == "stable"
 Source0:	http://download.kde.org/%{stable}/%{name}/%{version}/%{name}-%{version}.tar.xz
+%else
+Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
+%endif
 Source1:	%{name}.rpmlintrc
-
-## upstream patches
-Patch20:        0020-Fix-build-with-Qt-5.11-missing-headers.patch
-Patch22:        0022-Fix-compilation-with-Qt-5.11-missing-include.patch
-Patch23:        https://github.com/KDE/calligra/commit/a615718222f8ad3bba4b88fad640382e517f7dd9.patch
-Patch24:	calligra-poppler-0.71.patch
-Patch25:	calligra-3.1.0-poppler-0.72.patch
-Patch26:	calligra-3.1.0-poppler-0.74.patch
-Patch27:	calligra-3.1.0-compile.patch
-Patch28:	calligra-poppler-84.patch
+Patch0:		calligra-3.1.90-qt-5.15.patch
 
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
@@ -261,11 +256,7 @@ Common files for Calligra.
 %{_bindir}/visualimagecompare
 %{_sysconfdir}/xdg/calligra_stencils.knsrc
 %{_datadir}/mime/packages/calligra_svm.xml
-%{_datadir}/mime/packages/msooxml-all.xml
 %{_libdir}/qt5/plugins/calligra/colorspaces
-%{_libdir}/qt5/plugins/calligra/deferred
-# Gets built if spnav-devel is there
-%optional %{_libdir}/qt5/plugins/calligra/devices
 %{_libdir}/qt5/plugins/calligra/dockers
 %dir %{_libdir}/qt5/plugins/calligra/formatfilters
 %{_libdir}/qt5/plugins/calligra/formatfilters/calligra_filter_applixspread2kspread.so
@@ -343,6 +334,19 @@ Common files for Calligra.
 %{_datadir}/kservices5/calligradocinfopropspage.desktop
 %{_datadir}/kservices5/calligra_odg_thumbnail.desktop
 %{_datadir}/kservices5/ServiceMenus/calligra/words_print.desktop
+%doc %lang(ca) %{_docdir}/HTML/ca/calligra
+%doc %lang(de) %{_docdir}/HTML/de/calligra
+%doc %lang(es) %{_docdir}/HTML/es/calligra
+%doc %lang(fr) %{_docdir}/HTML/fr/calligra
+%doc %lang(it) %{_docdir}/HTML/it/calligra
+%doc %lang(nl) %{_docdir}/HTML/nl/calligra
+%doc %lang(pt) %{_docdir}/HTML/pt/calligra
+%doc %lang(pt_BR) %{_docdir}/HTML/pt_BR/calligra
+%doc %lang(ru) %{_docdir}/HTML/ru/calligra
+%doc %lang(sv) %{_docdir}/HTML/sv/calligra
+%doc %lang(uk) %{_docdir}/HTML/uk/calligra
+%doc %lang(et) %{_docdir}/HTML/et/calligra
+%doc %lang(id) %{_docdir}/HTML/id/calligra
 
 #--------------------------------------------------------------------
 %package gemini
@@ -437,6 +441,16 @@ such as income and expenditure, employee working hours, etc.
 %{_datadir}/icons/*/*/*/calligrasheets.*
 %{_libdir}/libkdeinit5_calligrasheets.so
 %{_datadir}/applications/org.kde.calligrasheets.desktop
+%doc %lang(ca) %{_docdir}/HTML/ca/sheets
+%doc %lang(de) %{_docdir}/HTML/de/sheets
+%doc %lang(es) %{_docdir}/HTML/es/sheets
+%doc %lang(nl) %{_docdir}/HTML/nl/sheets
+%doc %lang(pt) %{_docdir}/HTML/pt/sheets
+%doc %lang(pt_BR) %{_docdir}/HTML/pt_BR/sheets
+%doc %lang(ru) %{_docdir}/HTML/ru/sheets
+%doc %lang(sv) %{_docdir}/HTML/sv/sheets
+%doc %lang(uk) %{_docdir}/HTML/uk/sheets
+%doc %lang(it) %{_docdir}/HTML/it/sheets
 
 #--------------------------------------------------------------------
 
@@ -458,9 +472,28 @@ the integration with Calligra, all the power and flexibility of the Calligra
 content elements are available to Stage.
 
 %files stage
+%{_bindir}/calligrastage
+%{_libdir}/libkdeinit5_calligrastage.so
+%{_libdir}/qt5/plugins/calligra/formatfilters/calligra_filter_pdf2odg.so
+%{_datadir}/applications/org.kde.calligrastage.desktop
+%doc %lang(ca) %{_docdir}/HTML/ca/stage
+%doc %lang(de) %{_docdir}/HTML/de/stage
+%doc %lang(es) %{_docdir}/HTML/es/stage
+%doc %lang(fr) %{_docdir}/HTML/fr/stage
+%doc %lang(nl) %{_docdir}/HTML/nl/stage
+%doc %lang(pt) %{_docdir}/HTML/pt/stage
+%doc %lang(pt_BR) %{_docdir}/HTML/pt_BR/stage
+%doc %lang(sv) %{_docdir}/HTML/sv/stage
+%doc %lang(uk) %{_docdir}/HTML/uk/stage
+%doc %lang(it) %{_docdir}/HTML/it/stage
+%{_datadir}/icons/hicolor/scalable/actions/office-chart-stock-candlestick.svg
+%{_datadir}/icons/hicolor/scalable/actions/office-chart-stock-hlc.svg
+%{_datadir}/icons/hicolor/scalable/actions/office-chart-stock-ohlc.svg
+%{_datadir}/kservices5/ServiceMenus/calligra/stage_print.desktop
+%{_datadir}/metainfo/org.kde.calligrastage.appdata.xml
+
 %{_sysconfdir}/xdg/calligrastagerc
 %{_datadir}/kservices5/stage_*_thumbnail.desktop
-%{_datadir}/mime/packages/x-iwork-keynote-sffkey.xml
 %{_datadir}/kxmlgui5/calligrastage
 %{_datadir}/calligrastage
 %{_libdir}/qt5/plugins/calligrastage
@@ -683,22 +716,22 @@ done)}
 export CXXFLAGS="%{optflags} -std=gnu++17"
 %if %_mobile
 %cmake_kde5 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON \
-	-DPACKAGERS_BUILD=ON
+	-DPACKAGERS_BUILD=ON -G "Unix Makefiles"
 %else
 %cmake_kde5 -Wno-dev -DBUILD_mobile=OFF -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON \
-	-DPACKAGERS_BUILD=ON
+	-DPACKAGERS_BUILD=ON -G "Unix Makefiles"
 %endif
-%ninja -w dupbuild=warn
+%make_build
 
 %if %{compile_apidox}
-%ninja apidox -w dupbuild=warn
+%make_build apidox
 %endif
 
 %install
-%ninja_install -w dupbuild=warn -C build
+%make_install -C build
 
 %if %compile_apidox
-ninja install-apidox -w dupbuild=warn DESTDIR=%{buildroot}/
+%make_build install-apidox DESTDIR=%{buildroot}/
 list=`ls -d */ -1`;
 echo $list;
 for i in $list ; do
