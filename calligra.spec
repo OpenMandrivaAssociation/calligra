@@ -7,7 +7,7 @@
 %define _disable_ld_no_undefined 1
 %define _disable_lto 1
 
-%define major 16
+%define major 17
 
 %define stable %([ `echo %{version} |cut -d. -f3` -ge 70 ] && echo -n un; echo -n stable)
 
@@ -15,7 +15,7 @@ Summary:	Set of office applications for KDE
 Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
-Version:	3.1.90
+Version:	3.2.0
 Release:	1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
@@ -26,7 +26,6 @@ Source0:	http://download.kde.org/%{stable}/%{name}/%{version}/%{name}-%{version}
 Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
 %endif
 Source1:	%{name}.rpmlintrc
-Patch0:		calligra-3.1.90-qt-5.15.patch
 
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
@@ -256,6 +255,7 @@ Common files for Calligra.
 %{_bindir}/visualimagecompare
 %{_sysconfdir}/xdg/calligra_stencils.knsrc
 %{_datadir}/mime/packages/calligra_svm.xml
+%{_datadir}/applications/calligra.desktop
 %{_libdir}/qt5/plugins/calligra/colorspaces
 %{_libdir}/qt5/plugins/calligra/dockers
 %dir %{_libdir}/qt5/plugins/calligra/formatfilters
@@ -487,9 +487,6 @@ content elements are available to Stage.
 %doc %lang(sv) %{_docdir}/HTML/sv/stage
 %doc %lang(uk) %{_docdir}/HTML/uk/stage
 %doc %lang(it) %{_docdir}/HTML/it/stage
-%{_datadir}/icons/hicolor/scalable/actions/office-chart-stock-candlestick.svg
-%{_datadir}/icons/hicolor/scalable/actions/office-chart-stock-hlc.svg
-%{_datadir}/icons/hicolor/scalable/actions/office-chart-stock-ohlc.svg
 %{_datadir}/kservices5/ServiceMenus/calligra/stage_print.desktop
 %{_datadir}/metainfo/org.kde.calligrastage.appdata.xml
 
@@ -814,4 +811,4 @@ org.kde.calligrawords.appdata \
 org.kde.karbon.appdata \
 org.kde.kexi.appdata \
 org.kde.krita.appdata \
-calligra.lang
+calligra.lang --with-html
