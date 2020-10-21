@@ -16,7 +16,7 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	3.2.1
-Release:	1
+Release:	3
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
@@ -330,6 +330,7 @@ Common files for Calligra.
 %{_datadir}/color/icc/calligra
 %{_datadir}/icons/*/*/*/calligrastage.*
 %{_datadir}/icons/*/*/*/calligrakarbon.*
+%{_datadir}/icons/*/*/*/office-chart-stock-*.*
 %{_datadir}/kservices5/calligradocinfopropspage.desktop
 %{_datadir}/kservices5/calligra_odg_thumbnail.desktop
 %{_datadir}/kservices5/ServiceMenus/calligra/words_print.desktop
