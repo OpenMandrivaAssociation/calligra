@@ -16,7 +16,7 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	3.2.1
-Release:	5
+Release:	6
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
@@ -153,12 +153,12 @@ Obsoletes:	%{name}-kchart < %{EVRD}
 Obsoletes:	%{name}-kformula < %{EVRD}
 Obsoletes:	%{name}-stateshape < %{EVRD}
 Obsoletes:	%{name}-active < %{EVRD}
-Suggests:	%{name}-flow
-Suggests:	%{name}-karbon
-Suggests:	%{name}-sheets
-Suggests:	%{name}-stage
-Suggests:	%{name}-words
-Suggests:	%{name}-plan
+Recommends:	%{name}-flow
+Recommends:	%{name}-karbon
+Recommends:	%{name}-sheets
+Recommends:	%{name}-stage
+Recommends:	%{name}-words
+Recommends:	%{name}-plan
 
 %if !%{with okular}
 Obsoletes:	%{name}-okular-odp <= %{EVRD}
