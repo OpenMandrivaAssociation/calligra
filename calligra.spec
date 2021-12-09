@@ -16,7 +16,7 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		16
 Version:	3.2.1
-Release:	11
+Release:	12
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
@@ -26,6 +26,7 @@ Source0:	http://download.kde.org/%{stable}/%{name}/%{version}/%{name}-%{version}
 Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
 %endif
 Source1:	%{name}.rpmlintrc
+Patch0:		calligra-3.2.1-workaround-fontconfig-linkage.patch
 
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
