@@ -27,6 +27,7 @@ Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
 %endif
 Source1:	%{name}.rpmlintrc
 Patch0:		calligra-3.2.1-workaround-fontconfig-linkage.patch
+Patch1:		calligra-3.2.1-c++17.patch
 
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
@@ -712,7 +713,6 @@ done)}
 
 %build
 #sh initrepo.sh
-export CXXFLAGS="%{optflags} -std=gnu++17"
 %if %_mobile
 %cmake_kde5 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON \
 	-DPACKAGERS_BUILD=ON -G "Unix Makefiles"
