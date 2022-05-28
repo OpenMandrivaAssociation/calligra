@@ -1,0 +1,38 @@
+diff -up calligra-3.2.1/filters/karbon/pdf/Pdf2OdgImport.cpp.omv~ calligra-3.2.1/filters/karbon/pdf/Pdf2OdgImport.cpp
+--- calligra-3.2.1/filters/karbon/pdf/Pdf2OdgImport.cpp.omv~	2022-05-29 00:24:51.520797879 +0200
++++ calligra-3.2.1/filters/karbon/pdf/Pdf2OdgImport.cpp	2022-05-29 00:25:10.076829624 +0200
+@@ -86,8 +86,7 @@ KoFilter::ConversionStatus Pdf2OdgImport
+     if (! globalParams)
+         return KoFilter::NotImplemented;
+ 
+-    GooString * fname = new GooString(QFile::encodeName(m_chain->inputFile()).data());
+-    PDFDoc * pdfDoc = new PDFDoc(fname, 0, 0, 0);
++    PDFDoc * pdfDoc = new PDFDoc(std::make_unique<GooString>(QFile::encodeName(m_chain->inputFile()).data()));
+     if (! pdfDoc) {
+ #ifdef HAVE_POPPLER_PRE_0_83
+         delete globalParams;
+diff -up calligra-3.2.1/filters/karbon/pdf/PdfImport.cpp.omv~ calligra-3.2.1/filters/karbon/pdf/PdfImport.cpp
+--- calligra-3.2.1/filters/karbon/pdf/PdfImport.cpp.omv~	2022-05-29 00:15:04.618582378 +0200
++++ calligra-3.2.1/filters/karbon/pdf/PdfImport.cpp	2022-05-29 00:21:26.159425945 +0200
+@@ -73,8 +73,7 @@ KoFilter::ConversionStatus PdfImport::co
+     if (! globalParams)
+         return KoFilter::NotImplemented;
+ 
+-    GooString * fname = new GooString(QFile::encodeName(m_chain->inputFile()).data());
+-    PDFDoc * pdfDoc = new PDFDoc(fname, 0, 0, 0);
++    PDFDoc * pdfDoc = new PDFDoc(std::make_unique<GooString>(QFile::encodeName(m_chain->inputFile()).data()));
+     if (! pdfDoc) {
+ #ifdef HAVE_POPPLER_PRE_0_83
+         delete globalParams;
+diff -up calligra-3.2.1/filters/karbon/pdf/SvgOutputDev.cpp.omv~ calligra-3.2.1/filters/karbon/pdf/SvgOutputDev.cpp
+--- calligra-3.2.1/filters/karbon/pdf/SvgOutputDev.cpp.omv~	2022-05-29 00:22:53.197588622 +0200
++++ calligra-3.2.1/filters/karbon/pdf/SvgOutputDev.cpp	2022-05-29 00:23:09.963619050 +0200
+@@ -410,7 +410,7 @@ void SvgOutputDev::drawString(GfxState *
+     if (s->getLength() == 0)
+         return;
+ 
+-    GfxFont * font = state->getFont();
++    std::shared_ptr<GfxFont> font = state->getFont();
+ 
+     QString str;
+ 
