@@ -14,9 +14,9 @@
 Summary:	Set of office applications for KDE
 Name:		calligra
 #koffice has epoch 15. We need a higher epoch
-Epoch:		16
+Epoch:		17
 Version:	3.2.1
-Release:	16
+Release:	17
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
