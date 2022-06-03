@@ -339,6 +339,7 @@ Common files for Calligra.
 %{_datadir}/kservices5/ServiceMenus/calligra/words_print.desktop
 %doc %lang(ca) %{_docdir}/HTML/ca/calligra
 %doc %lang(de) %{_docdir}/HTML/de/calligra
+%doc %lang(en) %{_docdir}/HTML/en/calligra
 %doc %lang(es) %{_docdir}/HTML/es/calligra
 %doc %lang(fr) %{_docdir}/HTML/fr/calligra
 %doc %lang(it) %{_docdir}/HTML/it/calligra
@@ -447,6 +448,7 @@ such as income and expenditure, employee working hours, etc.
 %{_libdir}/qt5/plugins/calligra/formatfilters/calligra_filter_sheets2xls.so
 %doc %lang(ca) %{_docdir}/HTML/ca/sheets
 %doc %lang(de) %{_docdir}/HTML/de/sheets
+%doc %lang(en) %{_docdir}/HTML/en/calligrasheets
 %doc %lang(es) %{_docdir}/HTML/es/sheets
 %doc %lang(nl) %{_docdir}/HTML/nl/sheets
 %doc %lang(pt) %{_docdir}/HTML/pt/sheets
@@ -482,6 +484,7 @@ content elements are available to Stage.
 %{_datadir}/applications/org.kde.calligrastage.desktop
 %doc %lang(ca) %{_docdir}/HTML/ca/stage
 %doc %lang(de) %{_docdir}/HTML/de/stage
+%doc %lang(en) %{_docdir}/HTML/en/calligrastage
 %doc %lang(es) %{_docdir}/HTML/es/stage
 %doc %lang(fr) %{_docdir}/HTML/fr/stage
 %doc %lang(nl) %{_docdir}/HTML/nl/stage
@@ -813,4 +816,4 @@ org.kde.calligrawords.appdata \
 org.kde.karbon.appdata \
 org.kde.kexi.appdata \
 org.kde.krita.appdata \
-calligra.lang --with-html
+calligra.lang
