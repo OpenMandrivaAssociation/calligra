@@ -1,0 +1,16 @@
+diff -up calligra-master/sheets/3rdparty/mdds/flat_segment_tree.hpp.omv~ calligra-master/sheets/3rdparty/mdds/flat_segment_tree.hpp
+--- calligra-master/sheets/3rdparty/mdds/flat_segment_tree.hpp.omv~	2023-04-29 17:22:17.153097571 +0200
++++ calligra-master/sheets/3rdparty/mdds/flat_segment_tree.hpp	2023-04-29 17:23:27.382858565 +0200
+@@ -114,8 +114,12 @@ public:
+             }
+             else
+             {
++#ifdef __EXCEPTIONS
+                 // Having a left node is prerequisite.
+                 throw general_error("flat_segment_tree::fill_nonleaf_value_handler: Having a left node is prerequisite.");
++#else
++                return;
++#endif
+             }
+ 
+             if (right_node)

@@ -7,7 +7,9 @@
 %define _disable_ld_no_undefined 1
 %define _disable_lto 1
 
-%define major 17
+%define major 18
+
+%define snapshot 20230429
 
 %define stable %([ `echo %{version} |cut -d. -f3` -ge 70 ] && echo -n un; echo -n stable)
 
@@ -15,20 +17,22 @@ Summary:	Set of office applications for KDE
 Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		17
-Version:	3.2.1
-Release:	29
+Version:	3.3.0
+Release:	0.%{snapshot}.1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
+%if 0%{?snapshot:1}
+Source0:	https://invent.kde.org/office/calligra/-/archive/master/calligra-master.tar.bz2#/calligra-%{snapshot}.tar.bz2
+%else
 %if "%{stable}" == "stable"
 Source0:	http://download.kde.org/%{stable}/%{name}/%{version}/%{name}-%{version}.tar.xz
 %else
 Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
 %endif
+%endif
 Source1:	%{name}.rpmlintrc
-Patch0:		calligra-3.2.1-workaround-fontconfig-linkage.patch
-Patch1:		calligra-3.2.1-c++17.patch
-Patch2:		calligra-3.2.1-poppler-22.05.patch
+Patch0:		calligra-buildfix.patch
 
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
@@ -47,12 +51,12 @@ BuildRequires:	pkgconfig(Qt5WebKitWidgets)
 BuildRequires:	pkgconfig(Qt5X11Extras)
 BuildRequires:	pkgconfig(Qt5QuickWidgets)
 BuildRequires:	cmake(ECM)
+BuildRequires:	ninja
 BuildRequires:	pstoedit
 BuildRequires:	boost-devel
 BuildRequires:	freetds-devel
 BuildRequires:	getfem-devel
 BuildRequires:	glpk-devel
-BuildRequires:	gmic-devel
 BuildRequires:	jbig-devel
 BuildRequires:	marble-devel
 BuildRequires:	mariadb-devel
@@ -169,8 +173,11 @@ Obsoletes:	%{name}-okular-odt <= %{EVRD}
 %endif
 
 # Those were in KDE4 versions of calligra...
-%define obsoletelibs calligradb calligrakdchart calligrakdgantt flowprivate kformdesigner kformula kokross koproperty kordf koreport kplatokernel kplatomodels kplatoui planprivate planworkapp rcps_plan braindumpcore planworkfactory
-%{expand:%(for lib in %{obsoletelibs}; do echo Obsoletes: %%mklibname $lib 14; echo; done)}
+%define obsoletelibs14 calligradb calligrakdchart calligrakdgantt flowprivate kformdesigner kformula kokross koproperty kordf koreport kplatokernel kplatomodels kplatoui planprivate planworkapp rcps_plan braindumpcore planworkfactory
+%{expand:%(for lib in %{obsoletelibs14}; do echo Obsoletes: %%mklibname $lib 14; echo; done)}
+# Those were in Calligra 3.2
+%define obsoletelibs18 calligrasheetscommon calligrasheetsodf
+%{expand:%(for lib in %{obsoletelibs18}; do echo Obsoletes: %%mklibname $lib 18; echo; done)}
 
 %description
 Office applications for the K Desktop Environment.
@@ -186,12 +193,9 @@ Calligra contains:
 
 %files
 
-#--------------------------------------------------------------------
-### MD the libpackage macro is missing a few bits.
-### this fixes a couple until a better solution is found
 %define libpackage()\
 %{expand:%%define nib %(echo %{1} | sed 's,[0-9]$,&_,' )}\
-%{expand:%%global lib%{1} %%mklibname %{nib} %{2}}\
+%{expand:%%global lib%{1} %%mklibname %{nib}}\
 %%package -n %{expand:%{lib%{1}}}\
 Summary: The %{1} library, a part of %{name}\
 Group: System/Libraries\
@@ -202,7 +206,7 @@ The %{1} library, a part of %{name}.\
 %{nil}
 
 # libpackages
-%define calligralibs basicflakes calligrasheetscommon calligrasheetsodf calligrastageprivate flake karboncommon karbonui komain komsooxml koodf koodfreader kopageapp koplugin kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kundo2 pigmentcms wordsprivate koformula kookularGenerator_odp kookularGenerator_odt kostore
+%define calligralibs basicflakes calligrastageprivate flake karboncommon karbonui komain komsooxml koodf koodfreader kopageapp koplugin kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kundo2 pigmentcms wordsprivate koformula kookularGenerator_odp kookularGenerator_odt kostore autocorrection calligrasheetscore calligrasheetsengine calligrasheetspartlib calligrasheetsui
 %{expand:%(for lib in %{calligralibs}; do cat <<EOF
 %%libpackage $lib %{major}
 EOF
@@ -211,27 +215,31 @@ done)}
 
 #--------------------------------------------------------------------
 
-%define libkoodf2 %mklibname koodf2 %{major}
+%define oldlibkoodf2 %mklibname koodf2 18
+%define libkoodf2 %mklibname koodf2
 
 %package -n %{libkoodf2}
 Summary:        Calligra library
 Group:          System/Libraries
 %rename %{_lib}koodf214
+%rename %{oldlibkoodf2}
 
 %description -n %{libkoodf2}
 Calligra library.
 
 %files -n %{libkoodf2}
-%{_libdir}/libkoodf2.so.%{major}*
+%{_libdir}/libkoodf2.so.*
 
 #--------------------------------------------------------------------
 
-%define libRtfReader %mklibname RtfReader %{major}
+%define oldlibRtfReader %mklibname RtfReader 18
+%define libRtfReader %mklibname RtfReader
 
 %package -n %{libRtfReader}
 Summary:        Calligra library
 Group:          System/Libraries
 %rename %{_lib}rtfreader14
+%rename %{oldlibRtfReader}
 
 %description -n %{libRtfReader}
 Calligra library.
@@ -255,7 +263,6 @@ Common files for Calligra.
 %{_bindir}/cstester
 %{_bindir}/cstrunner
 %{_bindir}/visualimagecompare
-%{_sysconfdir}/xdg/calligra_stencils.knsrc
 %{_datadir}/mime/packages/calligra_svm.xml
 %{_datadir}/applications/calligra.desktop
 %{_libdir}/qt5/plugins/calligra/colorspaces
@@ -315,9 +322,9 @@ Common files for Calligra.
 %{_libdir}/qt5/plugins/calligra/textediting
 %{_libdir}/qt5/plugins/calligra/textinlineobjects
 %{_libdir}/qt5/plugins/calligra/tools
-%{_libdir}/qt5/plugins/calligradocinfopropspage.so
 %{_libdir}/qt5/plugins/calligraimagethumbnail.so
 %{_libdir}/qt5/plugins/calligrathumbnail.so
+%{_libdir}/qt5/plugins/kf5/propertiesdialog/calligradocinfopropspage.so
 %{_libdir}/qt5/qml/org/kde/calligra
 %dir %{_datadir}/calligra
 %{_datadir}/calligra/autocorrect
@@ -334,7 +341,6 @@ Common files for Calligra.
 %{_datadir}/icons/*/*/*/calligrastage.*
 %{_datadir}/icons/*/*/*/calligrakarbon.*
 %{_datadir}/icons/*/*/*/office-chart-stock-*.*
-%{_datadir}/kservices5/calligradocinfopropspage.desktop
 %{_datadir}/kservices5/calligra_odg_thumbnail.desktop
 %{_datadir}/kservices5/ServiceMenus/calligra/words_print.desktop
 %doc %lang(ca) %{_docdir}/HTML/ca/calligra
@@ -410,7 +416,6 @@ With it, you can create informative and attractive documents with ease.
 %{_datadir}/metainfo/org.kde.calligrawords.appdata.*
 %{_datadir}/templates/.source/TextDocument.odt
 %{_datadir}/templates/TextDocument.desktop
-%{_libdir}/libkdeinit5_calligrawords.so
 %{_datadir}/applications/org.kde.calligrawords.desktop
 %{_datadir}/icons/*/*/*/calligrawords.*
 
@@ -443,13 +448,13 @@ such as income and expenditure, employee working hours, etc.
 %{_datadir}/templates/SpreadSheet.desktop
 %{_datadir}/kservices5/ServiceMenus/calligra/sheets_print.desktop
 %{_datadir}/icons/*/*/*/calligrasheets.*
-%{_libdir}/libkdeinit5_calligrasheets.so
 %{_datadir}/applications/org.kde.calligrasheets.desktop
 %{_libdir}/qt5/plugins/calligra/formatfilters/calligra_filter_sheets2xls.so
 %doc %lang(ca) %{_docdir}/HTML/ca/sheets
 %doc %lang(de) %{_docdir}/HTML/de/sheets
 %doc %lang(en) %{_docdir}/HTML/en/calligrasheets
 %doc %lang(es) %{_docdir}/HTML/es/sheets
+%doc %lang(fr) %{_docdir}/HTML/fr/sheets
 %doc %lang(nl) %{_docdir}/HTML/nl/sheets
 %doc %lang(pt) %{_docdir}/HTML/pt/sheets
 %doc %lang(pt_BR) %{_docdir}/HTML/pt_BR/sheets
@@ -479,7 +484,6 @@ content elements are available to Stage.
 
 %files stage
 %{_bindir}/calligrastage
-%{_libdir}/libkdeinit5_calligrastage.so
 %{_libdir}/qt5/plugins/calligra/formatfilters/calligra_filter_pdf2odg.so
 %{_datadir}/applications/org.kde.calligrastage.desktop
 %doc %lang(ca) %{_docdir}/HTML/ca/stage
@@ -531,7 +535,6 @@ art.
 %{_datadir}/kxmlgui5/karbon
 %{_datadir}/karbon
 %{_datadir}/kservices5/ServiceMenus/calligra/karbon_print.desktop
-%{_libdir}/libkdeinit5_karbon.so
 %{_datadir}/applications/org.kde.karbon.desktop
 
 #--------------------------------------------------------------------
@@ -713,41 +716,41 @@ done)}
 #--------------------------------------------------------------------
 
 %prep
-%autosetup -p1
+%autosetup -p1 -n calligra-%{?snapshot:master}%{!?snapshot:%{version}}
 
 %build
 #sh initrepo.sh
 %if %_mobile
 %cmake_kde5 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON \
-	-DPACKAGERS_BUILD=ON -G "Unix Makefiles"
+	-DPACKAGERS_BUILD=ON -G Ninja
 %else
 %cmake_kde5 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON -DGHNS:BOOL=ON -DINSTALL_XLS_EXPORT_FILTER:BOOL=ON  \
-	-DPACKAGERS_BUILD=ON -G "Unix Makefiles"
+	-DPACKAGERS_BUILD=ON -G Ninja
 %endif
-%make_build
+%ninja_build
 
 %if %{compile_apidox}
-%make_build apidox
+%ninja_build apidox
 %endif
 
 %install
-%make_install -C build
+%ninja_install -C build
 
 %if %compile_apidox
-%make_build install-apidox DESTDIR=%{buildroot}/
+%ninja_build install-apidox DESTDIR=%{buildroot}/
 list=`ls -d */ -1`;
 echo $list;
 for i in $list ; do
 	cd $i;
 		if grep '^include .*Doxyfile.am' Makefile.am; then
 			echo "installing apidox from $i" ;
-			make install-apidox DESTDIR=%{buildroot}/ ;
+			ninja install-apidox DESTDIR=%{buildroot}/ ;
 		fi
 	cd ../;
 done;
 %endif
 
-%find_lang calligra \
+%find_lang --with html calligra \
 KarbonFilterEffects \
 KarbonTools \
 braindump \
@@ -816,4 +819,5 @@ org.kde.calligrawords.appdata \
 org.kde.karbon.appdata \
 org.kde.kexi.appdata \
 org.kde.krita.appdata \
+sheets \
 calligra.lang
