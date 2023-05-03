@@ -9,7 +9,7 @@
 
 %define major 18
 
-%define snapshot 20230429
+%define snapshot 20230503
 
 %define stable %([ `echo %{version} |cut -d. -f3` -ge 70 ] && echo -n un; echo -n stable)
 
@@ -18,7 +18,7 @@ Name:		calligra
 #koffice has epoch 15. We need a higher epoch
 Epoch:		17
 Version:	3.3.0
-Release:	0.%{snapshot}.2
+Release:	0.%{snapshot}.1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
