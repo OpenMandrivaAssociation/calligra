@@ -9,7 +9,7 @@
 
 %define major 18
 
-%define snapshot 20230812
+%define snapshot 20230907
 
 %define stable %([ `echo %{version} |cut -d. -f3` -ge 70 ] && echo -n un; echo -n stable)
 
@@ -99,8 +99,6 @@ BuildRequires:	pkgconfig(shared-mime-info)
 BuildRequires:	pkgconfig(libgit2)
 BuildRequires:	cmake(Phonon4Qt5)
 BuildRequires:	cmake(KF5Activities)
-BuildRequires:	cmake(KF5AkonadiContact)
-BuildRequires:	cmake(KF5Akonadi)
 BuildRequires:	cmake(KF5Archive)
 BuildRequires:	cmake(KF5Auth)
 BuildRequires:	cmake(KF5Bookmarks)
@@ -144,6 +142,8 @@ BuildRequires:	cmake(KF5Wallet)
 BuildRequires:	cmake(KF5WidgetsAddons)
 BuildRequires:	cmake(KF5WindowSystem)
 BuildRequires:	cmake(KF5XmlGui)
+BuildRequires:	cmake(KPim5AkonadiContact)
+BuildRequires:	cmake(KPim5Akonadi)
 BuildRequires:	cmake(KGantt)
 BuildRequires:	cmake(KPropertyWidgets)
 BuildRequires:	cmake(KReport)
