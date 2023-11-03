@@ -490,7 +490,6 @@ content elements are available to Stage.
 %doc %lang(de) %{_docdir}/HTML/de/stage
 %doc %lang(en) %{_docdir}/HTML/en/calligrastage
 %doc %lang(es) %{_docdir}/HTML/es/stage
-%doc %lang(fr) %{_docdir}/HTML/fr/stage
 %doc %lang(nl) %{_docdir}/HTML/nl/stage
 %doc %lang(pt) %{_docdir}/HTML/pt/stage
 %doc %lang(pt_BR) %{_docdir}/HTML/pt_BR/stage
@@ -724,7 +723,7 @@ done)}
 %cmake_kde5 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON \
 	-DPACKAGERS_BUILD=ON -G Ninja
 %else
-%cmake_kde5 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON -DGHNS:BOOL=ON -DINSTALL_XLS_EXPORT_FILTER:BOOL=ON  \
+%cmake_kde5 -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON -DGHNS:BOOL=ON -DINSTALL_XLS_EXPORT_FILTER:BOOL=ON -DAKONADI_DBUS_INTERFACES_DIR=/usr/share/dbus-1/interfaces \
 	-DPACKAGERS_BUILD=ON -G Ninja
 %endif
 %ninja_build
