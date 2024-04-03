@@ -1,0 +1,12 @@
+diff -up calligra/gemini/cloud/git/gitcontroller.cpp.omv~ calligra/gemini/cloud/git/gitcontroller.cpp
+--- calligra/gemini/cloud/git/gitcontroller.cpp.omv~	2024-04-03 17:20:29.152528407 +0200
++++ calligra/gemini/cloud/git/gitcontroller.cpp	2024-04-03 17:27:42.788852606 +0200
+@@ -404,7 +404,7 @@ void GitOpsThread::performPull()
+ 
+                     git_commit_create(&commit_id, repository, "HEAD", d->signature, d->signature,
+                                                 NULL, message.ptr,
+-                                                tree, 2, (const git_commit **) parents);
++                                                tree, 2, (git_commit *const *) parents);
+                     git_tree_free(tree);
+                 }
+                 git_index_free(index);

@@ -33,6 +33,7 @@ Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
 %endif
 Source1:	%{name}.rpmlintrc
 Patch0:		calligra-buildfix.patch
+Patch1:		calligra-libgit-api-update.patch
 
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
