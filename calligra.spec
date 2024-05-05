@@ -121,6 +121,7 @@ BuildRequires:	cmake(KF6ThreadWeaver)
 BuildRequires:	cmake(KF6WidgetsAddons)
 BuildRequires:	cmake(KF6WindowSystem)
 BuildRequires:	cmake(KF6XmlGui)
+BuildRequires:	spnav-devel
 %if %compile_apidox
 BuildRequires:	doxygen
 BuildRequires:	graphviz
@@ -244,8 +245,6 @@ Common files for Calligra.
 %{_qtdir}/plugins/calligra/dockers
 %{_qtdir}/plugins/kf6/thumbcreator/flow_vsdx_thumbnail.desktop
 %{_qtdir}/plugins/kf6/thumbcreator/flow_wpg_thumbnail.desktop
-%dir %{_qtdir}/plugins/calligra/devices
-%{_qtdir}/plugins/calligra/devices/calligra_device_spacenavigator.so
 %dir %{_qtdir}/plugins/calligra/formatfilters
 %{_qtdir}/plugins/calligra/formatfilters/calligra_filter_applixspread2kspread.so
 %{_qtdir}/plugins/calligra/formatfilters/calligra_filter_applixword2odt.so
@@ -320,6 +319,20 @@ Common files for Calligra.
 %{_datadir}/color/icc/calligra
 %{_datadir}/icons/*/*/*/calligrastage.*
 %{_datadir}/icons/*/*/*/calligrakarbon.*
+
+
+#--------------------------------------------------------------------
+%package spnav
+Summary:	Spacenav device support for Calligra
+Group:		Office
+
+%description spnav
+Spacenav device support for Calligra
+
+%files spnav
+%dir %{_qtdir}/plugins/calligra/devices
+%{_qtdir}/plugins/calligra/devices/calligra_device_spacenavigator.so
+
 
 #--------------------------------------------------------------------
 %package gemini
