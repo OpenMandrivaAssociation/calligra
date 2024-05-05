@@ -48,6 +48,7 @@ BuildRequires:	cmake(Qt6OpenGL)
 BuildRequires:	cmake(Qt6Quick)
 BuildRequires:	cmake(Qt6QuickWidgets)
 BuildRequires:	cmake(Qt6Sql)
+BuildRequires:	cmake(Qt6Keychain)
 BuildRequires:	cmake(ECM)
 BuildRequires:	ninja
 BuildRequires:	pstoedit
