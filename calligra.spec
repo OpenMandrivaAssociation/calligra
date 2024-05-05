@@ -64,8 +64,8 @@ BuildRequires:	plasma6-okular-devel
 %endif
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
-# We could do this, but it's in contrib
-#BuildRequires:	spnav-devel
+# We could do this, but it's in unsupported
+#BuildRequires:	pkgconfig(spnav)
 BuildRequires:	tiff-devel
 BuildRequires:	vc-devel
 BuildRequires:	xbase-devel
@@ -121,7 +121,6 @@ BuildRequires:	cmake(KF6ThreadWeaver)
 BuildRequires:	cmake(KF6WidgetsAddons)
 BuildRequires:	cmake(KF6WindowSystem)
 BuildRequires:	cmake(KF6XmlGui)
-BuildRequires:	spnav-devel
 %if %compile_apidox
 BuildRequires:	doxygen
 BuildRequires:	graphviz
@@ -322,6 +321,8 @@ Common files for Calligra.
 
 
 #--------------------------------------------------------------------
+%if 0
+# Disabled because the needed lib is in unsupported
 %package spnav
 Summary:	Spacenav device support for Calligra
 Group:		Office
@@ -332,6 +333,7 @@ Spacenav device support for Calligra
 %files spnav
 %dir %{_qtdir}/plugins/calligra/devices
 %{_qtdir}/plugins/calligra/devices/calligra_device_spacenavigator.so
+%endif
 
 
 #--------------------------------------------------------------------
