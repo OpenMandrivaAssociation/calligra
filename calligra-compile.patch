@@ -1,18 +1,6 @@
-diff -up calligra-master/CMakeLists.txt.omv~ calligra-master/CMakeLists.txt
---- calligra-master/CMakeLists.txt.omv~	2024-05-04 02:44:57.710868529 +0200
-+++ calligra-master/CMakeLists.txt	2024-05-04 02:45:02.658921483 +0200
-@@ -148,7 +148,7 @@ calligra_set_productset(${PRODUCTSET})
- set(REQUIRED_KF6_VERSION "5.76.0")
- set(REQUIRED_QT_VERSION "6.0.0")
- 
--set(CMAKE_CXX_STANDARD 17)
-+set(CMAKE_CXX_STANDARD 20)
- set(CMAKE_CXX_STANDARD_REQUIRED ON)
- set(CMAKE_CXX_EXTENSIONS OFF)
- 
 diff -up calligra-master/plugins/spacenavigator/SpaceNavigatorEvent.cpp.omv~ calligra-master/plugins/spacenavigator/SpaceNavigatorEvent.cpp
---- calligra-master/plugins/spacenavigator/SpaceNavigatorEvent.cpp.omv~	2024-05-04 02:36:39.769785002 +0200
-+++ calligra-master/plugins/spacenavigator/SpaceNavigatorEvent.cpp	2024-05-04 02:36:51.205894267 +0200
+--- calligra-master/plugins/spacenavigator/SpaceNavigatorEvent.cpp.omv~	2024-08-06 12:48:02.659091105 +0200
++++ calligra-master/plugins/spacenavigator/SpaceNavigatorEvent.cpp	2024-08-06 12:48:07.619130242 +0200
 @@ -8,7 +8,7 @@
  #include <KoPointerEvent.h>
  

@@ -10,14 +10,14 @@
 
 %define major 18
 
-%define snapshot 20240504
+%define snapshot 20240806
 
 %define stable %([ `echo %{version} |cut -d. -f3` -ge 70 ] && echo -n un; echo -n stable)
 
 Summary:	Set of office applications for KDE
 Name:		calligra
 Version:	3.3.0
-Release:	%{?snapshot:0.%{snapshot}.}4
+Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		http://www.calligra.org
@@ -242,8 +242,6 @@ Common files for Calligra.
 %{_datadir}/applications/calligra.desktop
 %{_qtdir}/plugins/calligra/colorspaces
 %{_qtdir}/plugins/calligra/dockers
-%{_qtdir}/plugins/kf6/thumbcreator/flow_vsdx_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/flow_wpg_thumbnail.desktop
 %dir %{_qtdir}/plugins/calligra/formatfilters
 %{_qtdir}/plugins/calligra/formatfilters/calligra_filter_applixspread2kspread.so
 %{_qtdir}/plugins/calligra/formatfilters/calligra_filter_applixword2odt.so
@@ -299,10 +297,7 @@ Common files for Calligra.
 %{_qtdir}/plugins/calligra/textediting
 %{_qtdir}/plugins/calligra/textinlineobjects
 %{_qtdir}/plugins/calligra/tools
-%{_qtdir}/plugins/calligraimagethumbnail.so
-%{_qtdir}/plugins/calligrathumbnail.so
 %{_qtdir}/plugins/kf5/propertiesdialog/calligradocinfopropspage.so
-%{_qtdir}/plugins/kf6/thumbcreator/calligra_odg_thumbnail.desktop
 %{_qtdir}/qml/org/kde/calligra
 %dir %{_datadir}/calligra
 %{_datadir}/calligra/autocorrect
@@ -318,11 +313,13 @@ Common files for Calligra.
 %{_datadir}/color/icc/calligra
 %{_datadir}/icons/*/*/*/calligrastage.*
 %{_datadir}/icons/*/*/*/calligrakarbon.*
+%{_qtdir}/plugins/kf6/thumbcreator/calligraimagethumbnail.so
+%{_qtdir}/plugins/kf6/thumbcreator/calligrathumbnail.so
 
 
 #--------------------------------------------------------------------
 %if 0
-# Disabled because the needed lib is in unsupported
+# Disabled because the needed lib is in extra
 %package spnav
 Summary:	Spacenav device support for Calligra
 Group:		Office
@@ -381,12 +378,6 @@ With it, you can create informative and attractive documents with ease.
 %{_datadir}/templates/TextDocument.desktop
 %{_datadir}/applications/org.kde.calligrawords.desktop
 %{_datadir}/icons/*/*/*/calligrawords.*
-%{_qtdir}/plugins/kf6/thumbcreator/words_docx_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/words_msword_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/words_odt_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/words_rtf_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/words_wpd_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/words_wps_thumbnail.desktop
 %{_datadir}/kio/servicemenus/words_print.desktop
 
 #--------------------------------------------------------------------
@@ -418,9 +409,6 @@ such as income and expenditure, employee working hours, etc.
 %{_datadir}/icons/*/*/*/calligrasheets.*
 %{_datadir}/applications/org.kde.calligrasheets.desktop
 %{_qtdir}/plugins/calligra/formatfilters/calligra_filter_sheets2xls.so
-%{_qtdir}/plugins/kf6/thumbcreator/sheets_excel_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/sheets_ods_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/sheets_xlsx_thumbnail.desktop
 %{_datadir}/kio/servicemenus/sheets_print.desktop
 
 #--------------------------------------------------------------------
@@ -455,11 +443,6 @@ content elements are available to Stage.
 %{_datadir}/templates/.source/Presentation.odp
 %{_datadir}/templates/Presentation.desktop
 
-%{_qtdir}/plugins/kf6/thumbcreator/stage_key_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/stage_kpr_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/stage_odp_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/stage_powerpoint_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/stage_pptx_thumbnail.desktop
 %{_datadir}/kio/servicemenus/stage_print.desktop
 
 #--------------------------------------------------------------------
@@ -482,10 +465,6 @@ art.
 %{_sysconfdir}/xdg/karbonrc
 %{_bindir}/karbon
 %{_qtdir}/plugins/karbon
-%{_qtdir}/plugins/kf6/thumbcreator/karbon_karbon1x_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/karbon_wmf_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/karbon_wpg_thumbnail.desktop
-%{_qtdir}/plugins/kf6/thumbcreator/karbon_xfig_thumbnail.desktop
 %{_datadir}/metainfo/org.kde.karbon.appdata.*
 %{_datadir}/templates/.source/Illustration.odg
 %{_datadir}/templates/Illustration.desktop
