@@ -1,22 +1,22 @@
 %global optflags %{optflags} -Wno-register
 
 # Seems to be broken at the moment
-%bcond_with okular
+%bcond_without okular
 
 %define compile_apidox 0
 %define _mobile 0
 %define _disable_ld_no_undefined 1
 %define _disable_lto 1
 
-%define major 18
+%define major 19
 
-%define snapshot 20240806
+#define snapshot 20240806
 
 %define stable %([ `echo %{version} |cut -d. -f3` -ge 70 ] && echo -n un; echo -n stable)
 
 Summary:	Set of office applications for KDE
 Name:		calligra
-Version:	3.3.0
+Version:	4.0.0
 Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
@@ -25,7 +25,7 @@ Url:		http://www.calligra.org
 Source0:	https://invent.kde.org/office/calligra/-/archive/master/calligra-master.tar.bz2#/calligra-%{snapshot}.tar.bz2
 %else
 %if "%{stable}" == "stable"
-Source0:	http://download.kde.org/%{stable}/%{name}/%{version}/%{name}-%{version}.tar.xz
+Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
 %else
 Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
 %endif
@@ -128,7 +128,6 @@ BuildRequires:	graphviz
 # No longer included in 3.x, but might come back at some point
 Obsoletes:	%{name}-semanticitem < %{EVRD}
 Obsoletes:	%{name}-author < %{EVRD}
-Obsoletes:	%{name}-braindump < %{EVRD}
 Obsoletes:	%{name}-kchart < %{EVRD}
 Obsoletes:	%{name}-kformula < %{EVRD}
 Obsoletes:	%{name}-stateshape < %{EVRD}
@@ -145,8 +144,10 @@ Obsoletes:	%{name}-okular-odp <= %{EVRD}
 Obsoletes:	%{name}-okular-odt <= %{EVRD}
 %endif
 
+Obsoletes:	%mklibname koversion
+
 # Those were in KDE4 versions of calligra...
-%define obsoletelibs14 calligradb calligrakdchart calligrakdgantt flowprivate kformdesigner kformula kokross koproperty kordf koreport kplatokernel kplatomodels kplatoui planprivate planworkapp rcps_plan braindumpcore planworkfactory
+%define obsoletelibs14 calligradb calligrakdchart calligrakdgantt flowprivate kformdesigner kformula kokross koproperty kordf koreport kplatokernel kplatomodels kplatoui planprivate planworkapp rcps_plan planworkfactory
 %{expand:%(for lib in %{obsoletelibs14}; do echo Obsoletes: %%mklibname $lib 14; echo; done)}
 # Those were in Calligra 3.2
 %define obsoletelibs18 calligrasheetscommon calligrasheetsodf
@@ -175,13 +176,13 @@ Group: System/Libraries\
 %%description -n %{expand:%{lib%{1}}}\
 The %{1} library, a part of %{name}.\
 %%files -n %{expand:%{lib%{1}}}\
-%{_libdir}/lib%{1}.so.%{2}*\
+%{_libdir}/lib%{1}.so.*\
 %{nil}
 
 # libpackages
-%define calligralibs basicflakes calligrastageprivate flake karboncommon karbonui komain komsooxml koodf koodfreader kopageapp koplugin kotext kotextlayout kovectorimage koversion kowidgets kowidgetutils kundo2 pigmentcms wordsprivate koformula kostore autocorrection calligrasheetscore calligrasheetsengine calligrasheetspartlib calligrasheetsui
+%global calligralibs basicflakes braindumpcore calligrastageprivate flake karboncommon karbonui komain komsooxml koodf koodfreader kopageapp koplugin kotext kotextlayout kovectorimage kowidgets kowidgetutils kundo2 pigmentcms wordsprivate koformula kostore autocorrection calligrasheetscore calligrasheetsengine calligrasheetspartlib calligrasheetsui
 %if %{with okular}
-%define calligralibs %{calligralibs} kookularGenerator_odp kookularGenerator_odt
+%global calligralibs %{calligralibs} kookularGenerator_odp kookularGenerator_odt
 %endif
 %{expand:%(for lib in %{calligralibs}; do cat <<EOF
 %%libpackage $lib %{major}
@@ -221,7 +222,7 @@ Group:          System/Libraries
 Calligra library.
 
 %files -n %{libRtfReader}
-%{_libdir}/libRtfReader.so.%{major}*
+%{_libdir}/libRtfReader.so.*
 
 #--------------------------------------------------------------------
 
@@ -235,11 +236,14 @@ Common files for Calligra.
 
 %files core -f calligra.lang -f koconverter.lang -f kocolorspaces.lang
 %{_bindir}/calligraconverter
+%{_bindir}/calligralauncher
 %{_bindir}/cstester
 %{_bindir}/cstrunner
 %{_bindir}/visualimagecompare
 %{_datadir}/mime/packages/calligra_svm.xml
 %{_datadir}/applications/calligra.desktop
+%{_datadir}/applications/org.kde.calligra.desktop
+%{_datadir}/calligra_shape_state
 %{_qtdir}/plugins/calligra/colorspaces
 %{_qtdir}/plugins/calligra/dockers
 %dir %{_qtdir}/plugins/calligra/formatfilters
@@ -313,9 +317,12 @@ Common files for Calligra.
 %{_datadir}/color/icc/calligra
 %{_datadir}/icons/*/*/*/calligrastage.*
 %{_datadir}/icons/*/*/*/calligrakarbon.*
+%{_datadir}/icons/*/*/*/office-chart-stock-candlestick.*
+%{_datadir}/icons/*/*/*/office-chart-stock-hlc.*
+%{_datadir}/icons/*/*/*/office-chart-stock-ohlc.*
 %{_qtdir}/plugins/kf6/thumbcreator/calligraimagethumbnail.so
 %{_qtdir}/plugins/kf6/thumbcreator/calligrathumbnail.so
-
+%{_datadir}/metainfo/org.kde.calligra.metainfo.xml
 
 #--------------------------------------------------------------------
 %if 0
@@ -346,11 +353,28 @@ Mobile version of the Calligra office suite
 
 %files gemini
 %{_bindir}/calligragemini*
+%{_datadir}/applications/org.kde.calligra.gemini.desktop
 %{_qtdir}/qml/Calligra/Gemini
-%{_datadir}/applications/org.kde.calligragemini.desktop
 %{_datadir}/calligragemini
 %{_datadir}/icons/*/*/*/calligragemini.*
-%{_datadir}/metainfo/org.kde.calligragemini.appdata.xml
+%{_datadir}/metainfo/org.kde.calligra.gemini.metainfo.xml
+
+#--------------------------------------------------------------------
+
+%package braindump
+Summary:	Braindump for calligra
+Group:		Graphical desktop/KDE
+Requires:	%{name}-core = %{EVRD}
+
+%description braindump
+A tool that helps visualize the contents of your brain
+
+%files braindump -f braindump.lang
+%{_bindir}/braindump
+%{_datadir}/applications/org.kde.calligra.braindump.desktop
+%{_datadir}/icons/hicolor/*/apps/braindump.*
+%{_datadir}/kxmlgui5/braindump
+%{_datadir}/metainfo/org.kde.calligra.braindump.metainfo.xml
 
 #--------------------------------------------------------------------
 
@@ -373,12 +397,12 @@ With it, you can create informative and attractive documents with ease.
 %{_qtdir}/plugins/calligra/parts/calligrawordspart.so
 %{_datadir}/calligrawords
 %{_datadir}/kxmlgui5/calligrawords
-%{_datadir}/metainfo/org.kde.calligrawords.appdata.*
 %{_datadir}/templates/.source/TextDocument.odt
 %{_datadir}/templates/TextDocument.desktop
-%{_datadir}/applications/org.kde.calligrawords.desktop
 %{_datadir}/icons/*/*/*/calligrawords.*
 %{_datadir}/kio/servicemenus/words_print.desktop
+%{_datadir}/applications/org.kde.calligra.words.desktop
+%{_datadir}/metainfo/org.kde.calligra.words.metainfo.xml
 
 #--------------------------------------------------------------------
 
@@ -396,20 +420,20 @@ Sheets is a fully-featured calculation and spreadsheet tool.
 Use it to quickly create and calculate various business-related spreadsheets,
 such as income and expenditure, employee working hours, etc.
 
-%files sheets -f calligrasheets.lang
+%files sheets -f calligrasheets.lang -f sheets.lang
 %{_sysconfdir}/xdg/calligrasheetsrc
 %{_bindir}/calligrasheets
 %{_datadir}/kxmlgui5/calligrasheets
 %{_datadir}/calligrasheets
 %{_qtdir}/plugins/calligrasheets
-%{_datadir}/metainfo/org.kde.calligrasheets.appdata.*
 %{_datadir}/config.kcfg/calligrasheets.kcfg
 %{_datadir}/templates/.source/SpreadSheet.ods
 %{_datadir}/templates/SpreadSheet.desktop
 %{_datadir}/icons/*/*/*/calligrasheets.*
-%{_datadir}/applications/org.kde.calligrasheets.desktop
 %{_qtdir}/plugins/calligra/formatfilters/calligra_filter_sheets2xls.so
 %{_datadir}/kio/servicemenus/sheets_print.desktop
+%{_datadir}/applications/org.kde.calligra.sheets.desktop
+%{_datadir}/metainfo/org.kde.calligra.sheets.metainfo.xml
 
 #--------------------------------------------------------------------
 
@@ -430,11 +454,10 @@ new content elements or even new ways of managing your presentation. Because of
 the integration with Calligra, all the power and flexibility of the Calligra
 content elements are available to Stage.
 
-%files stage -f calligrastage.lang
+%files stage -f calligrastage.lang -f stage.lang
 %{_bindir}/calligrastage
 %{_qtdir}/plugins/calligra/formatfilters/calligra_filter_pdf2odg.so
-%{_datadir}/applications/org.kde.calligrastage.desktop
-%{_datadir}/metainfo/org.kde.calligrastage.appdata.xml
+%{_datadir}/applications/org.kde.calligra.stage.desktop
 
 %{_sysconfdir}/xdg/calligrastagerc
 %{_datadir}/kxmlgui5/calligrastage
@@ -442,7 +465,7 @@ content elements are available to Stage.
 %{_qtdir}/plugins/calligrastage
 %{_datadir}/templates/.source/Presentation.odp
 %{_datadir}/templates/Presentation.desktop
-
+%{_datadir}/metainfo/org.kde.calligra.stage.metainfo.xml
 %{_datadir}/kio/servicemenus/stage_print.desktop
 
 #--------------------------------------------------------------------
@@ -465,13 +488,13 @@ art.
 %{_sysconfdir}/xdg/karbonrc
 %{_bindir}/karbon
 %{_qtdir}/plugins/karbon
-%{_datadir}/metainfo/org.kde.karbon.appdata.*
 %{_datadir}/templates/.source/Illustration.odg
 %{_datadir}/templates/Illustration.desktop
 %{_datadir}/kxmlgui5/karbon
 %{_datadir}/karbon
-%{_datadir}/applications/org.kde.karbon.desktop
 %{_datadir}/kio/servicemenus/karbon_print.desktop
+%{_datadir}/applications/org.kde.calligra.karbon.desktop
+%{_datadir}/metainfo/org.kde.calligra.karbon.metainfo.xml
 
 #--------------------------------------------------------------------
 
@@ -486,7 +509,6 @@ Requires:	%{name}-core = %{EVRD}
 RTF viewer plugin for Okular
 
 %files -n okular-rtf
-%{_datadir}/kservices5/okularRtf_calligra.desktop
 %{_datadir}/applications/okularApplication_rtf_calligra.desktop
 %{_qtdir}/plugins/okular/generators/okularGenerator_rtf_calligra.so
 
@@ -501,13 +523,11 @@ Requires:	okular
 %description okular-odp
 ODP file renderer for Okular.
 
-%files okular-odp
-%{_qtdir}/plugins/okular/generators/okularGenerator_odp_calligra.so
+%files okular-odp -f okularGenerator_odp.lang
 %{_datadir}/applications/okularApplication_odp_calligra.desktop
-%{_datadir}/kservices5/okularOdp_calligra.desktop
+%{_qtdir}/plugins/okular_generators/okularGenerator_odp_calligra.so
 
 #--------------------------------------------------------------------
-
 %package okular-odt
 Summary:	ODT file renderer for Okular
 Group:		Graphical desktop/KDE
@@ -517,10 +537,9 @@ Requires:	okular
 %description okular-odt
 ODT file renderer for Okular.
 
-%files okular-odt
-%{_qtdir}/plugins/okular/generators/okularGenerator_odt_calligra.so
+%files okular-odt -f okularGenerator_odt.lang
 %{_datadir}/applications/okularApplication_odt_calligra.desktop
-%{_datadir}/kservices5/okularOdt_calligra.desktop
+%{_qtdir}/plugins/okular_generators/okularGenerator_odt_calligra.so
 
 #--------------------------------------------------------------------
 
@@ -534,9 +553,8 @@ Requires:	okular
 Doc file renderer for Okular.
 
 %files okular-doc
-%{_qtdir}/plugins/okular/generators/okularGenerator_doc_calligra.so
 %{_datadir}/applications/okularApplication_doc_calligra.desktop
-%{_datadir}/kservices5/okularDoc_calligra.desktop
+%{_qtdir}/plugins/okular/generators/okularGenerator_doc_calligra.so
 
 #--------------------------------------------------------------------
 
@@ -550,9 +568,8 @@ Requires:	okular
 Docx file renderer for Okular.
 
 %files okular-docx
-%{_qtdir}/plugins/okular/generators/okularGenerator_docx_calligra.so
 %{_datadir}/applications/okularApplication_docx_calligra.desktop
-%{_datadir}/kservices5/okularDocx_calligra.desktop
+%{_qtdir}/plugins/okular/generators/okularGenerator_docx_calligra.so
 
 #--------------------------------------------------------------------
 
@@ -566,9 +583,8 @@ Requires:	okular
 Powerpoint file renderer for Okular.
 
 %files okular-powerpoint
-%{_qtdir}/plugins/okular/generators/okularGenerator_powerpoint_calligra.so
 %{_datadir}/applications/okularApplication_powerpoint_calligra.desktop
-%{_datadir}/kservices5/okularPowerpoint_calligra.desktop
+%{_qtdir}/plugins/okular/generators/okularGenerator_powerpoint_calligra.so
 
 #--------------------------------------------------------------------
 
@@ -582,9 +598,8 @@ Requires:	okular
 PPTX file renderer for Okular.
 
 %files okular-pptx
-%{_qtdir}/plugins/okular/generators/okularGenerator_pptx_calligra.so
 %{_datadir}/applications/okularApplication_pptx_calligra.desktop
-%{_datadir}/kservices5/okularPptx_calligra.desktop
+%{_qtdir}/plugins/okular/generators/okularGenerator_pptx_calligra.so
 
 #--------------------------------------------------------------------
 
@@ -598,9 +613,8 @@ Requires:	okular
 WPD file renderer for Okular.
 
 %files okular-wpd
-%{_qtdir}/plugins/okular/generators/okularGenerator_wpd_calligra.so
 %{_datadir}/applications/okularApplication_wpd_calligra.desktop
-%{_datadir}/kservices5/okularWpd_calligra.desktop
+%{_qtdir}/plugins/okular/generators/okularGenerator_wpd_calligra.so
 %endif
 
 #--------------------------------------------------------------------
@@ -639,7 +653,7 @@ Header files needed for developing calligra applications.
 
 %files devel
 %{expand:%(for lib in %{calligralibs}; do cat <<EOF
-%{_libdir}/lib${lib}.so
+%%optional %{_libdir}/lib${lib}.so
 EOF
 done)}
 %{_libdir}/libgemini.so
@@ -688,10 +702,9 @@ done;
 # If we can't build okular bits, we don't need their translations
 rm -rf %{buildroot}%{_datadir}/locale/*/LC_MESSAGES/okular*
 %endif
-# The application doesn't seem to exist anymore, just the translations
-rm -rf %{buildroot}%{_datadir}/locale/*/LC_MESSAGES/braindump*
 
 for i in \
+	braindump \
 	calligra \
 	KarbonFilterEffects \
 	KarbonTools \
@@ -733,6 +746,8 @@ for i in \
 	okularGenerator_odp \
 	okularGenerator_odt \
 %endif
+	sheets \
+	stage \
 	; do
 	%find_lang $i --with-html
 done
