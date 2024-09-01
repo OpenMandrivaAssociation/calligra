@@ -51,6 +51,7 @@ BuildRequires:	cmake(Qt6QuickWidgets)
 BuildRequires:	cmake(Qt6Sql)
 BuildRequires:	cmake(Qt6Keychain)
 BuildRequires:	cmake(ECM)
+BuildRequires:	locales-extra-charsets
 BuildRequires:	ninja
 BuildRequires:	pstoedit
 BuildRequires:	boost-devel
@@ -122,6 +123,13 @@ BuildRequires:	cmake(KF6ThreadWeaver)
 BuildRequires:	cmake(KF6WidgetsAddons)
 BuildRequires:	cmake(KF6WindowSystem)
 BuildRequires:	cmake(KF6XmlGui)
+BuildRequires:	cmake(KF6CalendarCore)
+BuildRequires:	cmake(KF6Contacts)
+BuildRequires:	cmake(KPim6Akonadi)
+BuildRequires:	cmake(KF5DocTools)
+BuildRequires:	cmake(KChart6)
+BuildRequires:	pkgconfig(fontconfig)
+BuildRequires:	pkgconfig(freetype2)
 %if %compile_apidox
 BuildRequires:	doxygen
 BuildRequires:	graphviz
