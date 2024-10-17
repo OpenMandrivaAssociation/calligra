@@ -20,7 +20,7 @@ Version:	4.0.0
 Release:	%{?snapshot:0.%{snapshot}.}2
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
-Url:		http://www.calligra.org
+Url:		https://www.calligra.org
 %if 0%{?snapshot:1}
 Source0:	https://invent.kde.org/office/calligra/-/archive/master/calligra-master.tar.bz2#/calligra-%{snapshot}.tar.bz2
 %else
