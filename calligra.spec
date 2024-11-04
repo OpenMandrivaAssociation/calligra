@@ -16,8 +16,8 @@
 
 Summary:	Set of office applications for KDE
 Name:		calligra
-Version:	4.0.0
-Release:	%{?snapshot:0.%{snapshot}.}3
+Version:	4.0.1
+Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		https://www.calligra.org
@@ -32,7 +32,6 @@ Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
 %endif
 Source1:	%{name}.rpmlintrc
 Patch0:		calligra-buildfix.patch
-Patch1:		calligra-compile.patch
 #Patch1:		calligra-libgit-api-update.patch
 
 BuildRequires:	cmake(Qt6Core)
@@ -66,8 +65,6 @@ BuildRequires:	plasma6-okular-devel
 %endif
 BuildRequires:	postgresql-devel
 BuildRequires:	readline-devel
-# We could do this, but it's in unsupported
-#BuildRequires:	pkgconfig(spnav)
 BuildRequires:	tiff-devel
 BuildRequires:	vc-devel
 BuildRequires:	xbase-devel
@@ -189,7 +186,8 @@ The %{1} library, a part of %{name}.\
 %{nil}
 
 # libpackages
-%global calligralibs basicflakes braindumpcore calligrastageprivate flake karboncommon karbonui komain komsooxml koodf koodfreader kopageapp koplugin kotext kotextlayout kovectorimage kowidgets kowidgetutils kundo2 pigmentcms wordsprivate koformula kostore autocorrection calligrasheetscore calligrasheetsengine calligrasheetspartlib calligrasheetsui
+# Gone in 4.0.1: braindumpcore
+%global calligralibs basicflakes calligrastageprivate flake karboncommon karbonui komain komsooxml koodf koodfreader kopageapp koplugin kotext kotextlayout kovectorimage kowidgets kowidgetutils kundo2 pigmentcms wordsprivate koformula kostore autocorrection calligrasheetscore calligrasheetsengine calligrasheetspartlib calligrasheetsui
 %if %{with okular}
 %global calligralibs %{calligralibs} kookularGenerator_odp kookularGenerator_odt
 %endif
@@ -243,7 +241,7 @@ Obsoletes:	koffice-core < 15:2.4
 %description core
 Common files for Calligra.
 
-%files core -f calligra.lang -f koconverter.lang -f kocolorspaces.lang
+%files core -f calligra.lang -f koconverter.lang -f kocolorspaces.lang -f calligralauncher.lang
 %{_bindir}/calligraconverter
 %{_bindir}/calligralauncher
 %{_bindir}/cstester
@@ -299,6 +297,7 @@ Common files for Calligra.
 %{_qtdir}/plugins/calligra/formatfilters/calligra_filter_xfig2odg.so
 %{_qtdir}/plugins/calligra/formatfilters/calligra_filter_xls2ods.so
 %{_qtdir}/plugins/calligra/formatfilters/calligra_filter_xlsx2ods.so
+%{_qtdir}/plugins/kf6/propertiesdialog/calligradocinfopropspage.so
 %{_qtdir}/plugins/calligra/pageapptools
 %dir %{_qtdir}/plugins/calligra/parts
 %{_qtdir}/plugins/calligra/parts/calligrasheetspart.so
@@ -310,7 +309,6 @@ Common files for Calligra.
 %{_qtdir}/plugins/calligra/textediting
 %{_qtdir}/plugins/calligra/textinlineobjects
 %{_qtdir}/plugins/calligra/tools
-%{_qtdir}/plugins/kf5/propertiesdialog/calligradocinfopropspage.so
 %{_qtdir}/qml/org/kde/calligra
 %dir %{_datadir}/calligra
 %{_datadir}/calligra/autocorrect
@@ -333,22 +331,8 @@ Common files for Calligra.
 %{_qtdir}/plugins/kf6/thumbcreator/calligrathumbnail.so
 %{_datadir}/metainfo/org.kde.calligra.metainfo.xml
 
-#--------------------------------------------------------------------
 %if 0
-# Disabled because the needed lib is in extra
-%package spnav
-Summary:	Spacenav device support for Calligra
-Group:		Office
-
-%description spnav
-Spacenav device support for Calligra
-
-%files spnav
-%dir %{_qtdir}/plugins/calligra/devices
-%{_qtdir}/plugins/calligra/devices/calligra_device_spacenavigator.so
-%endif
-
-
+# Seems to be dead (at least disabled) -- not in 4.0.1
 #--------------------------------------------------------------------
 %package gemini
 Summary:	Mobile version of the Calligra office suite
@@ -367,6 +351,7 @@ Mobile version of the Calligra office suite
 %{_datadir}/calligragemini
 %{_datadir}/icons/*/*/*/calligragemini.*
 %{_datadir}/metainfo/org.kde.calligra.gemini.metainfo.xml
+%endif
 
 #--------------------------------------------------------------------
 
@@ -380,8 +365,10 @@ A tool that helps visualize the contents of your brain
 
 %files braindump -f braindump.lang
 %{_bindir}/braindump
+%{_libdir}/libbraindumpcore.so*
 %{_datadir}/applications/org.kde.calligra.braindump.desktop
 %{_datadir}/icons/hicolor/*/apps/braindump.*
+%{_datadir}/icons/hicolor/*/apps/org.kde.calligra.braindump.*
 %{_datadir}/kxmlgui5/braindump
 %{_datadir}/metainfo/org.kde.calligra.braindump.metainfo.xml
 
@@ -412,6 +399,7 @@ With it, you can create informative and attractive documents with ease.
 %{_datadir}/kio/servicemenus/words_print.desktop
 %{_datadir}/applications/org.kde.calligra.words.desktop
 %{_datadir}/metainfo/org.kde.calligra.words.metainfo.xml
+%{_datadir}/icons/hicolor/*/apps/org.kde.calligra.words.svg
 
 #--------------------------------------------------------------------
 
@@ -443,6 +431,7 @@ such as income and expenditure, employee working hours, etc.
 %{_datadir}/kio/servicemenus/sheets_print.desktop
 %{_datadir}/applications/org.kde.calligra.sheets.desktop
 %{_datadir}/metainfo/org.kde.calligra.sheets.metainfo.xml
+%{_datadir}/icons/hicolor/*/apps/org.kde.calligra.sheets.svg
 
 #--------------------------------------------------------------------
 
@@ -476,6 +465,7 @@ content elements are available to Stage.
 %{_datadir}/templates/Presentation.desktop
 %{_datadir}/metainfo/org.kde.calligra.stage.metainfo.xml
 %{_datadir}/kio/servicemenus/stage_print.desktop
+%{_datadir}/icons/hicolor/*/apps/org.kde.calligra.stage.svg
 
 #--------------------------------------------------------------------
 
@@ -504,6 +494,7 @@ art.
 %{_datadir}/kio/servicemenus/karbon_print.desktop
 %{_datadir}/applications/org.kde.calligra.karbon.desktop
 %{_datadir}/metainfo/org.kde.calligra.karbon.metainfo.xml
+%{_datadir}/icons/hicolor/*/apps/org.kde.calligra.karbon.svg
 
 #--------------------------------------------------------------------
 
@@ -519,7 +510,7 @@ RTF viewer plugin for Okular
 
 %files -n okular-rtf
 %{_datadir}/applications/okularApplication_rtf_calligra.desktop
-%{_qtdir}/plugins/okular/generators/okularGenerator_rtf_calligra.so
+%{_qtdir}/plugins/okular_generators/okularGenerator_rtf_calligra.so
 
 #--------------------------------------------------------------------
 %package okular-odp
@@ -563,7 +554,7 @@ Doc file renderer for Okular.
 
 %files okular-doc
 %{_datadir}/applications/okularApplication_doc_calligra.desktop
-%{_qtdir}/plugins/okular/generators/okularGenerator_doc_calligra.so
+%{_qtdir}/plugins/okular_generators/okularGenerator_doc_calligra.so
 
 #--------------------------------------------------------------------
 
@@ -578,7 +569,7 @@ Docx file renderer for Okular.
 
 %files okular-docx
 %{_datadir}/applications/okularApplication_docx_calligra.desktop
-%{_qtdir}/plugins/okular/generators/okularGenerator_docx_calligra.so
+%{_qtdir}/plugins/okular_generators/okularGenerator_docx_calligra.so
 
 #--------------------------------------------------------------------
 
@@ -593,7 +584,7 @@ Powerpoint file renderer for Okular.
 
 %files okular-powerpoint
 %{_datadir}/applications/okularApplication_powerpoint_calligra.desktop
-%{_qtdir}/plugins/okular/generators/okularGenerator_powerpoint_calligra.so
+%{_qtdir}/plugins/okular_generators/okularGenerator_powerpoint_calligra.so
 
 #--------------------------------------------------------------------
 
@@ -608,7 +599,7 @@ PPTX file renderer for Okular.
 
 %files okular-pptx
 %{_datadir}/applications/okularApplication_pptx_calligra.desktop
-%{_qtdir}/plugins/okular/generators/okularGenerator_pptx_calligra.so
+%{_qtdir}/plugins/okular_generators/okularGenerator_pptx_calligra.so
 
 #--------------------------------------------------------------------
 
@@ -623,7 +614,7 @@ WPD file renderer for Okular.
 
 %files okular-wpd
 %{_datadir}/applications/okularApplication_wpd_calligra.desktop
-%{_qtdir}/plugins/okular/generators/okularGenerator_wpd_calligra.so
+%{_qtdir}/plugins/okular_generators/okularGenerator_wpd_calligra.so
 %endif
 
 #--------------------------------------------------------------------
@@ -665,7 +656,7 @@ Header files needed for developing calligra applications.
 %%optional %{_libdir}/lib${lib}.so
 EOF
 done)}
-%{_libdir}/libgemini.so
+#{_libdir}/libgemini.so
 %{_libdir}/libkowv2.so
 %{_libdir}/libRtfReader.so
 %{_libdir}/libkoodf2.so
@@ -737,12 +728,14 @@ for i in \
 	calligra_shape_threed \
 	calligra_shape_vector \
 	calligra_shape_video \
+	calligra_shape_webshape \
 	calligra_textediting_autocorrect \
 	calligra_textediting_changecase \
 	calligra_textediting_spellcheck \
 	calligra_textediting_thesaurus \
 	calligra_textinlineobject_variables \
 	calligrafilters \
+	calligralauncher \
 	calligrasheets \
 	calligrasheets_calendar \
 	calligrasheets_solver \
