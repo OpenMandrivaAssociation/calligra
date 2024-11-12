@@ -675,7 +675,7 @@ done)}
 %cmake -DIHAVEPATCHEDQT:BOOL=TRUE -DCALLIGRA_SHOULD_BUILD_STAGING:BOOL=ON -DGHNS:BOOL=ON -DINSTALL_XLS_EXPORT_FILTER:BOOL=ON -DAKONADI_DBUS_INTERFACES_DIR=/usr/share/dbus-1/interfaces -DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON -DBUILD_WITH_QT6:BOOL=ON \
 	-DPACKAGERS_BUILD=ON -G Ninja
 %endif
-%ninja_build
+%ninja_build || ninja
 
 %if %{compile_apidox}
 %ninja_build apidox
