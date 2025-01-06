@@ -16,19 +16,15 @@
 
 Summary:	Set of office applications for KDE
 Name:		calligra
-Version:	4.0.1
-Release:	%{?snapshot:0.%{snapshot}.}3
+Version:	24.12.0
+Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		https://www.calligra.org
 %if 0%{?snapshot:1}
 Source0:	https://invent.kde.org/office/calligra/-/archive/master/calligra-master.tar.bz2#/calligra-%{snapshot}.tar.bz2
 %else
-%if "%{stable}" == "stable"
-Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
-%else
-Source0:	http://download.kde.org/%{stable}/%{name}/%{name}-%{version}.tar.xz
-%endif
+Source0:	http://download.kde.org/%{stable}/release-service/%{version}/src/%{name}-%{version}.tar.xz
 %endif
 Source1:	%{name}.rpmlintrc
 Patch0:		calligra-buildfix.patch
@@ -50,6 +46,7 @@ BuildRequires:	cmake(Qt6QuickWidgets)
 BuildRequires:	cmake(Qt6Sql)
 BuildRequires:	cmake(Qt6Keychain)
 BuildRequires:	cmake(ECM)
+BuildRequires:	cmake(Eigen3)
 BuildRequires:	locales-extra-charsets
 BuildRequires:	ninja
 BuildRequires:	pstoedit
