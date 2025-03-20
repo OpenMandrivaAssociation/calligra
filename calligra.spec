@@ -16,7 +16,7 @@
 
 Summary:	Set of office applications for KDE
 Name:		calligra
-Version:	24.12.0
+Version:	24.12.3
 Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
@@ -120,7 +120,7 @@ BuildRequires:	cmake(KF6XmlGui)
 BuildRequires:	cmake(KF6CalendarCore)
 BuildRequires:	cmake(KF6Contacts)
 BuildRequires:	cmake(KPim6Akonadi)
-BuildRequires:	cmake(KF5DocTools)
+BuildRequires:	cmake(KF6DocTools)
 BuildRequires:	cmake(KChart6)
 BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(freetype2)
