@@ -27,8 +27,6 @@ Source0:	https://invent.kde.org/office/calligra/-/archive/master/calligra-master
 Source0:	http://download.kde.org/%{stable}/release-service/%{version}/src/%{name}-%{version}.tar.xz
 %endif
 Source1:	%{name}.rpmlintrc
-Patch0:		calligra-buildfix.patch
-#Patch1:		calligra-libgit-api-update.patch
 
 BuildRequires:	cmake(Qt6Core)
 BuildRequires:	cmake(Qt6Gui)
@@ -155,6 +153,10 @@ Obsoletes:	%mklibname koversion
 # Those were in Calligra 3.2
 %define obsoletelibs18 calligrasheetscommon calligrasheetsodf
 %{expand:%(for lib in %{obsoletelibs18}; do echo Obsoletes: %%mklibname $lib 18; echo; done)}
+
+%patchlist
+calligra-buildfix.patch
+calligra-25.08-poppler-25.11.patch
 
 %description
 Office applications for the K Desktop Environment.
