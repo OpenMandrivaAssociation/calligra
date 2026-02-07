@@ -16,8 +16,8 @@
 
 Summary:	Set of office applications for KDE
 Name:		calligra
-Version:	25.12.1
-Release:	%{?snapshot:0.%{snapshot}.}2
+Version:	25.12.2
+Release:	%{?snapshot:0.%{snapshot}.}1
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
 Url:		https://www.calligra.org
@@ -156,7 +156,7 @@ Obsoletes:	%mklibname koversion
 
 %patchlist
 calligra-buildfix.patch
-#calligra-25.08-poppler-25.11.patch
+calligra-poppler-26.02.patch
 
 %description
 Office applications for the K Desktop Environment.

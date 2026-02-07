@@ -1,0 +1,48 @@
+diff -up calligra-25.12.2/filters/karbon/pdf/SvgOutputDev.cpp.omv~ calligra-25.12.2/filters/karbon/pdf/SvgOutputDev.cpp
+--- calligra-25.12.2/filters/karbon/pdf/SvgOutputDev.cpp.omv~	2026-02-07 04:56:12.291512848 +0100
++++ calligra-25.12.2/filters/karbon/pdf/SvgOutputDev.cpp	2026-02-07 04:58:15.946411255 +0100
+@@ -141,7 +141,7 @@ void SvgOutputDev::stroke(GfxState *stat
+ {
+     QString path = convertPath(state->getPath());
+     *d->body << "<path";
+-    *d->body << " transform=\"" << convertMatrix(state->getCTM()) << "\"";
++    *d->body << " transform=\"" << convertMatrix(state->getCTM().data()) << "\"";
+     *d->body << printStroke();
+     *d->body << " fill=\"none\"";
+     *d->body << " d=\"" << path << "\"";
+@@ -152,7 +152,7 @@ void SvgOutputDev::fill(GfxState *state)
+ {
+     QString path = convertPath(state->getPath());
+     *d->body << "<path";
+-    *d->body << " transform=\"" << convertMatrix(state->getCTM()) << "\"";
++    *d->body << " transform=\"" << convertMatrix(state->getCTM().data()) << "\"";
+     *d->body << printFill();
+     *d->body << " fill-rule=\"nonzero\"";
+     *d->body << " d=\"" << path << "\"";
+@@ -163,7 +163,7 @@ void SvgOutputDev::eoFill(GfxState *stat
+ {
+     QString path = convertPath(state->getPath());
+     *d->body << "<path";
+-    *d->body << " transform=\"" << convertMatrix(state->getCTM()) << "\"";
++    *d->body << " transform=\"" << convertMatrix(state->getCTM().data()) << "\"";
+     *d->body << printFill();
+     *d->body << " fill-rule=\"evenodd\"";
+     *d->body << " d=\"" << path << "\"";
+@@ -434,7 +434,7 @@ void SvgOutputDev::drawString(GfxState *
+     double x = state->getCurX();
+     double y = state->getCurY();
+ 
+-    const double *ctm = state->getCTM();
++    const std::array<double,6> &ctm = state->getCTM();
+     QTransform transform(ctm[0], ctm[1], ctm[2], ctm[3], ctm[4], ctm[5]);
+ 
+     QTransform mirror;
+@@ -539,7 +539,7 @@ void SvgOutputDev::drawImage(GfxState *s
+         return;
+     }
+ 
+-    const double *ctm = state->getCTM();
++    const std::array<double,6> &ctm = state->getCTM();
+     QTransform m(ctm[0] / width, ctm[1] / width, -ctm[2] / height, -ctm[3] / height, ctm[2] + ctm[4], ctm[3] + ctm[5]);
+ 
+     QByteArray ba;
