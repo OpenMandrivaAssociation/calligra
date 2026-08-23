@@ -50,7 +50,6 @@ BuildRequires:	ninja
 BuildRequires:	pstoedit
 BuildRequires:	boost-devel
 BuildRequires:	freetds-devel
-BuildRequires:	getfem-devel
 BuildRequires:	glpk-devel
 BuildRequires:	jbig-devel
 BuildRequires:	plasma6-marble-devel
