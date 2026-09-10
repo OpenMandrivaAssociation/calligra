@@ -16,7 +16,7 @@
 
 Summary:	Set of office applications for KDE
 Name:		calligra
-Version:	26.08.0
+Version:	26.08.1
 Release:	%{?snapshot:0.%{snapshot}.}2
 Group:		Office
 License:	GPLv2+ and LGPLv2+ and GFDL
